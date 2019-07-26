@@ -27,9 +27,9 @@ function curlPost($url,$post_data){
     curl_setopt($curl, CURLOPT_POSTFIELDS, $post_data);
     //执行命令
     $data = curl_exec($curl);
+    $no=curl_errno($curl);
     //关闭URL请求
     curl_close($curl);
-
 
     return json_decode($data);
 }
@@ -77,7 +77,7 @@ function success_return($data,$msg=""){
  * $msg 失败原因
 */
 function error_return($msg=""){
-        throw new \App\Exceptions\ApiException($msg,0);
+        throw new \App\Exceptions\ApiException($msg,-1);
 }
 
 /**

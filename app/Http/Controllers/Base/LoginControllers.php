@@ -11,9 +11,9 @@ namespace App\Http\Controllers\Base;
 
 use App\Exceptions\ApiException;
 use App\Http\Controllers\Controller;
+use App\Model\Member;
 use App\Model\MpConfig;
 use App\Model\MpUser;
-use App\Model\User;
 use Illuminate\Http\Request;
 
 class LoginControllers extends Controller
@@ -44,16 +44,18 @@ class LoginControllers extends Controller
         $config=$mp_config->get_one($appid);//根据appid 得到配置信息
 
         //授权得到openid
-        $info=$this->get_openid($config->appid,$config->appsecret,$code);
-        $openid=$info["openid"];
-        $session_key=$info["session_key"];
+//        $info=$this->get_openid($config->appid,$config->appsecret,$code);
+//        $openid=$info["openid"];
+//        $session_key=$info["session_key"];
+        $openid=1;
+        $session_key="session_key";
         $mp_user=new MpUser();
         $check_info=$mp_user->checkUser($openid,$appid);//判断用户信息
 
         $check_info["parent_tuan"]=false;
         $check_info["sessionKey"]=$session_key;//sessionkey
         if(!empty($parent_code)){
-            $user_m=new User();
+            $user_m=new Member();
             $user_m->checkTuan();
         }
         success_return($check_info);

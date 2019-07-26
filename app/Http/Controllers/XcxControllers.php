@@ -28,7 +28,7 @@ class XcxControllers extends Controller
         $token_m=new Token();
         $user_info=$token_m->get_token($token);
 
-//        empty($user_info)&&error_return("token验证错误");
+        empty($user_info)&&error_return("token验证错误");
 
         $this->openid=$user_info["openid"];
         $this->uid=$user_info["uid"];

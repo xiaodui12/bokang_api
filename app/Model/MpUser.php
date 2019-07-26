@@ -27,7 +27,7 @@ class MpUser extends Model
             $this->add_user($openid,$appid);//添加用户
         }
         elseif(!empty($mp_user["uid"])){
-            $userM=new User();
+            $userM=new Member();
             $is_tuan=$userM->checkTuan($mp_user["uid"]);//得到用户是否是团长
             $return_array["is_tuan"]=$is_tuan?true:false;
         }
@@ -90,7 +90,7 @@ class MpUser extends Model
         }
 
         if(!empty($save["unionid"])){
-            $userM=new User();
+            $userM=new Member();
             $return_info=$userM->saveuserinfo($save,$first["unionid"]);
 
 
@@ -117,4 +117,6 @@ class MpUser extends Model
             error_return("加密信息解析错误");
         }
     }
+
+
 }

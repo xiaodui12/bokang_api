@@ -9,12 +9,14 @@
 namespace App\Http\Controllers\Pdd;
 
 
-use App\Http\Controllers\XcxControllers;
+
 use App\Model\System;
 use Illuminate\Http\Request;
 
-class IndexControllers extends XcxControllers
+class IndexControllers extends BaseControllers
 {
+
+
 
     public function __construct(Request $request)
     {

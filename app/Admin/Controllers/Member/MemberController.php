@@ -39,7 +39,7 @@ class MemberController extends AdminController
             array("field"=>"is_tuan","title"=>"是否是团长","type"=>"boolean"),
         ];
 
-        BaseControllers::setlist($grid,$info_array);
+        BaseControllers::setlist_show($grid,$info_array);
         BaseControllers::set_auth($grid,2);
         return $grid;
     }

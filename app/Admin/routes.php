@@ -14,7 +14,8 @@ Route::group([
     $router->resource('users', UserController::class);
     $router->resource('members', Member\MemberController::class);
     $router->resource('orders', Order\OrderController::class);
-
+    $router->resource('systems', Base\SystemController::class);
+    $router->resource('mp-configs', Base\MpController::class);
 
 
 });

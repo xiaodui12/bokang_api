@@ -93,8 +93,6 @@ class MpUser extends Model
             $userM=new Member();
             $return_info=$userM->saveuserinfo($save,$first["unionid"]);
 
-
-
             if(empty($first["uid"]))
             {
                 $result=$this->where("id",$first["id"])->Updates(array("uid"=>$return_info["set_uid"]));

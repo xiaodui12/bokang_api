@@ -32,8 +32,6 @@ class OrderController extends AdminController
 
         $column_array=[
             array("field"=>"order_no","title"=>"订单号","type"=>"expand","function"=>function ($model) {
-
-
                 $goods = $model->ordergoods()->get()->map(function ($comment) {
                     return $comment->only(['goods_thumbnail_url','goods_name', 'goods_price',"goods_quantity"]);
                 });
@@ -56,7 +54,6 @@ class OrderController extends AdminController
 
         ];
         BaseControllers::setlist_show($grid,$column_array);
-
 
         $grid->filter(function($filter) use($type){
             // 去掉默认的id过滤器
@@ -94,60 +91,45 @@ class OrderController extends AdminController
         $type=$this->type;
         $show = new Show(Order::findOrFail($id));
 
-//        $show->field('id', __('Id'));
-        $show->field('order_no', __('订单号'));
-        $show->field('refresh_time', __('刷新时间'))->as(function ($time) {
-            return date("Y-m-d H:i:s",$time);
-        });
-        $show->field('type', __('类型'))->using($type);
-        $show->field('order_id', __('订单id'));
-        $show->field('order_amount', __('订单总金额'));
-        $show->field('p_id', __('推广位'));
-        $show->field('promotion_rate', __('佣金比例'));
-        $show->field('promotion_amount', __('佣金金额'));
-
-        $show->field('order_status_desc', __('订单状态'));
-        $show->field('order_create_time', __('订单创建时间'))->as(function ($time) {
-            return date("Y-m-d H:i:s",$time);
-        });
-        $show->field('order_pay_time', __('订单支付时间'))->as(function ($time) {
-            return date("Y-m-d H:i:s",$time);
-        });
-        $show->field('order_group_success_time', __('Order group success time'))->as(function ($time) {
-            return date("Y-m-d H:i:s",$time);
-        });;
-        $show->field('order_verify_time', __('Order verify time'))->as(function ($time) {
-            return date("Y-m-d H:i:s",$time);
-        });;
-        $show->field('order_modify_at', __('Order modify at'));
-        $show->field('custom_parameters', __('自定义参数'));
-        $show->field('cpa_new', __('是否是新用户'))->using([0=>"不是",1=>"是"]);
+        $detail_array=[
+            array("field"=>"order_no","title"=>"订单号","type"=>"value"),
+            array("field"=>"refresh_time","title"=>"刷新时间","type"=>"datetime"),
+            array("field"=>"type","title"=>"类型","type"=>"array","array"=>$type),
+            array("field"=>"order_id","title"=>"订单id","type"=>"value"),
+            array("field"=>"order_amount","title"=>"订单总金额","type"=>"value"),
+            array("field"=>"p_id","title"=>"推广位","type"=>"value"),
+            array("field"=>"promotion_rate","title"=>"佣金比例","type"=>"value"),
+            array("field"=>"promotion_amount","title"=>"佣金金额","type"=>"value"),
+            array("field"=>"order_status_desc","title"=>"订单状态","type"=>"value"),
+            array("field"=>"order_create_time","title"=>"创建时间","type"=>"datetime"),
+            array("field"=>"order_pay_time","title"=>"订单支付时间","type"=>"datetime"),
+            array("field"=>"order_group_success_time","title"=>"订单收货时间","type"=>"datetime"),
+            array("field"=>"order_verify_time","title"=>"订单审核时间","type"=>"datetime"),
+            array("field"=>"order_modify_at","title"=>"order_modify_at","type"=>"value"),
+            array("field"=>"custom_parameters","title"=>"自定义参数","type"=>"value"),
+            array("field"=>"cpa_new","title"=>"是否是新用户","type"=>"boolean"),
+        ];
 
 
-        $show->panel()
-            ->tools(function ($tools) {
-                $tools->disableEdit();
-//                $tools->disableList();
-                $tools->disableDelete();
-            });
+
+        BaseControllers::setdetail($show,$detail_array);
 
         BaseControllers::set_auth($show,5);
 
         $model=$show->getModel();
 
-
         $team_uid=$model->team_uid;
         $team_price=$model->team_price;
         if(!empty($team_uid)){
             $show->tuanuid('团长收益', function ($tuanuid) use($team_price) {
-                $tuanuid->field("head", __('头像'))->image("",60,60);
-                $tuanuid->field("nickname", __('昵称'));
-                $tuanuid->field("sex", __('性别'))->using(['0' => '保密', '1' => '男',"2"=>"女"]);
-                $tuanuid->field("", __('团长可收益'))->as(function ($info) use($team_price){
-                    return $team_price;
-                });
+                $detail_array=[
+                    array("field"=>"head","title"=>"头像","type"=>"image"),
+                    array("field"=>"nickname","title"=>"昵称","type"=>"value"),
+                    array("field"=>"sex","title"=>"性别","type"=>"array","array"=>['0' => '保密', '1' => '男',"2"=>"女"]),
+                    array("field"=>"","title"=>"团长可收益","type"=>"use","detail"=>$team_price),
+                ];
+                BaseControllers::setdetail($tuanuid,$detail_array);
                 BaseControllers::set_auth($tuanuid,4);
-
 
             });
         }
@@ -157,12 +139,14 @@ class OrderController extends AdminController
         $user_price=$model->user_price;
         if(!empty($user_id)) {
             $show->buy_uid('用户收益', function ($tuanuid) use ($user_price) {
-                $tuanuid->field("head", __('头像'))->image("", 60, 60);
-                $tuanuid->field("nickname", __('昵称'));
-                $tuanuid->field("sex", __('性别'))->using(['0' => '保密', '1' => '男', "2" => "女"]);
-                $tuanuid->field("", __('用户可收益'))->as(function ($info) use ($user_price) {
-                    return $user_price;
-                });
+
+                $detail_array=[
+                    array("field"=>"head","title"=>"头像","type"=>"image"),
+                    array("field"=>"nickname","title"=>"昵称","type"=>"value"),
+                    array("field"=>"sex","title"=>"性别","type"=>"array","array"=>['0' => '保密', '1' => '男',"2"=>"女"]),
+                    array("field"=>"","title"=>"用户可收益","type"=>"use","detail"=>$user_price),
+                ];
+                BaseControllers::setdetail($tuanuid,$detail_array);
                 BaseControllers::set_auth($tuanuid,4);
 
             });

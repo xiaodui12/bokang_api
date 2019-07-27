@@ -27,9 +27,9 @@ class MemberController extends AdminController
     {
         $grid = new Grid(new Member);
         $info_array=[
-            array("field"=>"nickname","title"=>"昵称","type"=>"value"),
-            array("field"=>"realname","title"=>"真实姓名","type"=>"value"),
-            array("field"=>"head","title"=>"头像","type"=>"image"),
+            array("field"=>"nickname","title"=>"昵称","type"=>"value"),//展示昵称
+            array("field"=>"realname","title"=>"真实姓名","type"=>"value"),//展示真实姓名
+            array("field"=>"head","title"=>"头像","type"=>"image"),//展示图片 头像
             array("field"=>"sex","title"=>"性别","type"=>"array","array"=>['0' => '保密', '1' => '男',"2"=>"女"]),
             array("field"=>"city","title"=>"城市","type"=>"value"),
             array("field"=>"create_time","title"=>"注册时间","type"=>"datetime"),
@@ -39,8 +39,18 @@ class MemberController extends AdminController
             array("field"=>"is_tuan","title"=>"是否是团长","type"=>"boolean"),
         ];
 
-        BaseControllers::setlist_show($grid,$info_array);
-        BaseControllers::set_auth($grid,2);
+        BaseControllers::setlist_show($grid,$info_array);//拼接列表展示数据
+        BaseControllers::set_auth($grid,2);//设置版面权限
+
+        $grid->actions(function ($actions) {
+            // 去掉删除
+            $actions->disableDelete();
+
+            // 去掉编辑
+            $actions->disableEdit();
+//            // 去掉查看
+//            $actions->disableView();
+        });
         return $grid;
     }
 
@@ -54,26 +64,26 @@ class MemberController extends AdminController
     {
         $show = new Show(Member::findOrFail($id));
 
-        $show->field('id', __('Id'));
-        $show->field('mobile', __('Mobile'));
-        $show->field('password', __('Password'));
-        $show->field('last_login', __('Last login'));
-        $show->field('nickname', __('Nickname'));
-        $show->field('head', __('Head'));
-        $show->field('sex', __('Sex'));
-        $show->field('birthday', __('Birthday'));
-        $show->field('city', __('City'));
-        $show->field('city_code', __('City code'));
-        $show->field('create_time', __('Create time'));
-        $show->field('update_time', __('Update time'));
-        $show->field('longitude', __('Longitude'));
-        $show->field('latitude', __('Latitude'));
-        $show->field('realname', __('Realname'));
-        $show->field('level', __('Level'));
-        $show->field('status', __('Status'));
-        $show->field('invitation', __('Invitation'));
-        $show->field('unionid', __('Unionid'));
-        $show->field('is_tuan', __('Is tuan'));
+
+
+        //展示数据类型
+        $show_array=[
+            array("field"=>"mobile","title"=>"手机号","type"=>"value"),
+            array("field"=>"nickname","title"=>"昵称","type"=>"value"),
+            array("field"=>"realname","title"=>"真实姓名","type"=>"value"),
+            array("field"=>"head","title"=>"头像","type"=>"image"),
+            array("field"=>"sex","title"=>"性别","type"=>"array","array"=>['0' => '保密', '1' => '男',"2"=>"女"]),
+            array("field"=>"birthday","title"=>"生日","type"=>"value"),
+            array("field"=>"city","title"=>"城市","type"=>"value"),
+            array("field"=>"longitude","title"=>"坐标经度","type"=>"value"),
+            array("field"=>"latitude","title"=>"坐标纬度","type"=>"value"),
+            array("field"=>"status","title"=>"状态","type"=>"array","array"=>[0=>"禁用",1=>"正常"]),
+            array("field"=>"last_login","title"=>"最后登录","type"=>"datetime"),
+            array("field"=>"invitation","title"=>"邀请码","type"=>"value"),
+            array("field"=>"is_tuan","title"=>"是否是团长","type"=>"boolean"),
+        ];
+        //展示数据
+        BaseControllers::setdetail($show,$show_array);
 
         return $show;
     }

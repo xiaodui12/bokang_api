@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class System extends Model
 {
+
     protected $table = 'bokang_system';
+
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'updated_at';
 
     protected $pdd_config_string=["pdd_client_secret","pdd_client_id"];//拼多多配置键值
     public function __construct(array $attributes = [])

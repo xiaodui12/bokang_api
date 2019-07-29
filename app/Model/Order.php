@@ -30,7 +30,7 @@ class Order extends Model
     */
     public static function getlastrefresh_time(){
        $refresh_time= self::max("refresh_time");
-       return $refresh_time?$refresh_time:time()-24*60*60;//有刷新时间使用刷新时间，没有刷新时间，则使用90天时间戳
+       return $refresh_time&&$refresh_time>time()-24*60*60?$refresh_time:time()-24*60*60;//有刷新时间使用刷新时间，没有刷新时间，则使用90天时间戳
     }
     /**
      * 根据订单号查询订单是否存在

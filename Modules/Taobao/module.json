@@ -1,0 +1,16 @@
+{
+    "name": "Taobao",
+    "alias": "taobao",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Taobao\\Providers\\TaobaoServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}

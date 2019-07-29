@@ -17,6 +17,12 @@ Route::group([
     $router->resource('systems', Base\SystemController::class);
     $router->resource('mp-configs', Base\MpController::class);
     $router->resource('team-applies', Member\TeamApplyController::class);
+    $router->resource('teams', Member\TeamController::class);
+    $router->resource('advs', Base\AdvController::class);
+
+
+
 
 
 });
+

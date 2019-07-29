@@ -6,12 +6,12 @@
   <title>{{config('admin.title')}} | {{ trans('admin.login') }}</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  
-  @if(!is_null($favicon = Admin::favicon()))
-  <link rel="shortcut icon" href="{{$favicon}}">
-  @endif
 
-  <!-- Bootstrap 3.3.5 -->
+  @if(!is_null($favicon = Admin::favicon()))
+    <link rel="shortcut icon" href="{{$favicon}}">
+@endif
+
+<!-- Bootstrap 3.3.5 -->
   <link rel="stylesheet" href="{{ admin_asset("vendor/laravel-admin/AdminLTE/bootstrap/css/bootstrap.min.css") }}">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ admin_asset("vendor/laravel-admin/font-awesome/css/font-awesome.min.css") }}">
@@ -62,12 +62,12 @@
       <div class="row">
         <div class="col-xs-8">
           @if(config('admin.auth.remember'))
-          <div class="checkbox icheck">
-            <label>
-              <input type="checkbox" name="remember" value="1" {{ (!old('username') || old('remember')) ? 'checked' : '' }}>
-              {{ trans('admin.remember_me') }}
-            </label>
-          </div>
+            <div class="checkbox icheck">
+              <label>
+                <input type="checkbox" name="remember" value="1" {{ (!old('username') || old('remember')) ? 'checked' : '' }}>
+                {{ trans('admin.remember_me') }}
+              </label>
+            </div>
           @endif
         </div>
         <!-- /.col -->
@@ -91,13 +91,13 @@
 <!-- iCheck -->
 <script src="{{ admin_asset("vendor/laravel-admin/AdminLTE/plugins/iCheck/icheck.min.js")}}"></script>
 <script>
-  $(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' // optional
+    $(function () {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' // optional
+        });
     });
-  });
 </script>
 </body>
 </html>

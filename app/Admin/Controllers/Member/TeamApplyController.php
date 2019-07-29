@@ -2,6 +2,10 @@
 
 namespace App\Admin\Controllers\Member;
 
+use App\Admin\Actions\Member\NoPass;
+use App\Admin\Actions\Member\Pass;
+use App\Admin\Actions\Member\SeeMsg;
+use App\Admin\Actions\Member\SeeUser;
 use App\Admin\Controllers\BaseControllers;
 use App\Model\TeamApply;
 use Encore\Admin\Controllers\AdminController;
@@ -44,6 +48,23 @@ class TeamApplyController extends AdminController
 
         BaseControllers::setlist_show($grid,$info_array);//拼接列表展示数据
         BaseControllers::set_auth($grid,2);//设置版面权限
+
+        $grid->actions(function ($actions) {
+            // 去掉删除
+            $actions->disableDelete();
+            // 去掉编辑
+            $actions->disableEdit();
+            $actions->add(new SeeUser());
+           if($actions->row->status==0){
+               $actions->add(new Pass());
+               $actions->add(new NoPass());
+           }
+            if($actions->row->status==2){
+                $actions->add(new SeeMsg());
+            }
+
+        });
+
 
 
         return $grid;

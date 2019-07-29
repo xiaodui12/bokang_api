@@ -134,8 +134,6 @@ class BaseControllers extends Controller
         }
     }
 
-
-
     public static function set_form($model,$array)
     {
         foreach ($array as $key=>$value){
@@ -155,6 +153,32 @@ class BaseControllers extends Controller
                 case "switch":
                     $model->switch($value["field"], $value["title"]);
                     break;
+                case "image":
+                    $model->image($value["field"], $value["title"]);
+                    // 使用随机生成文件名 (md5(uniqid()).extension)
+//                    $model->image($value["field"])->uniqueName();
+                    break;
+                case "date":
+                    $model->date($value["field"], $value["title"])->format('YYYY-MM-DD');
+                    // 添加日期时间选择框
+                    break;
+                case "datetime":
+                    $model->datetime($value["field"], $value["title"])->format('YYYY-MM-DD HH:mm:ss');
+                    // 添加日期时间选择框
+                    break;
+                case "timeRange":
+                    $model->timeRange($value["field"][0], $value["field"][1],  $value["title"]);
+                    // 添加日期时间选择框
+                    break;
+                case "dateRange":
+                    $model->dateRange($value["field"][0], $value["field"][1],  $value["title"]);
+                    // 添加日期时间选择框
+                    break;
+                case "datetimeRange":
+                    $model->datetimeRange($value["field"][0], $value["field"][1],  $value["title"]);
+                    // 添加日期时间选择框
+                    break;
+
             }
         }
 

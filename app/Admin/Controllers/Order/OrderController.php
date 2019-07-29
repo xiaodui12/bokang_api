@@ -60,6 +60,7 @@ class OrderController extends AdminController
             $filter->disableIdFilter();
             // 在这里添加字段过滤器
             $filter->like('order_no', '订单号');
+            $filter->equal('team_uid', '团长id');
             $filter->in('type', "类型")->multipleSelect($type);
         });
 

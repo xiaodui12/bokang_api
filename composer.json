@@ -10,6 +10,7 @@
         "fideloper/proxy": "~3.3",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
+        "nwidart/laravel-modules": "^2.7",
         "overtrue/laravel-lang": "~3.0"
     },
     "require-dev": {
@@ -26,7 +27,8 @@
             "app/Libs/xcx_decrypt"
         ],
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Modules\\": "Modules/"
         },
         "files": [
             "app/Helpers/functions.php"

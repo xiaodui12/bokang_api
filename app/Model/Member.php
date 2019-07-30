@@ -16,6 +16,13 @@ class Member extends Model
         return $this->where("id",$uid)->value("is_tuan");
     }
     /**
+     * 得到邀请码
+     * $uid  用户id
+     */
+    public function getinvitation($uid){
+        return $this->where("id",$uid)->value("invitation");
+    }
+    /**
      * 判断是否是团长
      * $code  用户邀请码
      */
@@ -30,9 +37,11 @@ class Member extends Model
     */
     public function saveuserinfo($data,$unionid)
     {
-        $user_uid=$this->where("unionid",$unionid)->value("uid");//根据unionid 得到用户信息
-        $set_uid= $user_uid?$user_uid:"";
+        $user_uid=$this->where("unionid",$unionid)->first();//根据unionid 得到用户信息
+        $set_uid= $user_uid?$user_uid["id"]:"";
 
+        $is_tuan=false;
+        $invitation="";
         //用户id不存在,新增用户
         if(empty($set_uid))
         {
@@ -40,14 +49,22 @@ class Member extends Model
             $data["create_time"]=time();
             $data["status"]=1;
             $data["invitation"]=$data["unionid"];
+            $invitation= $data["invitation"];
             $set_uid=$this->insertGetId($data);//添加新用户
             empty($set_uid)&&error_return("创建用户失败");//创建失败抛出异常
         }else{
             $data["update_time"]=time();
-            $result=$this->where("id",$set_uid)->Updates($data);//更新用户
+            $result=$this->where("id",$set_uid)->update($data);//更新用户
             !$result&&error_return("创建用户失败");//更新失败，抛出异常
+            $is_tuan=$user_uid["is_tuan"];
+            $invitation=$user_uid["invitation"];
         }
-        return array("set_uid"=>$set_uid);// 返回用户id
+        $return_array=array(
+            "set_uid"=>$set_uid,
+            "is_tuan"=>$is_tuan,
+            "invitation"=>$invitation
+        );
+        return $return_array;// 返回用户id
 
     }
 }

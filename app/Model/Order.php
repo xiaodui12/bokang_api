@@ -64,4 +64,69 @@ class Order extends Model
         }
 
     }
+
+    /**
+     * 得到订单列表
+     * $uid 用户id
+     * $type  类型
+     * $page 页码
+     * $status 状态
+    */
+    public function get_list($uid,$type=0,$page=1,$status=-2)
+    {
+        $where=[
+            array("user_uid","=",$uid),
+        ];
+        $type!=0&&array_push($where,array("type"=>$type));
+        $status!=-2&&array_push($where,array("order_status"=>$status));
+
+        $order_list=$this
+            ->where($where)
+            ->with("ordergoods")
+            ->orderBy('id', 'desc')
+            ->paginate($page);
+
+        return $order_list;
+    }
+
+    /**
+     * 得到订单详情
+     * $uid 用户id
+     * $id 订单本地id
+    */
+    public function get_detail($uid,$id){
+        $where=[
+            array("user_uid","=",$uid),
+            array("id","=",$id),
+        ];
+        $order_list=$this
+            ->where($where)
+            ->with("ordergoods")
+            ->first();
+        return $order_list;
+    }
+
+
+    /*********修改器*****************/
+    //创建时间 时间戳转时间
+    public function getOrderCreateTimeAttribute($value)
+    {
+        return getdatatime($value);
+    }
+    //创建时间 时间戳转时间
+    public function getOrderPayTimeAttribute($value)
+    {
+        return getdatatime($value);
+    }
+    //创建时间 时间戳转时间
+    public function getOrderGroupSuccessTimeAttribute($value)
+    {
+        return getdatatime($value);
+    }
+    //创建时间 时间戳转时间
+    public function getOrderModifyAtAttribute($value)
+    {
+        return getdatatime($value);
+    }
+    /*********修改器*****************/
 }

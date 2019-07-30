@@ -63,6 +63,6 @@ class Token extends Model
 
     //新注册用户刷新信息
     public function refresh_info($token,$uid){
-        $this->where("token",$token)->Updates(array("uid"=>$uid));
+        $this->where("token",$token)->update(array("uid"=>$uid));
     }
 }

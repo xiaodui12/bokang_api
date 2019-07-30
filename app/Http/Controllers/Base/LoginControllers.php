@@ -44,11 +44,11 @@ class LoginControllers extends Controller
         $config=$mp_config->get_one($appid);//根据appid 得到配置信息
 
         //授权得到openid
-//        $info=$this->get_openid($config->appid,$config->appsecret,$code);
-//        $openid=$info["openid"];
-//        $session_key=$info["session_key"];
-        $openid=1;
-        $session_key="session_key";
+        $info=$this->get_openid($config->appid,$config->appsecret,$code);
+        $openid=$info["openid"];
+        $session_key=$info["session_key"];
+//        $openid=1;
+//        $session_key="session_key";
         $mp_user=new MpUser();
         $check_info=$mp_user->checkUser($openid,$appid);//判断用户信息
 
@@ -70,8 +70,9 @@ class LoginControllers extends Controller
     {
         $url="https://api.weixin.qq.com/sns/jscode2session?appid=".$appid."&secret=".$appsecret."&js_code=".$code."&grant_type=authorization_code";
         $info=curlGet($url);
-        if($info["errcode"]){
-            error_return("登陆失败，请联系管理员");
+
+        if(!empty($info["errcode"])){
+            error_return("登陆失败，请联系管理员".$info["errcode"]);
         }
         return $info;
     }
@@ -91,7 +92,7 @@ class LoginControllers extends Controller
         $iv=$request->input("iv");
         $token=$request->input("token");
         $mpuser=new MpUser();
-        $mpuser->saveuserinfo($this->appid,$sessionKey,$encryptedData,$iv,$token);//解析用户信息
-        success_return("","更新成功");
+        $data=$mpuser->saveuserinfo($this->appid,$sessionKey,$encryptedData,$iv,$token);//解析用户信息
+        success_return($data,"更新成功");
     }
 }

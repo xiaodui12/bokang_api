@@ -94,3 +94,11 @@ function error_return($msg=""){
 
     return $str;
 }
+
+
+/**
+ * 时间戳转时间
+*/
+function getdatatime($time){
+     return date("Y-m-d H:i:s",$time);
+}

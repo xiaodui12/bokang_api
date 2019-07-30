@@ -31,7 +31,7 @@ class TeamApply extends Model
     }
     /**
      * 审核执行
-    */
+     */
     private function setapply($id,$uid,$status,$msg="")
     {
         DB::beginTransaction();
@@ -59,5 +59,57 @@ class TeamApply extends Model
             DB::reback();
             return array("status"=>0,"msg"=>$e->getMessage());
         }
+    }
+
+
+    /**
+     * 提交申请
+     * uid  用户id
+     * phone 手机号
+     *realname  真实姓名
+     * wechet 微信号
+     * lon  经度
+     * lat 纬度
+     */
+    public function addapply($data){
+        $data["status"]=0;
+        $where=[
+            array("uid","=",$data["uid"]),
+            array("status","<=",1),
+        ];
+        $has=$this->where($where)->value("id");
+        if($has){
+            error_return("你已经申请过，请等待审核");
+        }
+
+        foreach ($data as $key=>$value){
+            $this->$key=$value;
+        }
+
+        $result=$this->save($data);
+        if(!$result){
+            error_return("申请失败，请重试！");
+        }
+    }
+
+    /**
+     * 得到审核状态
+     * $uid 用户id
+    */
+    public function getapply($uid)
+    {
+        //状态数组
+        $apply_status=array("-1"=>"未申请","0"=>"审核中，请稍后","1"=>"审核成功","2"=>"审核失败");
+        //得到申请
+        $apply=$this->where("uid",$uid)->orderBy("id","desc")->first();
+        $return_array=array();
+        $return_array["status"]=empty($apply)?-1:$apply["status"];//申请状态
+        $return_array["msg"]=$apply_status[$apply["status"]];//提示
+
+        if($apply["status"]==2){
+            $return_array["error"]=$apply["error_msg"];//错误原因
+        }
+
+        return $return_array;
     }
 }

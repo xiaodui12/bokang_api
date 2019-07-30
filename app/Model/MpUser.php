@@ -29,7 +29,9 @@ class MpUser extends Model
         elseif(!empty($mp_user["uid"])){
             $userM=new Member();
             $is_tuan=$userM->checkTuan($mp_user["uid"]);//得到用户是否是团长
+            $invitation=$userM->getinvitation($mp_user["uid"]);
             $return_array["is_tuan"]=$is_tuan?true:false;
+            $return_array["invitation"]=$invitation;
         }
 
         //设置token
@@ -63,7 +65,8 @@ class MpUser extends Model
     public function saveuserinfo($appid,$sessionKey,$encryptedData,$iv,$token)
     {
         $info=$this->Decrypt($appid,$sessionKey,$encryptedData,$iv);
-        $openid=$info["openid"];
+
+        $openid=$info["openId"];
 
 
         $save["nickname"]= $info["nickName"];//昵称
@@ -84,7 +87,7 @@ class MpUser extends Model
             error_return("用户不存在，或用户信息错误");
         }
 
-        $result=$this->where("openid",$openid)->where("appid",$appid)->Updates($save);//保存更新信息
+        $result=$this->where("openid",$openid)->where("appid",$appid)->update($save);//保存更新信息
         if(!$result){
             error_return("更新失败，请重试");
         }
@@ -95,12 +98,14 @@ class MpUser extends Model
 
             if(empty($first["uid"]))
             {
-                $result=$this->where("id",$first["id"])->Updates(array("uid"=>$return_info["set_uid"]));
+                $result=$this->where("id",$first["id"])->update(array("uid"=>$return_info["set_uid"]));
                 !$result&&error_return("信息错误");
                 $token_m=new Token();
                 $token_m->refresh_info($token,$return_info["set_uid"]);
             }
+            return $return_info;
         }
+        return "";
     }
     private  function Decrypt($appid,$sessionKey,$encryptedData,$iv){
         //解析加密数据

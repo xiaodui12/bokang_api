@@ -1,0 +1,30 @@
+
+// Body
+$body-bg: #ffffff;
+
+// Typography
+
+// Colors
+
+$black: #222222;
+$placeHolderColor: #c8c8c8;
+$borderColor: #f0f0f0;
+
+// font-size 标准是37.5基础 屏幕宽除以10，一倍图的情况下，如果是二倍图需要37.5*2
+@function rpx($pxs, $base-font-size: 37.5px) {
+  $result: '';
+  @each $px in $pxs {
+    $rem: $px;
+
+    @if $result != '' {
+      $result: $result + ' ';
+    }
+
+    @if type_of($px) == number {
+      $rem: ($px / $base-font-size) * 1rem;
+    }
+
+    $result: $result + $rem;
+  }
+  @return unquote($result);
+}

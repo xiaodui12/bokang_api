@@ -43,14 +43,14 @@ class OrderController extends AdminController
                 $table->setRows($goods_list);
                 return $table;
             }),
-            array("field"=>"refresh_time","title"=>"最后刷新时间","type"=>"datetime"),
+            array("field"=>"refresh_time","title"=>"最后刷新时间","type"=>"value"),
             array("field"=>"type","title"=>"类型","type"=>"array","array"=>$type),
             array("field"=>"order_amount","title"=>"订单总金额","type"=>"value"),
             array("field"=>"p_id","title"=>"推广位","type"=>"value"),
             array("field"=>"promotion_amount","title"=>"分销总金额","type"=>"value"),
             array("field"=>"order_status_desc","title"=>"订单状态","type"=>"value"),
-            array("field"=>"order_create_time","title"=>"创建时间","type"=>"datetime"),
-            array("field"=>"order_verify_time","title"=>"确认时间","type"=>"datetime"),
+            array("field"=>"order_create_time","title"=>"创建时间","type"=>"value"),
+            array("field"=>"order_verify_time","title"=>"确认时间","type"=>"value"),
 
         ];
         BaseControllers::setlist_show($grid,$column_array);
@@ -102,10 +102,10 @@ class OrderController extends AdminController
             array("field"=>"promotion_rate","title"=>"佣金比例","type"=>"value"),
             array("field"=>"promotion_amount","title"=>"佣金金额","type"=>"value"),
             array("field"=>"order_status_desc","title"=>"订单状态","type"=>"value"),
-            array("field"=>"order_create_time","title"=>"创建时间","type"=>"datetime"),
-            array("field"=>"order_pay_time","title"=>"订单支付时间","type"=>"datetime"),
-            array("field"=>"order_group_success_time","title"=>"订单收货时间","type"=>"datetime"),
-            array("field"=>"order_verify_time","title"=>"订单审核时间","type"=>"datetime"),
+            array("field"=>"order_create_time","title"=>"创建时间","type"=>"value"),
+            array("field"=>"order_pay_time","title"=>"订单支付时间","type"=>"value"),
+            array("field"=>"order_group_success_time","title"=>"订单收货时间","type"=>"value"),
+            array("field"=>"order_verify_time","title"=>"订单审核时间","type"=>"value"),
             array("field"=>"order_modify_at","title"=>"order_modify_at","type"=>"value"),
             array("field"=>"custom_parameters","title"=>"自定义参数","type"=>"value"),
             array("field"=>"cpa_new","title"=>"是否是新用户","type"=>"boolean"),

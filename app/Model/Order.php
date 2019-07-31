@@ -21,6 +21,7 @@ class Order extends Model
     public function tuanuid() {
         return $this->hasOne('App\Model\Member',"id","team_uid");
     }
+
     public function buy_uid() {
          return $this->hasOne('App\Model\Member', "id",'user_uid');
     }
@@ -32,6 +33,7 @@ class Order extends Model
        $refresh_time= self::max("refresh_time");
        return $refresh_time&&$refresh_time>time()-24*60*60?$refresh_time:time()-24*60*60;//有刷新时间使用刷新时间，没有刷新时间，则使用90天时间戳
     }
+
     /**
      * 根据订单号查询订单是否存在
     */
@@ -106,7 +108,6 @@ class Order extends Model
         return $order_list;
     }
 
-
     /*********修改器*****************/
     //创建时间 时间戳转时间
     public function getOrderCreateTimeAttribute($value)
@@ -129,4 +130,6 @@ class Order extends Model
         return getdatatime($value);
     }
     /*********修改器*****************/
+
+
 }

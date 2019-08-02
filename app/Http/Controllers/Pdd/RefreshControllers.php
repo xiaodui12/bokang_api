@@ -59,6 +59,7 @@ class RefreshControllers extends BaseControllers
             }
 
         }
+        echo "success";
     }
 
     /**

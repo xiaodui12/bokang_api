@@ -67,4 +67,13 @@ class Member extends Model
         return $return_array;// 返回用户id
 
     }
+
+    /**
+     * 利用邀请码得到用户id
+     * $code 邀请码
+    */
+    public function getidBycode($code){
+       $id= $this->where("invitation",$code)->value("id");
+       return $id?$id:0;
+    }
 }

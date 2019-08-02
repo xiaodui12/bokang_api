@@ -53,7 +53,6 @@ class Order extends Model
         $order_goods=$order_data["order_goods"];
 
         DB::beginTransaction();
-
         try{
             $order_m=self::create($order);
             $order_m->ordergoods()->createMany($order_goods);

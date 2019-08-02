@@ -9,9 +9,11 @@
 namespace App\Http\Controllers\Pdd;
 
 
+use App\Model\Member;
 use App\Model\Order;
 use App\Model\System;
 use Illuminate\Http\Request;
+use Tests\Models\User;
 
 class RefreshControllers extends BaseControllers
 {
@@ -66,6 +68,18 @@ class RefreshControllers extends BaseControllers
     {
         $type=1;
 
+        $user_uid=0;
+        $team_uid=0;
+        $custom_array=json_decode($order_data["custom_parameters"],1);
+        $my_code=$custom_array["my_code"];
+        $parent_code=$custom_array["parent_code"];
+        if(!empty($my_code)){
+            $user_uid=Member::getidBycode($my_code);
+        }
+        if(!empty($parent_code)){
+            $team_uid=Member::getidBycode($parent_code);
+        }
+
         $order_info=array(
             "order_no"=>$order_data["order_sn"],//订单时间
             "refresh_time"=>time(),//刷新时间
@@ -85,7 +99,9 @@ class RefreshControllers extends BaseControllers
             "custom_parameters"=>$order_data["custom_parameters"]?$order_data["custom_parameters"]:"0",
             "cpa_new"=>$order_data["cpa_new"]?$order_data["cpa_new"]:"0",
             "team_price"=>$order_data["promotion_amount"]*config("team_ratio")/100/100,
-            "user_price"=>$order_data["promotion_amount"]*config("user_ratio")/100/100
+            "user_price"=>$order_data["promotion_amount"]*config("user_ratio")/100/100,
+            "team_id"=>$team_uid,
+            "user_uid"=>$user_uid,
         );
         $order_goods=array(
             "goods_price"=>$order_data["goods_price"]/100,

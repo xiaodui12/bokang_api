@@ -79,8 +79,8 @@ class Order extends Model
         $where=[
             array("user_uid","=",$uid),
         ];
-        $type!=0&&array_push($where,array("type"=>$type));
-        $status!=-2&&array_push($where,array("order_status"=>$status));
+        $type!=0&&array_push($where,array("type","=",$type));
+        $status!=-2&&array_push($where,array("order_status","=",$status));
 
         $order_list=$this
             ->where($where)

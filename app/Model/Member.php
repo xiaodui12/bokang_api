@@ -72,8 +72,8 @@ class Member extends Model
      * 利用邀请码得到用户id
      * $code 邀请码
     */
-    public function getidBycode($code){
-       $id= $this->where("invitation",$code)->value("id");
+    public static function getidBycode($code){
+       $id= self::where("invitation",$code)->value("id");
        return $id?$id:0;
     }
 }

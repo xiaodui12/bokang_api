@@ -91,7 +91,7 @@ class RefreshControllers extends BaseControllers
             "order_amount"=>$order_data["order_amount"]/100,//订单总金额
             "p_id"=>$order_data["p_id"],//推广位
             "promotion_rate"=>$order_data["promotion_rate"],//
-            "promotion_amount"=>$order_data["promotion_amount"]/100,//佣金总金额
+            "promotion_amount"=>$order_data["promotion_amount"]*$order_data["promotion_rate"]/100,//佣金总金额
             "order_status"=>$order_data["order_status"],
             "order_status_desc"=>$order_data["order_status_desc"],
             "order_create_time"=>$order_data["order_create_time"],

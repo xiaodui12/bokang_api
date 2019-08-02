@@ -65,6 +65,10 @@ class Order extends Model
         }
 
     }
+    public function change_order($order_data,$order_id){
+        $order=$order_data["order"];
+        $id=self::where("order_id",$order_id)->update($order);
+    }
 
     /**
      * 得到订单列表

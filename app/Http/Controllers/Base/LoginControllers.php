@@ -70,7 +70,6 @@ class LoginControllers extends Controller
     {
         $url="https://api.weixin.qq.com/sns/jscode2session?appid=".$appid."&secret=".$appsecret."&js_code=".$code."&grant_type=authorization_code";
         $info=curlGet($url);
-
         if(!empty($info["errcode"])){
             error_return("登陆失败，请联系管理员".$info["errcode"]);
         }

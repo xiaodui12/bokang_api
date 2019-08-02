@@ -54,10 +54,15 @@ class RefreshControllers extends BaseControllers
         foreach ($order_list as $key=>$value)
         {
             $order_id=$value["order_id"];
+
+            $order=$this->build_order($value);
+
             $has_order=$order_m->check_orderByorderid($order_id);
             if(!$has_order){
-                $order=$this->build_order($value);
+
                 $order_m->add_order($order);
+            }else{
+                $order_m->change_order($order,$order_id);
             }
 
         }
@@ -91,7 +96,7 @@ class RefreshControllers extends BaseControllers
             "order_amount"=>$order_data["order_amount"]/100,//订单总金额
             "p_id"=>$order_data["p_id"],//推广位
             "promotion_rate"=>$order_data["promotion_rate"],//
-            "promotion_amount"=>$order_data["promotion_amount"]*$order_data["promotion_rate"]/100,//佣金总金额
+            "promotion_amount"=>$order_data["promotion_amount"]/100,//佣金总金额
             "order_status"=>$order_data["order_status"],
             "order_status_desc"=>$order_data["order_status_desc"],
             "order_create_time"=>$order_data["order_create_time"],

@@ -15,7 +15,7 @@ class Order extends Model
         "order_modify_at","custom_parameters","cpa_new","team_price","user_price","team_uid","user_uid"];
 
     public function ordergoods() {
-         return $this->hasMany('App\Model\OrderGoods', 'bokang_order_id');
+        return $this->hasMany('App\Model\OrderGoods', 'bokang_order_id');
     }
 
     public function tuanuid() {
@@ -23,20 +23,20 @@ class Order extends Model
     }
 
     public function buy_uid() {
-         return $this->hasOne('App\Model\Member', "id",'user_uid');
+        return $this->hasOne('App\Model\Member', "id",'user_uid');
     }
 
     /**
      * 得到最后更新时间
-    */
+     */
     public static function getlastrefresh_time(){
-       $refresh_time= self::max("refresh_time");
-       return $refresh_time&&$refresh_time>time()-24*60*60?$refresh_time:time()-24*60*60;//有刷新时间使用刷新时间，没有刷新时间，则使用90天时间戳
+        $refresh_time= self::max("refresh_time");
+        return $refresh_time&&$refresh_time>time()-24*60*60?$refresh_time:time()-24*60*60;//有刷新时间使用刷新时间，没有刷新时间，则使用90天时间戳
     }
 
     /**
      * 根据订单号查询订单是否存在
-    */
+     */
     public function check_orderByorderid($order_id)
     {
         $id=self::where("order_id",$order_id)->value("id");
@@ -46,7 +46,7 @@ class Order extends Model
     /**
      * 创建订单
      * $order_data  订单信息
-    */
+     */
     public function add_order($order_data,$number=1)
     {
         $order=$order_data["order"];
@@ -65,9 +65,28 @@ class Order extends Model
         }
 
     }
-    public function change_order($order_data,$order_id){
+    public function change_order($order_data,$order_id,$number=0){
         $order=$order_data["order"];
-        $id=self::where("order_id",$order_id)->update($order);
+        DB::beginTransaction();
+        try{
+            $order_m=self::where("order_id",$order_id)->first();
+            $order_m->order_status=$order["order_status"];
+            $order_m->order_status_desc=$order["order_status_desc"];
+            $order_m->refresh_time=$order["refresh_time"];
+            $result=$order_m->save();
+            if($result){
+                DB::commit();
+            }else{
+                throw new Exception(" ");
+            }
+        }catch (Exception $exception) {
+            DB::reback();
+            if ($number < 10) {
+                $this->add_order($order_data,$order_id, ++$number);
+            }
+        }
+
+
     }
 
     /**
@@ -76,7 +95,7 @@ class Order extends Model
      * $type  类型
      * $page 页码
      * $status 状态
-    */
+     */
     public function get_list($uid,$type=0,$page=1,$status=-2)
     {
         $where=[
@@ -98,7 +117,7 @@ class Order extends Model
      * 得到订单详情
      * $uid 用户id
      * $id 订单本地id
-    */
+     */
     public function get_detail($uid,$id){
         $where=[
             array("user_uid","=",$uid),

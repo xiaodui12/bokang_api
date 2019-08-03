@@ -59,7 +59,6 @@ class RefreshControllers extends BaseControllers
 
             $has_order=$order_m->check_orderByorderid($order_id);
             if(!$has_order){
-
                 $order_m->add_order($order);
             }else{
                 $order_m->change_order($order,$order_id);

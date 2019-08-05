@@ -41,6 +41,12 @@ Route::post('/pdd/config',  'Pdd\IndexControllers@get_config');
 Route::get('/pdd/refresh/order',  'Pdd\RefreshControllers@order_get');
 
 
+
+//淘宝拉取订单数据
+Route::get('/taobao/refresh/order',  'Taobao\RefreshControllers@order_get');
+Route::get('/taobao/getutil',  'Taobao\IndexControllers@getsend');
+
+
 /****---------拼多多接口（结束）---------------------**/
 
 

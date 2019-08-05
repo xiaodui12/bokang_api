@@ -25,7 +25,7 @@ class IndexControllers extends BaseControllers
         header('Access-Control-Allow-Methods:POST');
         header('Access-Control-Allow-Headers:x-requested-with, content-type');
 
-        $data=$request->post();
+        $data=$request->get();
 
         if(empty($data["method"])){
             error_return("参数错误");

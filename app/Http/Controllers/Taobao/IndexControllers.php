@@ -26,9 +26,7 @@ class IndexControllers extends BaseControllers
         header('Access-Control-Allow-Headers:x-requested-with, content-type');
 
         $data=$request->post();
-        $data["method"]="taobao.tbk.shop.get";
-        $data["fields"]="user_id,shop_title,shop_type,seller_nick,pict_url,shop_url";
-        $data["q"]="女装";
+
         if(empty($data["method"])){
             error_return("参数错误");
         }

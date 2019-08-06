@@ -104,6 +104,7 @@ class TeamApply extends Model
         $apply=$this->where("uid",$uid)->orderBy("id","desc")->first();
         $return_array=array();
         $return_array["status"]=empty($apply)?-1:$apply["status"];//申请状态
+        success_return($apply);
         $return_array["msg"]=$apply_status[$apply["status"].""];//提示
 
         if($apply["status"]==2){

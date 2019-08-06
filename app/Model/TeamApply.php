@@ -106,7 +106,7 @@ class TeamApply extends Model
         $return_array=array();
         $return_array["status"]=empty($apply)?-1:$apply["status"];//申请状态
 
-        $return_array["msg"]=$apply_status[$apply["status"].""];//提示
+        $return_array["msg"]=$apply_status[$return_array["status"]];//提示
 
         if($apply["status"]==2){
             $return_array["error"]=$apply["error_msg"];//错误原因

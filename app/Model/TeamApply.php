@@ -45,13 +45,13 @@ class TeamApply extends Model
             }
             $result=$this->where("id",$id)->update(array("status"=>$status?1:2,"error_msg"=>$msg));
             if($result===false){throw new Exception("审核失败，请重试");}
-
             if($status){
-                if(!(new Team())->add_one($uid)){
+                $result1=(new Team())->add_one($uid);
+                $result2=(new Member())->where("uid",$uid)->update(array("is_tuan"=>1));
+                if(!$result1||!$result2){
                     throw new Exception("审核失败，请重试");
                 }
             }
-
 
             DB::commit();
             return array("status"=>1,"msg"=>"审核成功");

@@ -26,14 +26,11 @@ class IndexControllers extends BaseControllers
         header('Access-Control-Allow-Headers:x-requested-with, content-type');
 
         $data=$request->input();
-
         if(empty($data["method"])){
             error_return("参数错误");
         }
-
         $type=$data["method"];
         $return_data=$this->send_all($this->url,$type,$data);
         success_return($return_data);
     }
-
 }

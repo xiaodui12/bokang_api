@@ -45,6 +45,7 @@ class IndexControllers extends XcxControllers
     */
     public function apply_status(){
         $tuan_apply=new TeamApply();
+        success_return($this->uid);
         $result=$tuan_apply->getapply($this->uid);//提交申请
         success_return($result,"");
     }

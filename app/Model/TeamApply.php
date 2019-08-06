@@ -98,13 +98,14 @@ class TeamApply extends Model
     */
     public function getapply($uid)
     {
+
         //状态数组
         $apply_status=array("-1"=>"未申请","0"=>"审核中，请稍后","1"=>"审核成功","2"=>"审核失败");
         //得到申请
         $apply=$this->where("uid",$uid)->orderBy("id","desc")->first();
         $return_array=array();
         $return_array["status"]=empty($apply)?-1:$apply["status"];//申请状态
-        success_return($apply);
+
         $return_array["msg"]=$apply_status[$apply["status"].""];//提示
 
         if($apply["status"]==2){

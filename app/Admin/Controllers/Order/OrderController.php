@@ -152,9 +152,6 @@ class OrderController extends AdminController
 
             });
         }
-
-
-
         $show->ordergoods("商品",function ($ordergoods){
             $ordergoods->column('goods_thumbnail_url', __('商品图'))->image("",60,60);
             $ordergoods->column('goods_name', __('商品名'));

@@ -19,6 +19,6 @@ class IndexControllers extends Controller
     public function index()
     {
 //        echo 123456;
-        echo csrf_token();
+        return view("master");
     }
 }

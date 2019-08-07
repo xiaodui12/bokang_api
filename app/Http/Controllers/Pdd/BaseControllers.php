@@ -18,6 +18,9 @@ class BaseControllers extends Controller
     protected  $url="http://gw-api.pinduoduo.com/api/router";
     public function __construct(Request $request)
     {
+        header("Access-Control-Allow-Origin:*");
+        header('Access-Control-Allow-Methods:POST');
+        header('Access-Control-Allow-Headers:x-requested-with, content-type');
         System::getpdd();
     }
     /**

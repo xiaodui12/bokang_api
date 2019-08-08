@@ -29,7 +29,7 @@ class BaseControllers extends Controller
 
 
         $data["method"]=$type;
-        $data["app_key"]="27720626";
+        $data["app_key"]="27771499";
         $data["sign_method"]="md5";
         $data["timestamp"]=time();
         $data["format"]="json";
@@ -37,7 +37,7 @@ class BaseControllers extends Controller
 
 
 
-        $pdd_client_secret="bb6a8db3cd997ad744c73d21db4fed66";//拼多多secret
+        $pdd_client_secret="2e342b22046fb9235a6715bc5913ac1b";//拼多多secret
 
         //-------拼接签名字符串
         $string=$pdd_client_secret;

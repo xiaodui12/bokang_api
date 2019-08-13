@@ -40,8 +40,7 @@ class IndexControllers extends Controller
                 $user_info=PutCurl::get_mp_userinfo("youqu",$code);
                 $mp_user=new MpUser();
                 $token=$mp_user->checkUser($user_info["openid"],$user_info["appid"]);//判断用户
-                var_dump($user_info);
-                exit;
+
                 $mp_user->change_userinfo($user_info["appid"],$user_info["openid"],$user_info["user_info"],$token["token"]);//更新用户信息数据
             }
         }

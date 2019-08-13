@@ -34,7 +34,7 @@ class Member extends Model
      * 设置用户信息
      * $data 更新数据
      * $unionid  用户唯一标识
-    */
+     */
     public function saveuserinfo($data,$unionid)
     {
         $user_uid=$this->where("unionid",$unionid)->first();//根据unionid 得到用户信息
@@ -71,9 +71,15 @@ class Member extends Model
     /**
      * 利用邀请码得到用户id
      * $code 邀请码
-    */
+     */
     public static function getidBycode($code){
-       $id= self::where("invitation",$code)->value("id");
-       return $id?$id:0;
+        $id= self::where("invitation",$code)->value("id");
+        return $id?$id:0;
+    }
+    /**
+     * 根据uid查询用户信息
+    */
+    public static function getuserinfo_by_uid($uid){
+        return self::where("id",$uid)->first();
     }
 }

@@ -5,13 +5,13 @@
  * 参数  $url 提交连接
  *       $post_data  提交内容
  */
-function curlPost($url,$post_data){
+function curlPost($url,$post_data,$type="json"){
     //初始化
     $curl = curl_init();
     //设置抓取的url
     curl_setopt($curl, CURLOPT_URL, $url);
     //设置头文件的信息作为数据流输出
-    curl_setopt($curl, CURLOPT_HEADER, 1);
+    curl_setopt($curl, CURLOPT_HEADER, 0);
 
 
     curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
@@ -24,14 +24,22 @@ function curlPost($url,$post_data){
     //设置post方式提交
     curl_setopt($curl, CURLOPT_POST, 1);
 
-    curl_setopt($curl, CURLOPT_POSTFIELDS, $post_data);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($post_data));
     //执行命令
     $data = curl_exec($curl);
-    $no=curl_errno($curl);
+    $error_no=curl_errno($curl);
+
     //关闭URL请求
     curl_close($curl);
+    $error_no!=0&&error_return("外部接口调取错误，错误码：".$error_no);
 
-    return json_decode($data);
+
+    if($type=="json"){
+        return json_decode($data);
+    }else{
+        return $data;
+    }
+
 }
 /**
  * curl get 提交
@@ -55,9 +63,11 @@ function curlGet($url){
 
     //执行命令
     $data = curl_exec($curl);
+    $error_no=curl_errno($curl);
     //关闭URL请求
     curl_close($curl);
 
+    $error_no!=0&&error_return("外部接口调取错误，错误码：".$error_no);
 
     return json_decode($data,1);
 }
@@ -101,4 +111,25 @@ function error_return($msg=""){
 */
 function getdatatime($time){
      return date("Y-m-d H:i:s",$time);
+}
+
+//PHP stdClass Object转array
+function object_array($array) {
+    if(is_object($array)) {
+        $array = (array)$array;
+    } if(is_array($array)) {
+        foreach($array as $key=>$value) {
+            $array[$key] = object_array($value);
+        }
+    }
+    return $array;
+}
+
+
+/**
+ * 判断是否是微信
+*/
+function is_weixin()
+{
+    return strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ?true:false;
 }

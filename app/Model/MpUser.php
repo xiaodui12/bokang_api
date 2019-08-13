@@ -62,13 +62,9 @@ class MpUser extends Model
 
 
 
-    public function saveuserinfo($appid,$sessionKey,$encryptedData,$iv,$token)
-    {
-        $info=$this->Decrypt($appid,$sessionKey,$encryptedData,$iv);
-
-        $openid=$info["openId"];
 
 
+    public function change_userinfo($appid,$openid,$info,$token){
         $save["nickname"]= $info["nickName"];//昵称
         $save["sex"]= $info["gender"];//性别
         $save["head"]= $info["avatarUrl"];//头像
@@ -81,17 +77,14 @@ class MpUser extends Model
         }
         $save["nickname"]=filterEmoji($save["nickname"]);
 
-
         $first=$this->where("openid",$openid)->where("appid",$appid)->first();//得到用户信息
         if(empty($first)){
             error_return("用户不存在，或用户信息错误");
         }
-
         $result=$this->where("openid",$openid)->where("appid",$appid)->update($save);//保存更新信息
         if(!$result){
             error_return("更新失败，请重试");
         }
-
         if(!empty($save["unionid"])){
             $userM=new Member();
             $return_info=$userM->saveuserinfo($save,$first["unionid"]);
@@ -107,6 +100,19 @@ class MpUser extends Model
         }
         return "";
     }
+
+
+    public function saveuserinfo($appid,$sessionKey,$encryptedData,$iv,$token)
+    {
+        $info=$this->Decrypt($appid,$sessionKey,$encryptedData,$iv);
+
+        $openid=$info["openId"];
+
+        return $this->change_userinfo($appid,$openid,$info,$token);
+
+    }
+
+
     private  function Decrypt($appid,$sessionKey,$encryptedData,$iv){
         //解析加密数据
         $pc = new \WXBizDataCrypt($appid, $sessionKey);

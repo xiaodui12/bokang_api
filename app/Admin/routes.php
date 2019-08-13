@@ -19,9 +19,7 @@ Route::group([
     $router->resource('team-applies', Member\TeamApplyController::class);
     $router->resource('teams', Member\TeamController::class);
     $router->resource('advs', Base\AdvController::class);
-
-
-
+    $router->resource('goods', Goods\GoodsController::class);
 
 
 });

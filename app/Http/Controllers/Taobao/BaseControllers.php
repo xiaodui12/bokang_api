@@ -35,8 +35,6 @@ class BaseControllers extends Controller
         $data["format"]="json";
         $data["v"]="2.0";
 
-
-
         $pdd_client_secret="2e342b22046fb9235a6715bc5913ac1b";//拼多多secret
 
         //-------拼接签名字符串

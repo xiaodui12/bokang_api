@@ -10,7 +10,9 @@ namespace App\Http\Controllers\Pdd;
 
 
 
+use App\Model\MpConfig;
 use App\Model\System;
+use App\Model\Xcx;
 use Illuminate\Http\Request;
 
 class IndexControllers extends BaseControllers
@@ -59,4 +61,21 @@ class IndexControllers extends BaseControllers
        $pdd_config=System::getpdd();
        success_return($pdd_config);
     }
+
+    /**
+     * 得到小程序码
+     * page
+     * scene
+     * width
+     */
+    public function  get_scene(Request $request)
+    {
+        $pic=Xcx::get_scene($request);
+        header( "Content-type: image/jpeg");
+        echo $pic;
+
+    }
+
+
+
 }

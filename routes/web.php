@@ -18,7 +18,7 @@
 
 Route::get('/',  'IndexControllers@index');
 Route::get('/init',  'IndexControllers@index');
-
+Route::post('/getuserinfo',  'IndexControllers@getuser_info');//仅在网页端使用
 
 
 
@@ -28,6 +28,7 @@ Route::post('/xcxlogin',  'Base\LoginControllers@xcx_login');//小程序登陆 �
 Route::post('/setuserinfo',  'Base\LoginControllers@setuserinfo');//设置用户信息参数
 Route::post('/getadv',  'Base\AdvControllers@getadv');//
 
+
 /**--------   公共接口 （结束） --------------*/
 
 
@@ -35,11 +36,11 @@ Route::post('/getadv',  'Base\AdvControllers@getadv');//
 
 Route::post('/pdd/getclass',  'Pdd\IndexControllers@get_class');
 Route::post('/pdd/config',  'Pdd\IndexControllers@get_config');
+Route::get('/pdd/getscene',  'Pdd\IndexControllers@get_scene');
 
 
 //拼多多拉取订单数据
 Route::get('/pdd/refresh/order',  'Pdd\RefreshControllers@order_get');
-
 
 
 //淘宝拉取订单数据

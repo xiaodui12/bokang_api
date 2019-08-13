@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller;
 use App\Model\Member;
 use App\Model\MpConfig;
 use App\Model\MpUser;
+use App\Model\PutCurl;
 use Illuminate\Http\Request;
 
 class LoginControllers extends Controller
@@ -44,7 +45,7 @@ class LoginControllers extends Controller
         $config=$mp_config->get_one($appid);//根据appid 得到配置信息
 
         //授权得到openid
-        $info=$this->get_openid($config->appid,$config->appsecret,$code);
+        $info=PutCurl::get_openid($config->appid,$config->appsecret,$code);
         $openid=$info["openid"];
         $session_key=$info["session_key"];
 //        $openid=1;
@@ -60,21 +61,7 @@ class LoginControllers extends Controller
         }
         success_return($check_info);
     }
-    /**
-     * 获得openid
-     * $appid
-     * $appsercert
-     * $code 登陆code
-    */
-    private function get_openid($appid,$appsecret,$code)
-    {
-        $url="https://api.weixin.qq.com/sns/jscode2session?appid=".$appid."&secret=".$appsecret."&js_code=".$code."&grant_type=authorization_code";
-        $info=curlGet($url);
-        if(!empty($info["errcode"])){
-            error_return("登陆失败，请联系管理员".$info["errcode"]);
-        }
-        return $info;
-    }
+
 
 
     /**

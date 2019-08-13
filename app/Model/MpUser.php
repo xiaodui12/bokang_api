@@ -67,7 +67,7 @@ class MpUser extends Model
     public function change_userinfo($appid,$openid,$info,$token){
         $save["nickname"]= $info["nickname"];//昵称
         $save["sex"]= $info["sex"];//性别
-        $save["head"]= $info["head"];//头像
+        $save["head"]= $info["headimgurl"];//头像
         $save["country"]= $info["country"];//国家
         $save["province"]= $info["province"];//省份
         $save["city"]= $info["city"];//城市
@@ -109,7 +109,7 @@ class MpUser extends Model
         $openid=$info["openId"];
         $info["nickname"]= $info["nickName"];//昵称
         $info["sex"]= $info["gender"];//性别
-        $info["head"]= $info["avatarUrl"];//头像
+        $info["headimgurl"]= $info["avatarUrl"];//头像
         $info["unionid"]= $info["unionId"];//头像
 
         return $this->change_userinfo($appid,$openid,$info,$token);

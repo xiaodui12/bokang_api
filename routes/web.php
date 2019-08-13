@@ -18,7 +18,7 @@
 
 Route::get('/',  'IndexControllers@index');
 Route::get('/init',  'IndexControllers@index');
-Route::post('/getuserinfo',  'IndexControllers@getuser_info');//仅在网页端使用
+Route::get('/getuserinfo',  'IndexControllers@getuser_info');//仅在网页端使用
 
 
 
@@ -52,13 +52,12 @@ Route::get('/taobao/getutil',  'Taobao\IndexControllers@getsend');
 
 
 
-
-
 /**--------   订单接口  --------------*/
 
 
 Route::post('/order/getlist',  'Order\IndexControllers@order_list');
 Route::post('/order/getdetail',  'Order\IndexControllers@order_detail');
+Route::post('/order/getdetailtuan',  'Order\IndexControllers@order_detail_by_tuan');//根据团长得到订单信息
 
 /**--------   订单接口  --------------*/
 

@@ -128,6 +128,22 @@ class Order extends Model
             ->first();
         return $order_list;
     }
+    /**
+     * 根据团长得到订单信息
+     * $uid 团长id
+     * $id 订单本地id
+     */
+    public function get_detail_tuan($uid,$id){
+        $where=[
+            array("tuan_uid","=",$uid),
+            array("id","=",$id),
+        ];
+        $order_list=$this
+            ->where($where)
+            ->with("ordergoods")
+            ->first();
+        return $order_list;
+    }
 
     /*********修改器*****************/
     //创建时间 时间戳转时间

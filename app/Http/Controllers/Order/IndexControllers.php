@@ -45,6 +45,18 @@ class IndexControllers extends XcxControllers
         $order=new Order();
         $order_list=$order->get_detail($this->uid,$id);//得到订单数据
         success_return($order_list);
+    }
+
+    /**
+     * 得到订单详情
+     * id 订单本地id
+     */
+    public function order_detail_by_tuan(Request $request){
+        $id=$request->post("id",0);
+        empty($id)&&error_return("参数错误");
+        $order=new Order();
+        $order_list=$order->get_detail_tuan($this->uid,$id);//得到订单数据
+        success_return($order_list);
 
     }
 

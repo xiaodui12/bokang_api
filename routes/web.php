@@ -76,5 +76,9 @@ Route::post('/tuan/getapply',  'Tuan\IndexControllers@apply_status');
 
 /**--------   前端接口  --------------*/
 
-
 Route::get('/getopenid',  'Web\IndexControllers@index');
+
+
+Route::get('/getbanner',  'Base\SystemControllers@getBanner');
+Route::get('/getword',  'Base\SystemControllers@getWord');
+Route::get('/getsearch',  'Base\SystemControllers@getSearch');

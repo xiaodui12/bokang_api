@@ -57,8 +57,13 @@ class IndexControllers extends Controller
         empty($token)&&error_return("用户未登录");
 
         $token_info=(new Token())->get_token($token);
-        $user_info=Member::getuserinfo_by_uid($token_info["uid"]);
-        success_return(array("token"=>$token_info,"user_info"=>$user_info));
+
+        $return_array=array();
+        $member=new Member();
+        $return_array["is_tuan"]=$member->checkTuan($token_info["uid"]);
+        $return_array["invitation"]=$member->getinvitation($token_info["uid"]);
+
+        success_return($return_array);
 
     }
 }

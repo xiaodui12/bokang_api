@@ -18,8 +18,6 @@ class GoodsController extends AdminController
      */
     protected $title = 'App\Model\Goods';
     protected $form_info = [];
-
-
     /**
      * Make a grid builder.
      *

@@ -20,6 +20,15 @@ Route::group([
     $router->resource('teams', Member\TeamController::class);
     $router->resource('advs', Base\AdvController::class);
     $router->resource('goods', Goods\GoodsController::class);
+    $router->resource('goodsclass', Goods\GoodsClassController::class);
+    $router->resource('words', System\WordController::class);
+    $router->resource('banners', System\BannerController::class);
+    $router->resource('search', System\SearchController::class);
+
+
+
+
+
 
 
 });

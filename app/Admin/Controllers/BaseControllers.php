@@ -94,6 +94,12 @@ class BaseControllers extends Controller
                     break;
                 case "expand"://expand 下拉展示类型，直接传递function
                     $field->expand($value["function"]);
+                    break;
+                case "default":
+                    $field->display(function ($default) use($value){
+                        return $default?$default:$value["default"];
+                    });
+
             }
         }
     }
@@ -133,7 +139,6 @@ class BaseControllers extends Controller
             }
         }
     }
-
     public static function set_form($model,$array)
     {
         foreach ($array as $key=>$value){
@@ -177,6 +182,9 @@ class BaseControllers extends Controller
                 case "datetimeRange":
                     $model->datetimeRange($value["field"][0], $value["field"][1],  $value["title"]);
                     // 添加日期时间选择框
+                    break;
+                case "number":
+                    $model->number($value["field"],$value["title"]);
                     break;
 
             }

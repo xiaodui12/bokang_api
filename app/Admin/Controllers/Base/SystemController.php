@@ -84,7 +84,6 @@ class SystemController extends AdminController
             array("field"=>"desc","title"=>"简介","type"=>"textarea"),
             array("field"=>"status","title"=>"状态","type"=>"switch"),
         ];
-
         BaseControllers::set_form($form,$edit_array);
 
 

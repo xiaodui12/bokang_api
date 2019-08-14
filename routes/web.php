@@ -68,7 +68,13 @@ Route::post('/order/getdetailtuan',  'Order\IndexControllers@order_detail_by_tua
 Route::post('/tuan/apply',  'Tuan\IndexControllers@apply');
 Route::post('/tuan/getapply',  'Tuan\IndexControllers@apply_status');
 
+
+
 /**--------   团长接口  --------------*/
+
+
+Route::post('/member/supplier',  'Member\SupplierControllers@supplierApply');
+Route::post('/member/checksupplier',  'Member\SupplierControllers@checkApply');
 
 
 

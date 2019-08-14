@@ -37,7 +37,6 @@ class TeamApply extends Model
         DB::beginTransaction();
         try{
 
-
             $user_m=new Member();
             $user=$user_m->where("id",$uid)->first();
             if(empty($user)){

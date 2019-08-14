@@ -40,7 +40,6 @@ class SystemControllers extends Controller
         $works=Words::getWorks($type);
         success_return($works);
     }
-
     /**
      * 得到热门搜索
     */
@@ -49,5 +48,4 @@ class SystemControllers extends Controller
         $search=HotSearch::getSearch();
         success_return($search);
     }
-
 }

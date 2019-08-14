@@ -42,6 +42,7 @@ class TeamApplyController extends AdminController
             array("field"=>"wechet","title"=>"微信号","type"=>"value"),
             array("field"=>"lon","title"=>"经度","type"=>"value"),
             array("field"=>"lat","title"=>"纬度","type"=>"value"),
+            array("field"=>"remark","title"=>"备注","type"=>"value"),
             array("field"=>"status","title"=>"状态","type"=>"array","array"=>array(0=>"申请中","1"=>"审核成功",2=>"审核失败")),
             array("field"=>"created_at","title"=>"申请时间","type"=>"value"),
         ];
@@ -98,7 +99,9 @@ class TeamApplyController extends AdminController
             array("field"=>"wechet","title"=>"微信号","type"=>"value"),
             array("field"=>"lon","title"=>"经度","type"=>"value"),
             array("field"=>"lat","title"=>"纬度","type"=>"value"),
+            array("field"=>"remark","title"=>"备注","type"=>"value"),
             array("field"=>"status","title"=>"状态","type"=>"array","array"=>array(0=>"申请中","1"=>"审核成功",2=>"审核失败")),
+
             array("field"=>"created_at","title"=>"申请时间","type"=>"value"),
             array("field"=>"updated_at","title"=>"更新时间","type"=>"value"),
             array("field"=>"error_msg","title"=>"失败原因","type"=>"value"),

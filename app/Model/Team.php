@@ -14,7 +14,6 @@ class Team extends Model
     public function tuanuid() {
         return $this->hasOne('App\Model\Member',"id","uid");
     }
-
     public function add_one($uid)
     {
         if(empty($uid)){

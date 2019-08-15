@@ -105,6 +105,7 @@ class WordController extends AdminController
             array("field"=>"title","title"=>"标题","type"=>"text"),
             array("field"=>"color","title"=>"color","type"=>"text"),
             array("field"=>"content","title"=>"内容","type"=>"text"),
+            array("field"=>"icon","title"=>"图标","type"=>"text"),
             array("field"=>"opentype","title"=>"打开方式","type"=>"text"),
             array("field"=>["start_time","end_time"],"title"=>"活动时间","type"=>"datetimeRange"),
             array("field"=>"sort","title"=>"排序","type"=>"number"),

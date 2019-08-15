@@ -43,14 +43,14 @@ class MemberController extends AdminController
         BaseControllers::set_auth($grid,2);//设置版面权限
 
         $grid->actions(function ($actions) {
-            // 去掉删除
-            $actions->disableDelete();
+        // 去掉删除
+        $actions->disableDelete();
 
-            // 去掉编辑
-            $actions->disableEdit();
+        // 去掉编辑
+        $actions->disableEdit();
 //            // 去掉查看
 //            $actions->disableView();
-        });
+    });
         return $grid;
     }
 

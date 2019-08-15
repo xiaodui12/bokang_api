@@ -24,6 +24,8 @@ Route::group([
     $router->resource('words', System\WordController::class);
     $router->resource('banners', System\BannerController::class);
     $router->resource('search', System\SearchController::class);
+    $router->resource('supplierapply', System\SupplierApplyController::class);
+
 
 
 

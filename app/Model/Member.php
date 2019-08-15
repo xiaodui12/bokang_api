@@ -82,4 +82,17 @@ class Member extends Model
     public static function getuserinfo_by_uid($uid){
         return self::where("id",$uid)->first();
     }
+
+    /**
+     * 添加积分
+    */
+    public function addPoint($uid,$point,$order_id)
+    {
+       $user= self::where("id",$uid)->first();
+        $user->point+=$point;//可用积分
+        $user->all_point+=$point;//总积分
+        $result=$user->save();//更新
+        return !$result?false:UserLog::log($uid,"订单".$order_id.",分享得到积分".$point);
+
+    }
 }

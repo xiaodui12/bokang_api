@@ -59,13 +59,16 @@ class Order extends Model
             $order_m->ordergoods()->createMany($order_goods);
             DB::commit();
         }catch (Exception $exception){
-            DB::reback();
+            DB::rollBack();
             if($number<10){
                 $this->add_order($order_data,++$number);
             }
         }
 
     }
+
+
+
     public function change_order($order_data,$order_id,$number=0){
         $order=$order_data["order"];
         DB::beginTransaction();
@@ -81,7 +84,7 @@ class Order extends Model
                 throw new Exception(" ");
             }
         }catch (Exception $exception) {
-            DB::reback();
+            DB::rollBack();
             if ($number < 10) {
                 $this->add_order($order_data,$order_id, ++$number);
             }
@@ -136,7 +139,7 @@ class Order extends Model
      */
     public function get_detail_tuan($uid,$id){
         $where=[
-            array("tuan_uid","=",$uid),
+            array("team_uid","=",$uid),
             array("id","=",$id),
         ];
         $order_list=$this
@@ -145,6 +148,47 @@ class Order extends Model
             ->first();
         return $order_list;
     }
+
+    /**
+     * 根据团长得到确认订单
+     * $uid 团长id
+     * $id 订单本地id
+     */
+    public function check_tuan_confirm($uid,$id){
+        $order_info=$this->get_detail_tuan($uid,$id);
+        ($order_info->share_status==1)&&error_return("订单已经确认过");
+        empty($order_info)&&error_return("订单信息错误");
+        $point=self::get_point($order_info);
+
+
+        DB::beginTransaction();
+        try{
+            $order_info->share_status=1;
+            $result=$order_info->save();
+            if(!$result){
+                throw new Exception("更新错误");
+            }
+           $member= new Member();
+            $result=$member->addPoint($order_info["user_uid"],$point,$id);
+            if(!$result){
+                throw new Exception("更新错误");
+            }
+            DB::commit();
+            success_return("更新成功");
+        }catch (Exception $e){
+            DB::rollBack();
+            error_return($e->getMessage());
+        }
+    }
+
+    /**
+     * 得到积分
+    */
+    private static function get_point($order_info){
+        $point=$order_info->promotion_amount*100;
+        return $point?$point:0;
+    }
+
 
     /*********修改器*****************/
     //创建时间 时间戳转时间
@@ -172,8 +216,11 @@ class Order extends Model
     public static function getorder_share($order_id)
     {
         $order_info=self::where("id",$order_id)->select("order_amount","promotion_amount")->first();
-        return array($order_info["order_amount"]?$order_info["order_amount"]:0,$order_info["promotion_amount"]?$order_info["promotion_amount"]*self::$point_rate:0);
+        return array($order_info["order_amount"]?$order_info["order_amount"]:0,self::get_point($order_info));
     }
+
+
+
 
 
 

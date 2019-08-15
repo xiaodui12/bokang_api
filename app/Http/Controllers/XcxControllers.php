@@ -26,12 +26,12 @@ class XcxControllers extends Controller
         }
 
         $token=$request->input("token","");
-//        empty($token)&&error_return("参数错误");//判断参数是否为空
+        empty($token)&&error_return("参数错误");//判断参数是否为空
 
         $token_m=new Token();
         $user_info=$token_m->get_token($token);//得到token保存数据
 
-//        empty($user_info)&&error_return("token验证错误");
+        empty($user_info)&&error_return("token验证错误");
 
         $this->openid=$user_info["openid"];
         $this->uid=$user_info["uid"];

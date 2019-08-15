@@ -490,6 +490,7 @@ class ComposerStaticInitbfed92281213be5542f0bf8fb14d3035
         'App\\Model\\Team' => __DIR__ . '/../..' . '/app/Model/Team.php',
         'App\\Model\\TeamApply' => __DIR__ . '/../..' . '/app/Model/TeamApply.php',
         'App\\Model\\Token' => __DIR__ . '/../..' . '/app/Model/Token.php',
+        'App\\Model\\UserLog' => __DIR__ . '/../..' . '/app/Model/UserLog.php',
         'App\\Model\\Words' => __DIR__ . '/../..' . '/app/Model/Words.php',
         'App\\Model\\Xcx' => __DIR__ . '/../..' . '/app/Model/Xcx.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',

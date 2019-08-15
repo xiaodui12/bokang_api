@@ -80,6 +80,7 @@ return array(
     'App\\Model\\Team' => $baseDir . '/app/Model/Team.php',
     'App\\Model\\TeamApply' => $baseDir . '/app/Model/TeamApply.php',
     'App\\Model\\Token' => $baseDir . '/app/Model/Token.php',
+    'App\\Model\\UserLog' => $baseDir . '/app/Model/UserLog.php',
     'App\\Model\\Words' => $baseDir . '/app/Model/Words.php',
     'App\\Model\\Xcx' => $baseDir . '/app/Model/Xcx.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',

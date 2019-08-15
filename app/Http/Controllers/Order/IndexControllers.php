@@ -59,6 +59,19 @@ class IndexControllers extends XcxControllers
         $order=new Order();
         $order_list=$order->get_detail_tuan($this->uid,$id);//得到订单数据
         success_return($order_list);
+    }
+
+
+
+    /**
+     * 确认团长订单
+    */
+    public function order_detail_confirm(Request $request)
+    {
+        $id=$request->post("id","");
+        empty($id)&&error_return("参数错误");
+        $order=new Order();
+       $order->check_tuan_confirm($this->uid,$id);//得到订单数据
 
     }
 

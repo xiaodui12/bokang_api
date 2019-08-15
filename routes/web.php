@@ -61,6 +61,8 @@ Route::post('/order/getdetailtuan',  'Order\IndexControllers@order_detail_by_tua
 
 Route::get('/order/getshareimg',  'Web\IndexControllers@get_order_img');//根据团长得到订单信息
 
+Route::get('/order/checkconfirm',  'Order\IndexControllers@order_detail_confirm');//根据团长得到订单信息
+
 /**--------   订单接口  --------------*/
 
 

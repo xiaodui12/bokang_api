@@ -26,6 +26,7 @@ class IndexControllers extends WebControllers
         echo 111;
     }
 
+
     public function get_order_img(Request $request)
     {
         $order_id=$request->input("order_id","");
@@ -34,8 +35,6 @@ class IndexControllers extends WebControllers
 
         $bg="images/share_bg.png";
         $fonttitle="fonts/msyh.ttf";
-
-
 
 
         // 修改指定图片的大小
@@ -53,7 +52,6 @@ class IndexControllers extends WebControllers
             $font->valign('left');
             $font->color("#ff0000");
         });
-//
 
         $response=new Response($img->encode('jpg'));
         return $response->make();

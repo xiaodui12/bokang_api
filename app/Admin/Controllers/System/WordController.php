@@ -112,8 +112,6 @@ class WordController extends AdminController
             array("field"=>"status","title"=>"状态","type"=>"switch","array"=>$status),
         ];
 
-
-
         BaseControllers::set_form($form,$list_array);
 
         return $form;

@@ -59,6 +59,8 @@ Route::post('/order/getlist',  'Order\IndexControllers@order_list');
 Route::post('/order/getdetail',  'Order\IndexControllers@order_detail');
 Route::post('/order/getdetailtuan',  'Order\IndexControllers@order_detail_by_tuan');//根据团长得到订单信息
 
+Route::get('/order/getshareimg',  'Web\IndexControllers@get_order_img');//根据团长得到订单信息
+
 /**--------   订单接口  --------------*/
 
 

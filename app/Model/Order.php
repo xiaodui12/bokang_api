@@ -8,6 +8,7 @@ use Mockery\Exception;
 
 class Order extends Model
 {
+    private static $point_rate=100;
     protected $table = 'bokang_order';
 
     protected $fillable = ['order_no',"type","refresh_time","order_id","order_amount","p_id","promotion_rate","promotion_amount",
@@ -167,6 +168,12 @@ class Order extends Model
         return getdatatime($value);
     }
     /*********修改器*****************/
+
+    public static function getorder_share($order_id)
+    {
+        $order_info=self::where("id",$order_id)->select("order_amount","promotion_amount")->first();
+        return array($order_info["order_amount"]?$order_info["order_amount"]:0,$order_info["promotion_amount"]?$order_info["promotion_amount"]*self::$point_rate:0);
+    }
 
 
 

@@ -106,13 +106,13 @@ class MpUser extends Model
     {
         $info=$this->Decrypt($appid,$sessionKey,$encryptedData,$iv);
 
-        var_dump($info);
-        exit;
         $openid=$info["openId"];
         $info["nickname"]= $info["nickName"];//昵称
         $info["sex"]= $info["gender"];//性别
         $info["headimgurl"]= $info["avatarUrl"];//头像
-        $info["unionid"]= $info["unionId"];//头像
+        if(!empty($info["unionId"])){
+            $info["unionid"]= $info["unionId"];//头像
+        }
 
         return $this->change_userinfo($appid,$openid,$info,$token);
 

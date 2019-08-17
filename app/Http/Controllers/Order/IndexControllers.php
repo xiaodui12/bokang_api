@@ -68,10 +68,10 @@ class IndexControllers extends XcxControllers
     */
     public function order_detail_confirm(Request $request)
     {
-        $id=$request->post("id","");
-        empty($id)&&error_return("参数错误");
+        $order_id=$request->post("order_id","");
+        empty($order_id)&&error_return("参数错误");
         $order=new Order();
-       $order->check_tuan_confirm($this->uid,$id);//得到订单数据
+       $order->check_tuan_confirm($this->uid,$order_id);//得到订单数据
 
     }
 

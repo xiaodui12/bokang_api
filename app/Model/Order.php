@@ -142,10 +142,12 @@ class Order extends Model
             array("team_uid","=",$uid),
             array("id","=",$id),
         ];
+        var_dump($where);
         $order_list=$this
             ->where($where)
             ->with("ordergoods")
             ->first();
+        var_dump($order_list);
         return $order_list;
     }
 

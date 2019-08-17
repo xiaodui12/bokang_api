@@ -113,7 +113,6 @@ class MpUser extends Model
         if(!empty($info["unionId"])){
             $info["unionid"]= $info["unionId"];//头像
         }
-
         return $this->change_userinfo($appid,$openid,$info,$token);
 
     }

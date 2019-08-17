@@ -35,7 +35,7 @@ class IndexControllers extends XcxControllers
         $save["lon"]=$request->post("lon","");//经度
         $save["lat"]=$request->post("lat","");//纬度
         $save["uid"]=$this->uid;
-        $save["remark"]=$this->remark;
+        $save["remark"]=$request->post("remark","");//纬度
 
         $tuan_apply=new TeamApply();
         $result=$tuan_apply->addapply($save);//提交申请

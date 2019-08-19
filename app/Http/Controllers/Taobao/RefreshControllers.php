@@ -37,13 +37,16 @@ class RefreshControllers extends BaseControllers
 
         $type="taobao.tbk.order.details.get";
 
-        $refresh_time=date("Y-m-d H:i:s",time()-7200);//得到最后更新时间
-        $data["start_time"]=$refresh_time;//搜索开始时间
-        $data["end_time"]=date("Y-m-d H:i:s",time()-7200);//搜索结束时间
 
+        $data["query_type"]=2;
+        $data["start_time"]=date("Y-m-d H:i:s",time()-3600);//搜索开始时间
+        $data["end_time"]=date("Y-m-d H:i:s");//搜索结束时间
+        $data["page_size"]=100;//搜索结束时间
 
 
         $order_data=$this->send_all($this->url,$type,$data);//得到接口返回
+        var_dump($order_data);
+        exit;
 
         $this->change_order($order_data["order_list_get_response"]["order_list"]);
 

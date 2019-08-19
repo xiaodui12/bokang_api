@@ -49,4 +49,5 @@ class IndexControllers extends XcxControllers
         $result=$tuan_apply->getapply($this->uid);//提交申请
         success_return($result,"");
     }
+
 }

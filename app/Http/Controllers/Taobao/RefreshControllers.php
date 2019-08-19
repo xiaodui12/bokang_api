@@ -31,17 +31,23 @@ class RefreshControllers extends BaseControllers
     /**
      * 得到拼多多刷新订单
      */
-    public function order_get()
+    public function order_get(Request $request)
     {
 
+        $code=$request->input("code");
+        if(empty($code)){
+            $url="https://oauth.taobao.com/authorize?response_type=code&client_id=27771499&redirect_uri=https://www.pingoufan.com/taobao/refresh/order&state=1212&view=web";
+            header("location:$url");
+            exit;
+        }
 
-        $type="taobao.tbk.order.details.get";
 
+        $type="taobao.tbk.sc.order.get";
 
         $data["query_type"]=2;
-        $data["start_time"]=date("Y-m-d H:i:s",time()-3600);//搜索开始时间
-        $data["end_time"]=date("Y-m-d H:i:s");//搜索结束时间
-        $data["page_size"]=100;//搜索结束时间
+        $data["fields"]="tb_trade_parent_id,tb_trade_id,num_iid,item_title,item_num,price,pay_price,seller_nick,seller_shop_title,commission,commission_rate,unid,create_time,earning_time,tk3rd_pub_id,tk3rd_site_id,tk3rd_adzone_id,relation_id,tb_trade_parent_id,tb_trade_id,num_iid,item_title,item_num,price,pay_price,seller_nick,seller_shop_title,commission,commission_rate,unid,create_time,earning_time,tk3rd_pub_id,tk3rd_site_id,tk3rd_adzone_id,special_id,click_time";
+        $data["start_time"]="1200";//搜索开始时间
+
 
 
         $order_data=$this->send_all($this->url,$type,$data);//得到接口返回

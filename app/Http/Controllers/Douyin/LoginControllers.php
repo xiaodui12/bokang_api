@@ -101,7 +101,7 @@ class LoginControllers extends Controller
 
         $config=$mp_config->get_one($appid);//根据appid 得到配置信息
         //授权得到openid
-        $info=PutCurl::get_openid($config->appid,$config->appsecret,$code,$anonymous_code);
+        $info=PutCurl::get_douyin_openid($config->appid,$config->appsecret,$code,$anonymous_code);
         $openid=$info["openid"];
         $session_key=$info["session_key"];
         $mp_user=new MpUser();

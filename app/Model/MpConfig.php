@@ -18,6 +18,8 @@ class MpConfig extends Model
         return $mp_info;
     }
 
+
+
     /**
      * 根据appid得到appsecret和token
     */

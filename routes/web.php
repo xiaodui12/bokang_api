@@ -98,3 +98,8 @@ Route::get('/getsearch',  'Base\SystemControllers@getSearch');
 Route::post('/getgoods',  'Goods\IndexControllers@get_list');
 Route::post('/getgoodsclass',  'Goods\IndexControllers@getClass');
 
+
+
+Route::post('/douyin/login',  'Douyin\LoginControllers@xcx_login');
+Route::post('/douyin/setuserinfo',  'Douyin\LoginControllers@setuserinfo');
+

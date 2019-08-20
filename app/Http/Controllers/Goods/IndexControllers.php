@@ -40,4 +40,11 @@ class IndexControllers extends BaseControllers
         success_return($list);
     }
 
+    public function getDetail(Request $request){
+
+        $id=$request->post("id");
+        $detail=Goods::where("id",$id)->first();
+        success_return($detail);
+    }
+
 }

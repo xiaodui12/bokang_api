@@ -31,6 +31,18 @@ class PutCurl extends Model
     }
 
     /**
+     * 获得抖音openid
+     * $appid
+     * $appsercert
+     * $code 登陆code
+     */
+    public static function get_douyin_openid($appid,$appsecret,$code,$anonymous_code="")
+    {
+        $url="https://developer.toutiao.com/api/apps/jscode2session?appid=".$appid."&secret=".$appsecret."&code=".$code."&anonymous_code=".$anonymous_code;
+        return self::wx_get($url,"登陆失败，请联系管理员");
+    }
+
+    /**
      * 得到公众号用户信息
      * $type 公众号类型
      * $code code

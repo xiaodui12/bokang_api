@@ -25,9 +25,10 @@ class SystemControllers extends Controller
     /**
      * 得到banner
     */
-    public function getBanner()
+    public function getBanner(Request $request)
     {
-        $banner=Banner::getbanner();
+        $type=$request->input("type",0);
+        $banner=Banner::getbanner($type);
         success_return($banner);
     }
     /**

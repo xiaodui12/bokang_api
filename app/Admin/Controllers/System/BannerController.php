@@ -91,6 +91,7 @@ class BannerController extends AdminController
 
         $status= $banner->status;
         $turn_type= $banner->turn_type;
+        $type_array= $banner->type_array;
 
 
         $list_array=[
@@ -100,6 +101,7 @@ class BannerController extends AdminController
             array("field"=>["start_time","end_time"],"title"=>"活动时间","type"=>"datetimeRange"),
             array("field"=>"turn_type","title"=>"跳转类型","type"=>"select","array"=>$turn_type),
             array("field"=>"sort","title"=>"排序","type"=>"number"),
+            array("field"=>"type","title"=>"类型","type"=>"select","array"=>$type_array),
             array("field"=>"status","title"=>"状态","type"=>"switch","array"=>$status),
             array("field"=>"created_at","title"=>"创建时间","type"=>"value")
         ];

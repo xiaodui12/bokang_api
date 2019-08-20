@@ -2,8 +2,10 @@
 
 namespace App\Admin\Controllers\Goods;
 
+use App\Admin\Extensions\Form\uEditor;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Form\Field\Decimal;
+use Encore\Admin\Form\Field\Editor;
 use Encore\Admin\Form\Field\Id;
 use Encore\Admin\Form\Field\Image;
 use Encore\Admin\Form\Field\MultipleImage;
@@ -23,7 +25,7 @@ class GoodsBaseController extends Controller
     */
     public  function setid($name,$label,$value,$msg="")
     {
-        $class=$this->get_class("text",$name,$label, $value,$msg);
+        $class=$this->get_class("id",$name,$label, $value,$msg);
         $form_info_one= ($class->render()->__toString());
         array_push($this->form_info,array("type"=>"html","html"=>$form_info_one));
     }
@@ -34,8 +36,14 @@ class GoodsBaseController extends Controller
     public function settext($name,$label,$value,$msg="")
     {
 
-        $class=$this->get_class("text",$name,$label, $value,$msg);
+
+
+        $class=$this->get_class("text",$name,$label,$value,$msg);
+        $class->default($value);
+
         $form_info_one= ($class->render()->__toString());
+
+
 
         array_push($this->form_info,array("type"=>"html","html"=>$form_info_one));
     }
@@ -75,10 +83,18 @@ class GoodsBaseController extends Controller
      *
     */
     public function set_imgs($name,$label, $value,$msg=""){
-        $img=$this->get_class("imgs",$name,$label, $value,$msg);
-        $form_info_one=$img->render()->__toString();
-        array_push($this->form_info,array("type"=>"html","html"=>$form_info_one));
+
+        array_push($this->form_info, array("type"=>"image","name"=>$name,"label"=>$label,"value"=>$value));
     }
+
+    public function set_uedit($name,$label, $value,$msg="")
+    {
+        $uedit=$this->get_class("uedit",$name,$label, $value,$msg);
+        $form_info_one=$uedit->render()->__toString();
+        array_push($this->form_info,array("type"=>"html","html"=>$form_info_one));
+
+    }
+
 
     public function set_sku($value){
         array_push($this->form_info,array("type"=>"sku","value"=>$value));
@@ -108,6 +124,9 @@ class GoodsBaseController extends Controller
             case "imgs":
                 $new_class=new MultipleImage($name,[$label]);
 
+                break;
+            case "uedit":
+                $new_class=new uEditor($name,[$label]);
 
 
                 break;

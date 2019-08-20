@@ -28,6 +28,10 @@ Route::group([
 
 
 
+    $router->post('goodscreate', "Goods\GoodsInfoController@create");
+
+
+
 
 
 

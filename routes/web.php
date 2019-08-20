@@ -92,3 +92,9 @@ Route::get('/getopenid',  'Web\IndexControllers@index');
 Route::get('/getbanner',  'Base\SystemControllers@getBanner');
 Route::get('/getword',  'Base\SystemControllers@getWord');
 Route::get('/getsearch',  'Base\SystemControllers@getSearch');
+
+
+
+Route::post('/getgoods',  'Goods\IndexControllers@get_list');
+Route::post('/getgoodsclass',  'Goods\IndexControllers@getClass');
+

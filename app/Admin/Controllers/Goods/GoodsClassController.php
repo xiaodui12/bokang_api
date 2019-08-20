@@ -64,8 +64,6 @@ class GoodsClassController extends AdminController
             if(empty($pid)){
                 $actions->add(new SeeNext());
             }
-
-
         });
 
         return $grid;

@@ -241,7 +241,14 @@
 				init: function(items) {
 					var html = ""
 					for(var i = 0; i < items.length; i++) {
-						html += '<span class="sku_item"><a data-id="' + getIndex() + '">' + items[i] + '</a><i class="sku_item_close">×</i></span>';
+					    var value=items[i];
+					    var id=getIndex();
+					    if(items[i].name){
+                            id=items[i].id;
+                            value=items[i].name;
+						}
+
+						html += '<span class="sku_item"><a data-id="' + id + '">' + value + '</a><i class="sku_item_close">×</i></span>';
 					}
 					//获取所有生成按钮
 					this.skumlist.append($(html))

@@ -63,6 +63,7 @@ class Address extends Model
 
         }else{
             $id=$detail["id"];
+            unset($detail["id"]);
             $detail["updated_at"]=date("Y-m-d H:i:s");
             $result=$this->where("address_id",$id)->update($detail);
         }

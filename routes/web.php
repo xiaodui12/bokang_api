@@ -104,3 +104,12 @@ Route::post('/getgoodsdetail',  'Goods\IndexControllers@getDetail');
 Route::post('/douyin/login',  'Douyin\LoginControllers@xcx_login');
 Route::post('/douyin/setuserinfo',  'Douyin\LoginControllers@setuserinfo');
 
+
+
+Route::post('/address/getlist',  'Base\AddressControllers@getList');
+Route::post('/address/getdetail',  'Base\AddressControllers@getDetail');
+Route::post('/address/savedetail',  'Base\AddressControllers@saveDetail');
+
+Route::post('/address/getdefault',  'Base\AddressControllers@getDefault');
+Route::post('/address/setdefault',  'Base\AddressControllers@setDefault');
+

@@ -14,6 +14,7 @@ use App\Http\Controllers\Goods\BaseControllers;
 use App\Http\Controllers\XcxControllers;
 use App\Model\Goods;
 use App\Model\GoodsClass;
+use App\Model\GoodsProp;
 use App\Model\Order;
 use Illuminate\Http\Request;
 
@@ -40,10 +41,19 @@ class IndexControllers extends BaseControllers
         success_return($list);
     }
 
-    public function getDetail(Request $request){
 
-        $id=$request->post("id");
-        $detail=Goods::where("id",$id)->first();
+    /**
+     * 得到商品详情
+     * id
+    */
+    public function getDetail(Request $request){
+        $id=$request->post("id","");
+        $detail=Goods::where("id",$id)->with("sku")->first();
+        $prop=GoodsProp::where("goods_id",$id)->where("pid","0")->get();
+        foreach ($prop as $key=>$value){
+            $prop[$key]->child=GoodsProp::where("goods_id",$id)->where("pid",$value->no)->get();
+        }
+        $detail->prop=$prop;
         success_return($detail);
     }
 

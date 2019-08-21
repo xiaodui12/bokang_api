@@ -16,6 +16,13 @@ class Goods extends Model
     );
 
 
+    public function prop() {
+        return $this->hasMany('App\Model\GoodsProp',"goods_id");
+    }
+    public function sku() {
+        return $this->hasMany('App\Model\GoodsSku',"goods_id");
+    }
+
     public function addGoods($data)
     {
         if(empty($data["title"])){
@@ -143,7 +150,7 @@ class Goods extends Model
             ->OrderBy("sort","desc");
 
         if($where["page"]){
-            $list=$model->paginate(1);
+            $list=$model->paginate(15);
         }else{
             $list=$model->get();
         }

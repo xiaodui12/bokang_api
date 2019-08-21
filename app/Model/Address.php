@@ -3,12 +3,13 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Mockery\Exception;
 
 class Address extends Model
 {
-
+    use SoftDeletes;
     protected $table = 'bokang_user_address';
 
 
@@ -70,6 +71,12 @@ class Address extends Model
         }else{
             error_return("更新失败");
         }
+
+    }
+    public function deleteAddress($uid,$id){
+        return $this->where("uid",$uid)->where("address_id",$id)->delete();
+
+
 
     }
 

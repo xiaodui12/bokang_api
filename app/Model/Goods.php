@@ -158,6 +158,11 @@ class Goods extends Model
             return $list;
     }
 
+
+    public static function getDetail($id)
+    {
+        return self::where("id",$id)->first();
+    }
     /**
      * 图片链接修改器
      */

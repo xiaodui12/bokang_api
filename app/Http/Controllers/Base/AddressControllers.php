@@ -43,6 +43,12 @@ class AddressControllers extends XcxControllers
         success_return((new Address())->setDefault($this->uid,$id));
     }
 
+    public function delete(Request $request){
+        $id=$request->post("id");
+        $success=(new Address())->deleteAddress($this->uid,$id);
+        $success?success_return("删除成功"):error_return("删除失败");
+    }
+
     public function saveDetail(Request $request){
         $detail["id"]=$request->post("id","");
         $detail["name"]=$request->post("name","");

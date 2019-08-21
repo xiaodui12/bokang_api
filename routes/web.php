@@ -113,3 +113,7 @@ Route::post('/address/savedetail',  'Base\AddressControllers@saveDetail');
 Route::post('/address/getdefault',  'Base\AddressControllers@getDefault');
 Route::post('/address/setdefault',  'Base\AddressControllers@setDefault');
 
+
+
+Route::post('/Order/our/getadd',  'Order\OurControllers@getAddOrder');
+

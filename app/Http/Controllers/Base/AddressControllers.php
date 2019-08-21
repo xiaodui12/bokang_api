@@ -54,11 +54,11 @@ class AddressControllers extends XcxControllers
         $detail["name"]=$request->post("name","");
         $detail["mobile"]=$request->post("mobile","");
         $detail["phone"]=$request->post("phone","");
-        $detail["province_id"]=$request->post("province_id","");
+        $detail["province_id"]=$request->post("province_id",0);
         $detail["province"]=$request->post("province","");
-        $detail["city_id"]=$request->post("city_id","");
+        $detail["city_id"]=$request->post("city_id",0);
         $detail["city"]=$request->post("city","");
-        $detail["area_id"]=$request->post("area_id","");
+        $detail["area_id"]=$request->post("area_id",0);
         $detail["area"]=$request->post("area","");
         $detail["address"]=$request->post("address","");
         $detail["zip"]=$request->post("zip","");

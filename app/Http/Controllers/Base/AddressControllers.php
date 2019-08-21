@@ -62,6 +62,7 @@ class AddressControllers extends XcxControllers
         $detail["area"]=$request->post("area","");
         $detail["address"]=$request->post("address","");
         $detail["zip"]=$request->post("zip","");
+        $detail["uid"]=$this->uid;
         (new Address())->saveDetail($detail);
     }
 }

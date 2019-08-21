@@ -187,4 +187,34 @@ class Goods extends Model
 
         return $list;
     }
+
+
+
+
+    public static function getAddOrderGoods($goods)
+    {
+        $goodsList=[];
+        foreach ($goods as $key=>$val){
+            $goods_one=self::getDetail($val["id"]);
+            $goodsList_one=array(
+                "id"=>$goods_one->id,
+                "number"=>$val['number'],
+                "title"=>$goods_one->title,
+                "desc"=>$goods_one->desc,
+                "old_price"=>$goods_one->old_price,
+                "new_price"=>$goods_one->new_price,
+                "cover"=>$goods_one->cover,
+                "goods_sku"=>$goods_one->sku,
+            );
+            if(!empty($val["sku"])){
+                $sku=GoodsSku::where("goods_id",$val["id"])->where("code",$val["sku"])->first();
+                $goodsList_one["new_price"]=$sku->price;
+                $goodsList_one["code"]=$sku->code;
+                $goodsList_one["name"]=$sku->name;
+                $goodsList_one["sku"]=$sku->sku;
+            }
+            $goodsList[]=$goodsList_one;
+        }
+        return $goodsList;
+    }
 }

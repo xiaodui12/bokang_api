@@ -16,6 +16,7 @@ use App\Model\Goods;
 use App\Model\GoodsSku;
 use App\Model\Order;
 use App\Model\OurOrder;
+use App\Model\Pay\DouyinPay;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -64,5 +65,11 @@ class OurControllers extends XcxControllers
             $goodsList=$cart->getCartList($cartList);
         }
         OurOrder::addOurOrder($this->uid,$goodsList,$address_id,$share_code,$cart);
+    }
+
+
+
+    public function pay(){
+        (new DouyinPay())->pay();
     }
 }

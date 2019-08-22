@@ -132,3 +132,7 @@ Route::post('/cart/del',  'Douyin\CartControllers@delCart');
 
 
 
+Route::post('/Order/douyin/pay',  'Order\OurControllers@pay');
+
+
+

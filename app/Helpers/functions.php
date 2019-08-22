@@ -1,5 +1,53 @@
 <?php
 
+
+/**
+ * curl post 提交
+ * 参数  $url 提交连接
+ *       $post_data  提交内容
+ */
+function curlPostPay($url,$post_data,$type="json"){
+    //初始化
+    $curl = curl_init();
+    //设置抓取的url
+    curl_setopt($curl, CURLOPT_URL, $url);
+
+    $headers=[
+        "Content-Type:application/x-www-form-urlencoded"
+    ];
+    //设置头文件的信息作为数据流输出
+    curl_setopt($curl, CURLOPT_HEADER, 0);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+
+    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+    curl_setopt($curl, CURLOPT_SSLVERSION, false);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+
+    //设置获取的信息以文件流的形式返回，而不是直接输出。
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    //设置post方式提交
+    curl_setopt($curl, CURLOPT_POST, 1);
+
+    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($post_data));
+    //执行命令
+    $data = curl_exec($curl);
+    $error_no=curl_errno($curl);
+
+    //关闭URL请求
+    curl_close($curl);
+    $error_no!=0&&error_return("外部接口调取错误，错误码：".$error_no);
+
+
+    if($type=="json"){
+        return json_decode($data);
+    }else{
+        return $data;
+    }
+
+}
+
+
 /**
  * curl post 提交
  * 参数  $url 提交连接

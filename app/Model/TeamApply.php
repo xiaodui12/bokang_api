@@ -46,7 +46,7 @@ class TeamApply extends Model
             if($result===false){throw new Exception("审核失败，请重试");}
             if($status){
                 $result1=(new Team())->add_one($uid);
-                $result2=(new Member())->where("uid",$uid)->update(array("is_tuan"=>1));
+                $result2=(new Member())->where("id",$uid)->update(array("is_tuan"=>1));
                 if(!$result1||!$result2){
                     throw new Exception("审核失败，请重试");
                 }

@@ -59,8 +59,8 @@ class Address extends Model
             unset($detail["id"]);
             $detail["type"]="douyin";
             $detail["created_at"]=date("Y-m-d H:i:s");
-            $result=$this->insert($detail);
-
+            $id=$this->insertGetId($detail);
+            $result=$id;
         }else{
             $id=$detail["id"];
             unset($detail["id"]);
@@ -68,7 +68,7 @@ class Address extends Model
             $result=$this->where("address_id",$id)->update($detail);
         }
         if($result){
-            success_return("更新成功");
+            success_return(array("id"=>$id),"更新成功");
         }else{
             error_return("更新失败");
         }
@@ -76,8 +76,6 @@ class Address extends Model
     }
     public function deleteAddress($uid,$id){
         return $this->where("uid",$uid)->where("address_id",$id)->delete();
-
-
 
     }
 

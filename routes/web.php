@@ -113,7 +113,22 @@ Route::post('/address/savedetail',  'Base\AddressControllers@saveDetail');
 Route::post('/address/getdefault',  'Base\AddressControllers@getDefault');
 Route::post('/address/setdefault',  'Base\AddressControllers@setDefault');
 
+Route::post('/address/delete',  'Base\AddressControllers@delete');
+
+
 
 
 Route::post('/Order/our/getadd',  'Order\OurControllers@getAddOrder');
+
+
+Route::post('/Order/our/addorder',  'Order\OurControllers@addSubmit');
+
+
+
+Route::post('/cart/getlist',  'Douyin\CartControllers@getList');
+Route::post('/cart/setdetail',  'Douyin\CartControllers@setDetail');
+Route::post('/cart/setnumber',  'Douyin\CartControllers@setNumber');
+Route::post('/cart/del',  'Douyin\CartControllers@delCart');
+
+
 

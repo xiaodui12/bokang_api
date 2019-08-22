@@ -18,15 +18,16 @@ class OurOrder extends Model
         return $this->hasOne('App\Model\OurOrderAddress',"order_id");
     }
 
-
-    public function addOurOrder($uid,$goods,$address_id,$share_code="")
+    /**
+     * 添加订单
+    */
+    public function addOurOrder($uid,$goods,$address_id,$share_code="",$cart=[])
     {
         $order_info=array();
 
         if(!empty($share_code)){
             $order_info["share_uid"]=Member::getidBycode($share_code);
         }
-
 
         $order_info["type"]=0;
         $order_info["user_uid"]=$uid;
@@ -76,6 +77,10 @@ class OurOrder extends Model
             $order_m=self::create($order_info);
             $order_m->ourgoods()->createMany($order_info_goods);
             $order_m->ouraddress()->createMany($address_info);
+
+            $cart=new Cart();
+            $cart->setUid($uid);
+            $cart->deleteCart($cart);
 
             DB::commit();
             success_return(array("order_no"=>$order_info["order_no"]),"创建成功");

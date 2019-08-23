@@ -9,6 +9,9 @@
 function curlPostPay($url,$post_data,$type="json"){
     //初始化
     $curl = curl_init();
+
+
+
     //设置抓取的url
     curl_setopt($curl, CURLOPT_URL, $url);
 
@@ -29,13 +32,14 @@ function curlPostPay($url,$post_data,$type="json"){
     //设置post方式提交
     curl_setopt($curl, CURLOPT_POST, 1);
 
-    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($post_data));
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $post_data);
     //执行命令
     $data = curl_exec($curl);
     $error_no=curl_errno($curl);
 
     //关闭URL请求
     curl_close($curl);
+    var_dump($error_no);
     $error_no!=0&&error_return("外部接口调取错误，错误码：".$error_no);
 
 

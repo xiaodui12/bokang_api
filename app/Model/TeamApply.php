@@ -43,6 +43,7 @@ class TeamApply extends Model
                 throw new Exception("用户不存在");
             }
             $result=$this->where("id",$id)->update(array("status"=>$status?1:2,"error_msg"=>$msg));
+
             if($result===false){throw new Exception("审核失败，请重试");}
             if($status){
                 $result1=(new Team())->add_one($uid);
@@ -51,7 +52,6 @@ class TeamApply extends Model
                     throw new Exception("审核失败，请重试");
                 }
             }
-
             DB::commit();
             return array("status"=>1,"msg"=>"审核成功");
         }catch (Exception $e){
@@ -59,7 +59,6 @@ class TeamApply extends Model
             return array("status"=>0,"msg"=>$e->getMessage());
         }
     }
-
 
     /**
      * 提交申请

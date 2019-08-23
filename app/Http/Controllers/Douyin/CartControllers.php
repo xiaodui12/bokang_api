@@ -29,8 +29,6 @@ class CartControllers extends XcxControllers
     {
         parent::__construct($request);
         $this->cart=new Cart();
-        var_dump($this->uid);
-        exit;
         $this->cart->setUid($this->uid);
     }
 

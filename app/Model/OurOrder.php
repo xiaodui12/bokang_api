@@ -81,7 +81,7 @@ class OurOrder extends Model
 
             $order_m=self::create($order_info);
             $order_m->ourgoods()->createMany($order_info_goods);
-            $order_m->ouraddress()->createMany($address_info);
+            $order_m->ouraddress()->create($address_info);
 
             $cart=new Cart();
             $cart->setUid($uid);

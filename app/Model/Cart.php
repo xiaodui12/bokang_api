@@ -54,8 +54,7 @@ class Cart extends Model
         if(!$goods_info){
             error_return("商品信息错误");
         }
-        var_dump($this->uid);
-        exit;
+
         $Cart=self::where("uid",$this->uid)
             ->where("goods_id",$goods_id)
             ->where("code",$code)
@@ -68,6 +67,9 @@ class Cart extends Model
             $Cart->code=$code;
             $Cart->created_at=date("Y-m-d H:i:s");
         }
+
+        var_dump($Cart->toarray());
+        exit;
         $Cart->number+=$number;
         if($goods_info["sku"]<$Cart->number||$goods_info["goods_sku"]<$Cart->number)
         {

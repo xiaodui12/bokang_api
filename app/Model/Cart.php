@@ -11,15 +11,15 @@ class Cart extends Model
 {
     protected $table = 'bokang_cart';
 
-    protected $uid;
+    protected $this_uid;
 
     public function setUid($uid){
-        $this->uid=$uid;
+        $this->this_uid=$uid;
     }
 
     public function getList($cart_id=[])
     {
-        $list=self::where("uid",$this->uid)
+        $list=self::where("uid",$this->this_uid)
             ->paginate(30);
         $list->each(function ($item,$key){
             $item->goods=Goods::getGoodsOne($item->goods_id,$item->code,$item->number);
@@ -31,7 +31,7 @@ class Cart extends Model
 
     public function getCartList($cart_id=[])
     {
-        $list=self::where("uid",$this->uid)
+        $list=self::where("uid",$this->this_uid)
             ->whereIn("id",$cart_id)
             ->get();
         $list->each(function ($item,$key){
@@ -55,21 +55,20 @@ class Cart extends Model
             error_return("商品信息错误");
         }
 
-        $Cart=self::where("uid",$this->uid)
+        $Cart=self::where("uid",$this->this_uid)
             ->where("goods_id",$goods_id)
             ->where("code",$code)
             ->first();
         if(empty($Cart)){
             $Cart=new self();
-            $Cart->uid=$this->uid;
+            $Cart->uid=$this->this_uid;
             $Cart->goods_id=$goods_id;
             $Cart->number=0;
             $Cart->code=$code;
             $Cart->created_at=date("Y-m-d H:i:s");
         }
 
-        var_dump($Cart->toarray());
-        exit;
+
         $Cart->number+=$number;
         if($goods_info["sku"]<$Cart->number||$goods_info["goods_sku"]<$Cart->number)
         {
@@ -82,7 +81,7 @@ class Cart extends Model
     */
     public function setNumber($cart_id,$number)
     {
-        $Cart=self::where("uid",$this->uid)
+        $Cart=self::where("uid",$this->this_uid)
             ->where("id",$cart_id)
             ->first();
         if(empty($Cart)){
@@ -96,7 +95,7 @@ class Cart extends Model
      * 删除购物车
     */
     public function deleteCart($id){
-        $model=self::where("uid",$this->uid);
+        $model=self::where("uid",$this->this_uid);
         if(is_array($id)){
             $model=$model->whereIn("id",$id);
         }else{

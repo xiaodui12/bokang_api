@@ -228,7 +228,7 @@ class Goods extends Model
         $goodsList=[];
         foreach ($goods as $key=>$val){
             $val["sku"]=empty($val["sku"])?"":$val["sku"];
-            $goodsList_one=self::getGoodsOne($val["id"],$val["sku"]);
+            $goodsList_one=self::getGoodsOne($val["id"],$val["sku"],$val["number"]);
             if($goodsList_one){
                 $goodsList[]= $goodsList_one;
             }else{

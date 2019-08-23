@@ -58,7 +58,6 @@ class OurControllers extends XcxControllers
             $goodsList=Goods::getAddOrderGoods($goods);
         }elseif ($type=="cart")
         {
-
             $cartList=explode(",",$cart);
             $cart=new Cart();
             $cart->setUid($this->uid);

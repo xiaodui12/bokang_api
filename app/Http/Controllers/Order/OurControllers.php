@@ -23,6 +23,12 @@ use Illuminate\Support\Facades\DB;
 class OurControllers extends XcxControllers
 {
 
+    protected $ourOrder;
+    public function __construct(Request $request)
+    {
+        parent::__construct($request);
+        $this->ourOrder=new OurOrder();
+    }
 
     public function getAddOrder(Request $request){
         $type=$request->post("type","goods");
@@ -63,7 +69,7 @@ class OurControllers extends XcxControllers
             $cart->setUid($this->uid);
             $goodsList=$cart->getCartList($cartList);
         }
-        OurOrder::addOurOrder($this->uid,$goodsList,$address_id,$share_code,$cart);
+        $this->ourOrder->addOurOrder($this->uid,$goodsList,$address_id,$share_code,$cart);
     }
 
 

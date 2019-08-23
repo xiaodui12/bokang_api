@@ -11,5 +11,5 @@ class OurOrderGoods extends Model
 
     protected $table = 'bokang_our_order_goods';
 
-
+    protected $guarded=[];
 }

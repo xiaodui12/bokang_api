@@ -10,6 +10,6 @@ class OurOrderAddress extends Model
 {
 
     protected $table = 'bokang_our_order_Address';
-
+    protected $guarded=[];
 
 }

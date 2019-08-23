@@ -10,7 +10,7 @@ class OurOrder extends Model
 {
 
     protected $table = 'bokang_our_order';
-
+    protected $guarded=[];
     public function ourgoods(){
         return $this->hasMany('App\Model\OurOrderGoods',"order_id");
     }
@@ -74,8 +74,6 @@ class OurOrder extends Model
 
             $address_info["created_at"]=date("Y-m-d H:i:s");
 
-            var_dump($order_info);
-            exit;
 
             $order_m=self::create($order_info);
             $order_m->ourgoods()->createMany($order_info_goods);

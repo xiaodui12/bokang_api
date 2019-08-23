@@ -35,7 +35,7 @@ class OurOrder extends Model
         $order_info["created_at"]=date("Y-m-d H:i:s");
         $order_info["order_no"]=time()."_".$uid."_".rand(100,999);
 
-        var_dump($order_info);exit;
+
         $order_amount=0;
         DB::beginTransaction(); //开启事务
         try{

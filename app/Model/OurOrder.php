@@ -74,8 +74,11 @@ class OurOrder extends Model
 
             $address_info["created_at"]=date("Y-m-d H:i:s");
 
+            unset($address_info["updated_at"]);
+            unset($address_info["deleted_at"]);
+            unset($address_info["is_default"]);
 
-            var_dump($address_info);exit;
+
             $order_m=self::create($order_info);
             $order_m->ourgoods()->createMany($order_info_goods);
             $order_m->ouraddress()->createMany($address_info);

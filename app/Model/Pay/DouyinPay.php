@@ -56,6 +56,7 @@ class DouyinPay extends Model
     public function pay($openid){
 
 
+        exit;
         $biz_content = array(
             'out_order_no' => "123",
             'uid' => $openid,

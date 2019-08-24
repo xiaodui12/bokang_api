@@ -40,6 +40,7 @@ class Goods extends Model
         $goods["old_price"]=empty($data["old_price"])?"0":$data["old_price"];
         $goods["new_price"]=empty($data["new_price"])?"0":$data["new_price"];
         $goods["basic"]=empty($data["basic"])?"0":$data["basic"];
+        $goods["sku"]=empty($data["sku"])?"0":$data["sku"];
         $goods["sales"]=empty($data["sales"])?"0":$data["sales"];
         $goods["disseminate"]=empty($data["disseminate"])?"0":$data["disseminate"];
         $goods["cover"]=empty($data["pic"][0])?"":$data["pic"][0];
@@ -98,24 +99,28 @@ class Goods extends Model
 
 
 
-            foreach ($data["name"] as $key=>$value)
-            {
-                $goods_sku_one["code"]=$key;
-                $goods_sku_one["name"]=$value;
-                $goods_sku_one["price"]=$data["price"][$key];
-                $goods_sku_one["sku"]=$data["sku"][$key];
-                $goods_sku_one["goods_id"]=$goods_id;
-                $goods_sku[]=$goods_sku_one;
+            if(!empty($data["name"])){
+                $goods["sku"]=0;
+                foreach ($data["name"] as $key=>$value)
+                {
+                    $goods_sku_one["code"]=$key;
+                    $goods_sku_one["name"]=$value;
+                    $goods_sku_one["price"]=$data["price"][$key];
+                    $goods_sku_one["sku"]=$data["sku"][$key];
+                    $goods["sku"]+=$data["sku"][$key];
+                    $goods_sku_one["goods_id"]=$goods_id;
+                    $goods_sku[]=$goods_sku_one;
+                }
             }
 
             $result2=GoodsSku::where("goods_id",$goods_id)->delete();
-            $result=GoodsSku::insert($goods_sku);
+            $result=empty($goods_sku)?true:GoodsSku::insert($goods_sku);
+
+
             if($result===false||$result2===false)
             {
                 throw new Exception("添加出错2");
             }
-
-
 
             DB::commit();
             return true;
@@ -169,7 +174,7 @@ class Goods extends Model
     public function getCoverAttribute($value)
     {
         $url=config("filesystems.disks.admin.url");//图片链接前缀
-        return $url.$value;
+        return strpos($value,"http")?$value:$url.$value;
     }
     /**
      * 图片链接修改器
@@ -184,7 +189,6 @@ class Goods extends Model
                 $list[$key]=strpos($value1,"http")?$value1:$url.$value1;
             }
         }
-
         return $list;
     }
 

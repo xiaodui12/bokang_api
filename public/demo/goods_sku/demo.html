@@ -248,10 +248,13 @@
                             value=items[i].name;
 						}
 
-						html += '<span class="sku_item"><a data-id="' + id + '">' + value + '</a><i class="sku_item_close">×</i></span>';
+						var a=$("<a>").attr("data-id",id).html(value);
+						var i=$("<i>").attr("data-id",id).html("×").addClass("sku_item_close");
+						html=$("<span>").addClass("sku_item").append(a).append(i);
+
+                        this.skumlist.append(html)
 					}
 					//获取所有生成按钮
-					this.skumlist.append($(html))
 					this.skumodels.append(this.skumlist)
 					this.container.append(this.skumodels)
 					this.skuinputcon.append(this.skuinput)

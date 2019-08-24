@@ -59,18 +59,21 @@
                                         <script>
                                             var list=JSON.parse('<?php echo (!empty($value["value"])&&!empty($value["value"][$value["name"]]))?json_encode($value["value"][$value["name"]]):"[]"?>');
 
-                                            for(var i in list){
-                                                var html='<div id="WU_FILE_'+i+'" class="img-item">' +
-                                                '<div class="delete"></div>' +
-                                                '<img class="img" src="'+list[i]+'">' +
-                                                    '<div class="wrapper" style="display: none;">100%</div>' +
-                                                '<input type="hidden" name="{{$value["name"]}}[]" value="'+list[i]+'">' +
-                                                '</div>';
-                                                $("#image_{{$value['name']}}").find(".img-item").before(html);
 
+
+                                            for(var i in list){
+                                                var html= $("<div>")
+                                                html.attr("id","WU_FILE_"+i);
+                                                html.addClass("img-item");
+                                                html.append($("<div>").addClass("delete"));
+                                                html.append($("<img>").addClass("img").attr("src",list[i]));
+                                                html.append($("<div>").addClass("wrapper").css("display","none"));
+                                                html.append($("<input>").attr("type","hidden").attr("name",'{{$value["name"]}}'+"[]").val(list[i]));
+
+                                                $("#image_{{$value['name']}}").find(".img-item").before(html);
                                             }
 
-                                            </script>
+                                        </script>
                                     @else
                                         @include($value["model"],$value)
                                     @endif
@@ -300,6 +303,7 @@
     </div>
     <script>
 
+
         var sizes = JSON.parse('<?php echo  empty($detail['sizes'])?'{}':$detail['sizes']?>');
         var sizesList = JSON.parse('<?php echo empty($detail['sizesList'])?'{}':$detail['sizesList']?>');
         var tabledata =JSON.parse('<?php echo empty($detail['tabledata'])?'{}':$detail['tabledata']?>');
@@ -308,7 +312,40 @@
         var hasdid = {};
         var hastext = [];
 
+        function load_sku()
+        {
+            var nametitle=[];
+            for(var i in sizesList){
 
+                $(".sku_content_sku_list").append("<span class=\"sku_item\"><a id=\""+i+"\" data-id=\""+i+"\" class=\"itemactive\">"+sizesList[i]["name"]+"</a><i class=\"sku_item_close\" style=\"display: none;\">×</i></span>");
+                nametitle.push(sizesList[i]["name"]);
+
+                sizes[sizesList[i]['name']]=[];
+                var child=sizesList[i]["child"];
+                new Skumodel(sizesList[i]['name'], child, sizesList[i]['id'])
+                for(var c_i in child){
+                    sizes[sizesList[i]['name']].push(child[c_i]["name"])
+                }
+                $(".sku_guige").show();
+                $(".sku_table").show();
+            }
+
+            for(var j in selectedArr){
+                for(var k in selectedArr[j]){
+                    $(".sku_list").find("#"+selectedArr[j][k].dataid).addClass("itemactive")
+                }
+            }
+            tableContent();
+            createTablehead(nametitle);
+
+            for(var i in sku){
+                $(".name_"+sku[i]["code"]).val(sku[i]["name"]);
+                $(".price_"+sku[i]["code"]).val(sku[i]["price"]);
+                $(".sku_"+sku[i]["code"]).val(sku[i]["sku"]);
+            }
+
+
+        }
         /***
          * Skumodel 为生成规格类
          * title为规格名字  string  例：尺码
@@ -319,17 +356,21 @@
             //最外层div+标题栏
             this.title = title || "";
             this.items = items || [];
-            this.container = $('<div class="sku_container" id="' + dataid + '">' +
-                '<div class="sku_modellist_title">' + this.title + '：</div>' +
-                '</div>');
+
+
+            this.container=$("<div>").addClass("sku_container").attr("id",dataid);
+
+            var sku_modellist_title=$("<div>").addClass("sku_modellist_title").html(this.title+" :")
+            this.container.append(sku_modellist_title);
+
             //模型列表
-            this.skumodels = $('<div class="sku_models"></div>');
-            this.skumlist = $('<div class="sku_list"></div>')
-            this.skuinputcon = $('<div class="sku_add"></div>');
+            this.skumodels = $('<div>').addClass("sku_models");
+            this.skumlist = $('<div>').addClass("sku_list")
+            this.skuinputcon = $('<div>').addClass("sku_add");
             //输入框
             this.skuinput = $('<input type="text" placeholder="请输入型号属性">');
             //新建按钮
-            this.addbtn = $('<a>新建</a>');
+            this.addbtn = $('<a>').html("新建");
             this.init(this.items)
         }
         Skumodel.prototype = {
@@ -344,7 +385,7 @@
                         id=items[i].id;
                         value=items[i].name;
                     }
-                    html += '<span class="sku_item"><a  id="'+id+'" data-id="' + id + '">' + value + '</a><i class="sku_item_close">×</i></span>';
+                    html += '<span class="sku_item"><a  id="'+id+'" data-id="' + id + '">' + value + '<\/a><i class="sku_item_close">×<\/i><\/span>';
                 }
                 //获取所有生成按钮
                 this.skumlist.append($(html))
@@ -362,7 +403,6 @@
                 this.addbtn.click(function() {
                     self.createItem();
                 });
-                this.activeItem();
                 //点击删除按钮删除
                 this.deleteItem();
                 //控制删除符号
@@ -384,24 +424,15 @@
                     return;
                 }
                 sizes[this.title].push(this.skuinput.val());
-
-
                 if( !sizesList[pid]){
                     sizesList[pid]={"name":this.title,id:pid,child:[]}
                 }
                 sizesList[pid]["child"].push({name:this.skuinput.val(),id:id});
-                console.log(sizesList);
-                this.skumlist.append($('<span class="sku_item"><a id="' + id + '" data-id="' + id + '">' + value + '</a><i class="sku_item_close">×</i></span>'))
+                this.skumlist.append($('<span class="sku_item"><a class="itemactive" id="' + id + '" data-id="' + id + '">' + value + '</a><i class="sku_item_close">×</i></span>'))
                 this.skuinput.val("")
+                tableContent()
             },
-            //子元素是否选中事件
-            activeItem: function() {
-                this.skumlist.on("click", "a", function() {
-                    $(this).toggleClass("itemactive");
-                    console.log($(this).attr("data-id"));
-                    tableContent()
-                });
-            },
+
             //监听删除元素
             deleteItem: function() {
                 var self=this;
@@ -437,12 +468,18 @@
         var SkuCell = function(celllist, dataid) {
 
             //每行表格的父元素
-            this.cellcon = $('<div id="' + dataid + '" class="sku_cell clearfix"></div>');
-            this.nameInput = $('<div class="sku_t_title"><input  class="name_'+dataid+'"  value="'+celllist.join(",")+'" name="name['+dataid+']"/></div>');
+            this.cellcon =$("<div>").attr("id",dataid).addClass("sku_cell clearfix");
+            var nameInput=$("<input>").addClass("name_"+dataid).attr("name","name["+dataid+"]").val(celllist.join(","));
+            this.nameInput =$("<div>").addClass("sku_t_title").append(nameInput);
+
+
+
+            var input='<input class="price_'+dataid+'" value="0" name="price['+dataid+']"/>';
             //价格输入
-            this.moneyInput = $('<div class="sku_t_title"><input class="price_'+dataid+'" value="0" name="price['+dataid+']"/></div>');
+            this.moneyInput = $("<div>").addClass("sku_t_title").append(input);
+            var input='<input class="sku_'+dataid+'" value="0" name="sku['+dataid+']"/>';
             //库存输入
-            this.leftInput = $('<div class="sku_t_title"><input  class="sku_'+dataid+'" value="0" name="sku['+dataid+']" /></div>');
+            this.leftInput = $("<div>").addClass("sku_t_title").append(input);
             this.init(celllist)
         };
         SkuCell.prototype = {
@@ -450,9 +487,8 @@
             init: function(celllist) {
                 var html = "";
                 for(var i = 0; i < celllist.length; i++) {
-                    html += '<div class="sku_t_title">' + celllist[i] + '</div>'
+                    this.cellcon.append($("<div>").addClass("sku_t_title").html(celllist[i]));
                 }
-                this.cellcon.append($(html));
                 this.cellcon.append(this.nameInput);
                 this.cellcon.append(this.moneyInput);
                 this.cellcon.append(this.leftInput);
@@ -468,10 +504,11 @@
             var relayArr = arr.concat(mustArr);
 
             html = "";
+            $(".sku_tableHead").html("")
             for(var i = 0, len = relayArr.length; i < len; i++) {
-                html += '<div class="sku_t_title">' + relayArr[i] + '</div>'
+                html = $("<div>").addClass("sku_t_title").html(relayArr[i]);
+                $(".sku_tableHead").append(html)
             }
-            $(".sku_tableHead").html("").append($(html))
         }
         /***
          * 排列组合计算出选择的规格型号的组合方式
@@ -568,8 +605,9 @@
                             $(".sku_table").show();
                             $(".sku_tableHead").html('')
                             $(".sku_tablecell").html("")
-                            $(".sku_container .itemactive").toggleClass("itemactive")
+                            $(".sku_container .sku_item a").addClass("itemactive");
                             createTablehead(arrs);
+                            tableContent()
                         } else {
                             $(".sku_table").hide()
                             $(".sku_guige").hide()
@@ -578,37 +616,8 @@
                 })
             });
             setTimeout(function () {
-                console.log(sizesList);
-                for(var i in sizesList){
-                    sizes[sizesList[i]['name']]=[];
-                    var child=sizesList[i]["child"];
-                    new Skumodel(sizesList[i]['name'], child, sizesList[i]['id'])
-                    for(var c_i in child){
-                        sizes[sizesList[i]['name']].push(child[c_i]["name"])
-                    }
-                    $(".sku_guige").show();
-                    $(".sku_table").show();
-                }
-
-
-                for(var j in selectedArr){
-                    for(var k in selectedArr[j]){
-                        $(".sku_list").find("#"+selectedArr[j][k].dataid).addClass("itemactive")
-                    }
-                }
-                tableContent();
-
-
-                for(var i in sku){
-                    $(".name_"+sku[i]["code"]).val(sku[i]["name"]);
-                    $(".price_"+sku[i]["code"]).val(sku[i]["price"]);
-                    $(".sku_"+sku[i]["code"]).val(sku[i]["sku"]);
-                }
-
-
-
+                load_sku();
             },500)
-
 
 
             //弹窗中的新建sku
@@ -655,6 +664,9 @@
                 }
             });
         })
+
+
+
     </script>
     <script>
         $("#form").submit(function () {

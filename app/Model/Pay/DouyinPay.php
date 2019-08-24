@@ -48,14 +48,15 @@ class DouyinPay extends Model
             'out_order_no' => "123",
             'uid' => $openid,
             'merchant_id'=>"1900014826",
-            'total_amount' =>"1",
+            'total_amount' =>1,
             "currency"=>"CNY",
             'subject' => "测试订单" ,
             'body' => "测试订单",
             "trade_time"=>time()."",
-            'valid_time' => 3600,
+            'valid_time' => "3600",
             'risk_info' =>json_encode(["ip"=>$_SERVER['SERVER_ADDR']]),
         );
+
 
 
 
@@ -63,6 +64,8 @@ class DouyinPay extends Model
         $data=$this->build_base($biz_content);
 
 
+        var_dump($data);
+        exit;
         $vars = 'app_id='.$data['app_id'].'&biz_content='.$data['biz_content'].'&charset='.$data['charset'].'&method='.$data['method'].'&sign='.$data['sign'].'&sign_type='.$data['sign_type'].'&timestamp='.$data['timestamp'].'&version='.$data['version'];
 
         $vars=$this->trimall($vars);

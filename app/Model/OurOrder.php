@@ -26,7 +26,7 @@ class OurOrder extends Model
     /**
      * 添加订单
     */
-    public function addOurOrder($uid,$goods,$address_id,$share_code="",$cart=[])
+    public function addOurOrder($uid,$goods,$address_id,$share_code="",$cart_list=[])
     {
         $order_info=array();
 
@@ -90,7 +90,7 @@ class OurOrder extends Model
 
             $cart=new Cart();
             $cart->setUid($uid);
-            $cart->deleteCart($cart);
+            $cart->deleteCart($cart_list);
 
             DB::commit();
             success_return(array("order_no"=>$order_info["order_no"]),"创建成功");

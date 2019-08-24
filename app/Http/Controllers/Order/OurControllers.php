@@ -77,4 +77,46 @@ class OurControllers extends XcxControllers
     public function pay(){
         (new DouyinPay())->pay();
     }
+
+
+
+
+    /**
+     * 得到订单列表
+     */
+    public function getOrderList(Request $request)
+    {
+        $status=$request->post("status",-1);
+        $list=OurOrder::getList($this->uid,$status);
+        success_return($list);
+    }
+
+    /**
+     * 得到订单信息
+     */
+    public function getOrderDetail(Request $request)
+    {
+        $id=$request->post("id","");
+        $info=OurOrder::getDetail($this->uid,$id);
+        success_return($info);
+    }
+
+
+    /**
+     * 设置收货
+     */
+    public function setReceiving(Request $request){
+        $id=$request->post("id","");
+        $result=OurOrder::setReceiving($this->uid,$id);
+        $result?success_return("收货成功"):error_return("收货失败，请重试");
+    }
+
+    /**
+     * 物流信息
+    */
+    public function getLogistics(Request $request){
+        $id=$request->post("id","");
+        $result=OurOrder::getLogistics($this->uid,$id);
+        success_return($result);
+    }
 }

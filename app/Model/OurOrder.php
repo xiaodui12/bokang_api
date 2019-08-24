@@ -96,4 +96,85 @@ class OurOrder extends Model
 
     }
 
+
+    /**
+     * 得到列表
+    */
+    public static function getList($uid,$status)
+    {
+        $list=self::where("user_uid",$uid)
+            ->when($status!=-1,function ($query)use($status){
+                return $query->where("order_status",$status);
+            })
+            ->with("ourgoods")
+            ->paginate(15);
+        return $list;
+
+    }
+
+    /**
+     * 得到列表
+     */
+    public static function getDetail($uid,$id)
+    {
+        $list=self::where("user_uid",$uid)
+            ->where("id",$id)
+            ->with("ourgoods","ouraddress")
+            ->first();
+        return $list;
+    }
+    public static function checkOrder($uid,$id,$status=""){
+        $order=self::getDetail($uid,$id);
+        if(empty($order->id)){
+            error_return("订单不存在");
+        }
+        if($status!=""&&$order->order_status!=$status){
+            error_return("订单状态不正确");
+        }
+        return $order;
+    }
+
+    /**
+     * 设置订单收货
+    */
+    public static function setReceiving($uid,$id)
+    {
+
+        $order=self::checkOrder($uid,$id,2);
+        $order->order_status=3;
+        $order->receive_at=date("Y-m-d H:i:s");
+        return $order->save();
+    }
+
+    /**
+     * 设置发货
+    */
+    public static function setSend($uid,$id,$logistics,$logistics_no)
+    {
+        $order=self::checkOrder($uid,$id,1);
+        $order->logistics=$logistics;
+        $order->logistics_no=$logistics_no;
+        $order->send_at=date("Y-m-d H:i:s");
+        return $order->save();
+    }
+
+
+    public static function getLogistics($uid,$id){
+        $order=self::checkOrder($uid,$id,2);
+        $url="https://wuliu.market.alicloudapi.com/kdi?no=".$order->logistics_no;
+        $headers = array();
+        $appcode="354c97818b494856b4cf05860f4f05a6";
+        array_push($headers, "Authorization:APPCODE " . $appcode);
+        $info=curlGet($url,$headers);
+
+        $return_array=array(
+            "logistics"=>$info,
+            "order"=>$order,
+        );
+       return $return_array;
+
+
+
+
+    }
 }

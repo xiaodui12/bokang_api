@@ -49,6 +49,7 @@ class DouyinPay extends Model
 
         $public['sign'] = MD5($c);
 
+        var_dump($public);
 
         return $public;
     }

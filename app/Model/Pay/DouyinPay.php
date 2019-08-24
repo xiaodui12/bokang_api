@@ -18,12 +18,6 @@ class DouyinPay extends Model
 
     public function build_base($data){
 
-        $data["merchant_id"]="1900014826";
-        $data["currency"]="CNY";
-        $data["trade_time"]=time();
-        $data["notify_url"]="https://pingoufan.com/douyin/notify";
-
-
 
 
         $public["app_id"]=$this->appid;
@@ -53,13 +47,18 @@ class DouyinPay extends Model
         $biz_content = array(
             'out_order_no' => "123",
             'uid' => $openid,
+            'merchant_id'=>"1900014826",
             'total_amount' =>"1",
+            "currency"=>"CNY",
             'subject' => "测试订单" ,
             'body' => "测试订单",
-            'valid_time' => '60',
+            "trade_time"=>time(),
+            'valid_time' => 3600,
             'risk_info' =>json_encode(["ip"=>$_SERVER['SERVER_ADDR']]),
         );
-        var_dump($biz_content);
+
+
+
 
         $data=$this->build_base($biz_content);
 

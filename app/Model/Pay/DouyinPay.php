@@ -31,7 +31,7 @@ class DouyinPay extends Model
         $public["format"]="JSON";
         $public["charset"]="utf-8";
         $public["sign_type"]="MD5";
-        $public["timestamp"]=time();
+        $public["timestamp"]=time()."";
         $public["version"]="1.0";
         $public["biz_content"]=(json_encode($data));
         ksort($public);
@@ -53,25 +53,33 @@ class DouyinPay extends Model
         $biz_content = array(
             'out_order_no' => "123",
             'uid' => $openid,
-            'total_amount' =>1,
+            'total_amount' =>"1",
             'subject' => "测试订单" ,
             'body' => "测试订单",
             'valid_time' => '60',
-            'risk_info' => $_SERVER['SERVER_ADDR'],
+            'risk_info' =>json_encode(["ip"=>$_SERVER['SERVER_ADDR']]),
         );
+        var_dump($biz_content);
 
         $data=$this->build_base($biz_content);
 
 
         $vars = 'app_id='.$data['app_id'].'&biz_content='.$data['biz_content'].'&charset='.$data['charset'].'&method='.$data['method'].'&sign='.$data['sign'].'&sign_type='.$data['sign_type'].'&timestamp='.$data['timestamp'].'&version='.$data['version'];
 
+        $vars=$this->trimall($vars);
         $url=$this->pay_url;
+
 
 
 
         $data= curlPostPay($url,$vars);
         var_dump($data);
     }
+    function trimall($str){
+        $qian=array(" ","　","\t","\n","\r");
+        return str_replace($qian, '', $str);
+    }
+
 
 
 

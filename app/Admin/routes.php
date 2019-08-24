@@ -25,6 +25,8 @@ Route::group([
     $router->resource('banners', System\BannerController::class);
     $router->resource('search', System\SearchController::class);
     $router->resource('supplierapply', System\SupplierApplyController::class);
+    $router->resource('our-orders', Our\OurOrderController::class);
+
 
 
 

@@ -10,11 +10,16 @@ class OurOrder extends Model
 {
 
     protected $table = 'bokang_our_order';
+
+
+    public $type=["普通订单"];
+    public $status=["未付款","已付款","已发货","已收货"];
     protected $guarded=[];
     public function ourgoods(){
         return $this->hasMany('App\Model\OurOrderGoods',"order_id");
     }
     public function ouraddress(){
+
         return $this->hasOne('App\Model\OurOrderAddress',"order_id");
     }
 
@@ -154,10 +159,17 @@ class OurOrder extends Model
         $order=self::checkOrder($uid,$id,1);
         $order->logistics=$logistics;
         $order->logistics_no=$logistics_no;
+        $order->order_status=2;
         $order->send_at=date("Y-m-d H:i:s");
         return $order->save();
     }
 
+    public static function setPay($uid,$id){
+        $order=self::checkOrder($uid,$id,0);
+        $order->order_status=1;
+        $order->order_pay_time=date("Y-m-d H:i:s");
+        return $order->save();
+    }
 
     public static function getLogistics($uid,$id){
         $order=self::checkOrder($uid,$id,2);

@@ -52,7 +52,7 @@ class DouyinPay extends Model
 
         return $public;
     }
-    public function pay(){
+    public function pay($openid){
 
 
         $biz_content = array(

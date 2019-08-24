@@ -75,7 +75,7 @@ class OurControllers extends XcxControllers
 
 
     public function pay(){
-        (new DouyinPay())->pay();
+        (new DouyinPay())->pay($this->openid);
     }
 
 

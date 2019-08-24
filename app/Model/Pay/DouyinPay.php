@@ -62,7 +62,7 @@ class DouyinPay extends Model
             'subject' => "测试订单" ,
             'body' => "测试订单",
             'valid_time' => '60',
-            'risk_info' => '127.0.0.1',
+            'risk_info' => $_SERVER['SERVER_ADDR'],
         );
 
         $data=$this->build_base($biz_content);

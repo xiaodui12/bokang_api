@@ -39,15 +39,11 @@ function curlPostPay($url,$post_data,$type="json"){
 
     //关闭URL请求
     curl_close($curl);
-    var_dump($error_no);
     $error_no!=0&&error_return("外部接口调取错误，错误码：".$error_no);
 
 
-    if($type=="json"){
-        return json_decode($data);
-    }else{
-        return $data;
-    }
+    return json_decode($data);
+
 
 }
 

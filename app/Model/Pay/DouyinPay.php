@@ -57,7 +57,7 @@ class DouyinPay extends Model
 
         $biz_content = array(
             'out_order_no' => "123",
-            'uid' => "acXqu.bomiUAzS88",
+            'uid' => $openid,
             'total_amount' =>1,
             'subject' => "测试订单" ,
             'body' => "测试订单",

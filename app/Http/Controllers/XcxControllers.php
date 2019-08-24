@@ -26,6 +26,7 @@ class XcxControllers extends Controller
         }
 
         $token=$request->post("token","");
+
         empty($token)&&error_return("参数错误");//判断参数是否为空
 
         $token_m=new Token();

@@ -35,21 +35,15 @@ class DouyinPay extends Model
         $public["version"]="1.0";
         $public["biz_content"]=(json_encode($data));
         ksort($public);
-
         $var = '';
-
         foreach($public as $key => $value){
-
             $var .= $key.'='.$value.'&';
-
         }
         $var = trim($var,'&');
 
         $c = $var.$this->secret;
 
         $public['sign'] = MD5($c);
-
-        dump($public);
 
         return $public;
     }

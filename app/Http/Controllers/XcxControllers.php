@@ -25,7 +25,7 @@ class XcxControllers extends Controller
             $this->appid=$Referer_array[3];//从数组中提取出appid
         }
 
-        $token=$request->input("token","");
+        $token=$request->post("token","");
         empty($token)&&error_return("参数错误");//判断参数是否为空
 
         $token_m=new Token();

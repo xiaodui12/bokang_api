@@ -52,7 +52,7 @@ class DouyinPay extends Model
             "currency"=>"CNY",
             'subject' => "测试订单" ,
             'body' => "测试订单",
-            "trade_time"=>time(),
+            "trade_time"=>time()."",
             'valid_time' => 3600,
             'risk_info' =>json_encode(["ip"=>$_SERVER['SERVER_ADDR']]),
         );

@@ -13,6 +13,8 @@ namespace App\Http\Controllers\Tuan;
 use App\Http\Controllers\XcxControllers;
 use App\Model\Order;
 use App\Model\TeamApply;
+use App\Model\TeamUser;
+use App\Model\WechetGroup;
 use Illuminate\Http\Request;
 
 class IndexControllers extends XcxControllers
@@ -48,6 +50,47 @@ class IndexControllers extends XcxControllers
         $tuan_apply=new TeamApply();
         $result=$tuan_apply->getapply($this->uid);//提交申请
         success_return($result,"");
+    }
+
+
+
+    public function tuanList(Request $request){
+
+        $lon=$request->post("lon","0");
+        $lat=$request->post("lat","0");
+
+        $list=(new WechetGroup())->getListByDistance($lon,$lat);
+
+        success_return($list);
+
+    }
+
+    /**
+     * 团队信息
+    */
+    public function userTeam(){
+        $team_status=(new TeamUser())->getTeam($this->uid);
+        $team_info=[];
+        if(!empty($team_status)&&$team_status->status=1)
+        {
+            $team_info=(new WechetGroup())->getDetail($team_status->tuan_id);
+        }
+        success_return(array("team_status"=>$team_status,"team_info"=>$team_info));
+
+    }
+
+    public function joinApply(Request $request)
+    {
+        $save["name"]=$request->post("name","");
+        $save["phone"]=$request->post("phone","");
+        $save["wechet"]=$request->post("wechet","");
+        $save["lon"]=$request->post("lon","");
+        $save["lat"]=$request->post("lat","");
+        $save["tuan_id"]=$request->post("tuan_id","");
+        $save["remark"]=$request->post("remark","");
+        $result=(new TeamUser())->AddTeam($this->uid,$save);
+        $result?success_return("申请成功"):error_return("申请失败，请重试");
+
     }
 
 }

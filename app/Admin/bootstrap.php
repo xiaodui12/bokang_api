@@ -20,3 +20,5 @@
 
 Encore\Admin\Form::forget(['map', 'editor']);
 Encore\Admin\Form::extend('ueditor', \App\Admin\Extensions\Form\uEditor::class);
+Encore\Admin\Form::extend('map', Encore\Admin\Form\Field\Map::class);
+

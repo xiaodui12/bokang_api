@@ -27,15 +27,11 @@ Route::group([
     $router->resource('supplierapply', System\SupplierApplyController::class);
     $router->resource('our-orders', Our\OurOrderController::class);
 
+    $router->resource('wechet-groups', wechet\WechetGroupController::class);
 
 
 
     $router->post('goodscreate', "Goods\GoodsInfoController@create");
-
-
-
-
-
 
 
 

@@ -72,6 +72,12 @@ Route::post('/order/checkconfirm',  'Order\IndexControllers@order_detail_confirm
 Route::post('/tuan/apply',  'Tuan\IndexControllers@apply');
 Route::post('/tuan/getapply',  'Tuan\IndexControllers@apply_status');
 
+Route::post('/tuan/gettuanlist',  'Tuan\IndexControllers@tuanList');
+Route::post('/tuan/userteam',  'Tuan\IndexControllers@userTeam');
+
+Route::post('/tuan/joinapply',  'Tuan\IndexControllers@joinApply');
+
+
 
 
 /**--------   团长接口  --------------*/
@@ -139,6 +145,8 @@ Route::post('/Order/our/getlist',  'Order\OurControllers@getOrderList');
 Route::post('/Order/our/getdetail',  'Order\OurControllers@getOrderDetail');
 Route::post('/Order/our/setreceive',  'Order\OurControllers@setReceiving');
 Route::post('/Order/our/getlogistics',  'Order\OurControllers@getLogistics');
+
+
 
 
 

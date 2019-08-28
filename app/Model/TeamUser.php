@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TeamUser extends Model
 {
+    use SoftDeletes;
     protected $table = 'bokang_team_user';
 
 

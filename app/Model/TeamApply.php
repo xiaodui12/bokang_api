@@ -18,9 +18,9 @@ class TeamApply extends Model
     }
 
     //成功审核
-    public function pass_apply($id,$uid)
+    public function pass_apply($id,$uid,$other_info=[])
     {
-        $return=$this->setapply($id,$uid,true);
+        $return=$this->setapply($id,$uid,true,"",$other_info);
         return $return;
     }
     //失败审核
@@ -32,7 +32,7 @@ class TeamApply extends Model
     /**
      * 审核执行
      */
-    private function setapply($id,$uid,$status,$msg="")
+    private function setapply($id,$uid,$status,$msg="",$other_info=[])
     {
         DB::beginTransaction();
         try{
@@ -48,6 +48,12 @@ class TeamApply extends Model
             if($status){
                 $result1=(new Team())->add_one($uid);
                 $result2=(new Member())->where("id",$uid)->update(array("is_tuan"=>1));
+
+                $result3=(new WechetGroup())->addWechet($other_info,$uid);
+                if(!$result3["status"]){
+                    throw new Exception($result3["msg"]);
+                }
+
                 if(!$result1||!$result2){
                     throw new Exception("审核失败，请重试");
                 }
@@ -55,7 +61,7 @@ class TeamApply extends Model
             DB::commit();
             return array("status"=>1,"msg"=>"审核成功");
         }catch (Exception $e){
-            DB::reback();
+            DB::rollback();
             return array("status"=>0,"msg"=>$e->getMessage());
         }
     }
@@ -83,7 +89,6 @@ class TeamApply extends Model
         foreach ($data as $key=>$value){
             $this->$key=$value;
         }
-
         $result=$this->save($data);
         if(!$result){
             error_return("申请失败，请重试！");

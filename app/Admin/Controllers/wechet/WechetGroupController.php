@@ -26,7 +26,7 @@ class WechetGroupController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new WechetGroup);
-
+        $grid->model()->OrderBy("created_at","desc");
         $grid->column('id', __('Id'));
         $grid->column('title', __('群组名'));
         $grid->column('address', __('群组地址'));

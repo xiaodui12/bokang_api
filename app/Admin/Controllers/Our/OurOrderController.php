@@ -46,9 +46,9 @@ class OurOrderController extends AdminController
                 $table->setRows($goods_list);
 
                 $address = $model->ouraddress()->get()->map(function ($comment) {
-                    return $comment->only(['name','mobile', 'province',"city","area","zip"]);
+                    return $comment->only(['name','mobile', 'province',"city","area","address","zip"]);
                 });
-                $table1=new Table(['收货人', '手机号', '省',"市","区","邮编"]);
+                $table1=new Table(['收货人', '手机号', '省',"市","区","地址","邮编"]);
                 $address_list=$address->toArray();
                 $table1->setRows($address_list);
 

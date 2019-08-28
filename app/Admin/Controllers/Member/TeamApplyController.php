@@ -30,7 +30,7 @@ class TeamApplyController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new TeamApply);
-
+        $grid->model()->OrderBy("created_at","desc");
 
 
         $info_array=[

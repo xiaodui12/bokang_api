@@ -221,6 +221,12 @@ class Order extends Model
     }
 
 
+    public static function getorderinfo($order_id)
+    {
+        $order_info=self::where("id",$order_id)->first();
+        return $order_info;
+    }
+
 
 
 

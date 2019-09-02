@@ -20,7 +20,7 @@ function curlPostPay($url,$post_data,$type="json"){
     ];
     //设置头文件的信息作为数据流输出
     curl_setopt($curl, CURLOPT_HEADER, 0);
-    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+//    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
     curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
     curl_setopt($curl, CURLOPT_SSLVERSION, false);
@@ -41,7 +41,7 @@ function curlPostPay($url,$post_data,$type="json"){
     $error_no!=0&&error_return("外部接口调取错误，错误码：".$error_no);
 
 
-    return json_decode($data);
+    return $data;
 
 
 }

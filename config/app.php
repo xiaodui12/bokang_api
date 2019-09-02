@@ -168,7 +168,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Stevenyangecho\UEditor\UEditorServiceProvider::class,
         SunnyShift\Uploader\UploaderServiceProvider::class,
-
+        Overtrue\LaravelWeChat\ServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -232,7 +232,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Uploader' => SunnyShift\Uploader\UploaderServiceProvider::class,
-
+        'EasyWeChat' => Overtrue\LaravelWeChat\Facade::class,
     ],
 
 ];

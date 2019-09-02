@@ -3,6 +3,9 @@
 namespace App\Model\Pay;
 
 use App\Model\MpConfig;
+use App\Model\Order;
+use App\Model\OurOrder;
+use EasyWeChat\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
@@ -17,12 +20,9 @@ class DouyinPay extends Model
     protected $sign_type="RSA2";
     protected $merchant_id="1900014826";
 
-    protected $privateKey="MIIEpQIBAAKCAQEAjFs4N+3MkyUmwCEydME2hlRL4b3tbGet+jZIPIRWYvl0sXixwR/jRwO/RzIwOKSmZTqcP6v8WRiBMEkweqDbQatrzMULSheS3IRxmO7QYi8GiwOD6OwVd52IOXcFzu/AloHuRybaziUpSHNJ3ApAoqZPSqqQowcMXKiPZHyGY5nZO97JpIc5iMJrFOXzoxRZ7JduOeoResVK/hRPs8xC6+P3apxIL63Jkw0MwT5qXeyu3XTCaMhcczT35Tjepa24HauMnxTjJ6FQBpiFW4FJKatG0Ank/ZP65J6eGI0H9u5tk1N2pQV0OfWYxQGzDDrzoG3Ox3BDyAL6djfBXpZf2wIDAQABAoIBABoUsUOjSoplMugswwVzCcC4VUljU4T7VxbRk2a7aJoHpKl9tfofBMqjZZ3DM7ay0cCpvXMPcFrV9NuWHg4LafKv+d4ZF1nzO3UCn2E9rzcvadXXF2HmzK5ndXLILSog3vaYukA6dhosSZmO4sCinxQaN022mB3TJ3boU4zmnspO+jcVgoIcmrlf5aJCO/JhrSgJCsruTRtfACvfOGBDxNV3OsoHVoNcyZ4kmM0pi81Mlab5bInuAfgcSwWsrSuNEgwVBNoFODT6fCcPuHFbKbUAk5SnsivZQEzuTpGBzrte9/8EPvEd9SDS8wZ9Jaj5Wgk+wcuWkv9KOQtNrT5CRrECgYEA61JDb7YMr4cCWAi0YQKS2EsQPJGiBx12qHGdfowBY43tPDsC/LMBzzGqfcaJn6xhVJi1dYvM3ikwdTsnJZFv2TVPYv12wwTqW6A77P8gz5IhdAiM40KQ1CEiVV71mroqkjxO8/ozaqpQv/s2V5yv9Amz377IDsn0UMUpZJsuzq8CgYEAmLCk8hfeHxeD+UWgj+GYron61kGhoiWOTDdMOOLsRg1dsHBCINc0g2ELTKP20jOTR1vDpBL0Q5g2Tr3rfPPn0S1qDyoWfWzHqf5EDW2Uq4kclVQYbCanlB0bw4lcOaAz/7Ua1g1O8SjjnsfbVJSFAc30RIACa0XXU8QAmlDOLJUCgYEAoCweOqtvdwouTj2eiWl3CkINiyyVXMJxQbYTvU8OovS3xYdlQRuW37Cum23HvydWGH7ZBGljyNPAaAsbWjbkKrRelMJxU8zEuBkYsPf3HVIZ8yDexNFKQxlKhVFdWzPcRi1GkEp9NN04mXQkSP4dxb3U8TaqdWaBJXkN86ys74ECgYEAj1TCgb+F8wnQCR8jKe1LtgwwOxBA+kTm3wTJuFzMDrZdTFMUwF9EHE/sm3UPLSLdDg9GB68DPLCVyjTd6d3LrsBC3xlTI0oJ47mbiD9lX+DFxCe9BUkD5jWs6lD3EeEg7tjC6Ex13kvT4Ckb6rnAYYFD20mO+8QD7c4AAtv3rkECgYEA3OowPVPRh7WrD8EhBc0bIr2GkcFYe+yfK2z7dm6wqZ2dOxot9CK4XSiyg6XgkZOuowUaX3k1px2xEDFnERJAs8Nqx8MzSDggbrfMAFFWJS2VnLNlQJuWkOdUDikcJ6dts4NKVTkxEsbnVLObFnSvIwYGcYkiBLtf9oqvh+E37TQ=";
-
+     protected $privateKey="MIIEogIBAAKCAQEAp5zBRnxEUm+C4Q2Sf0jgkpKD3Gr/AkFnc6v8hQ/uv+Y0zgOzGMQ89M1S90Pq2SLI8PKVR9wZ0PkeM5qqsB28VFtmmudoa3juPCtyBCs4Gxm5AQBGvLyapMkRXb6RcTChh3r1wOEwXEpyVG0iiL4MtkahBVeaPqssRo8BVokrKtfoyVJXTQgkkfwHabkQPL3jTn0TAsN7WPdyRkeSV1BNP2fHQv5f9RAqEwHTSfHKh62SiMg+WiU/71KiHrcg9HArqHLo2mYJ7SaOG1I54+mTlifXr4nW6v5kakdM4Xe/xSenP9wbKqodyVkwLIuOixDU8SAeE3C0hgQOi6WcjdaZGQIDAQABAoIBAGAaoDNTAzWlHIz/5DS5S5KfEZ4rd0YKzE9lmKeO6Bz92N8a/fDAbBcNN3nxZlHUARUucmu+hsrsW+XI0/+hPR+9PIqrDpM4xpiXbIt5YHUhfZNWXjjPh3feleeDYg9di/CLjydltv3j7cP8w2VWWyGUQ7U1copmST+3tVOx2J96ORxS0q1CKB8msMiznZ/FZc7LOsQn/l4xXSeAW2Ddp8fiRFiLydmZbeKhw9cl5fdMzLRy4H68tDyM68Xb/RjNy9EzlizCKdbn2crd4yQLssptnlYsQILu1sNzwk7kO98LYz9h/VRLvV8ZwK6FZEmWr1dsqwSmdz8/PZqIVXrw34UCgYEA1qkZOPlwvFx7IkeGB+Lhv1mrMXkJaf0QgZHZbZvqYDr/3JMJtMiAySHa0hfQtkCSJtATir3phniV/7hiv9q5HflWDETWh41pE4lfycDHMr5QhbGo2iTXwK5b+R1oYPthSLLrakwkUch9TYj7nAhbEVQSS3yaWCHmjfNjwLN9uZMCgYEAx+QmPZNi8Ka2Bw7cu/Uz1E0a5vxKW1RscikE2Pk5FJThzr/zdAsRKeilTTuSyDMBJqxe9uUZsEIWYCXeotZfWYCZjvASTwGEH/ofMoDe+0kiFY7Qh7XkvF3hWuavaJN7nl+PMJdkGMpGYDHYNe+QLBeLvsFdl9/gujmIwhzdHiMCgYB0vFDzIvOj+8caxTqmX0PVA7aNmPz9npmzXNWZPgkfe/ZYxb2pisA+oSKWzky6UDMq2E1ITi8I6droziUloJS7MDUTRvxDiytxbGujFCs/9S9lBVCGETMjna52sv9ofkxRdLuBexblQtqhp7TtDb44lje8xW5KL2VqHMpKqVHd8QKBgBePACLJuCN8wn9adRGB+LXQ0JbgrTLOZGmgA/4+gUe3tFVVsi+/DirOTI0ptEb8G+qe7iJTJg/r+g8i53ZxpZM64N5D1SSSnSvXos2k+qLLH8VCq7kS6v54YhMAlTPSDgPAZ3Pmo9l4HYtA1KamsWtA6yt0Rr+blzTbiw61sCnZAoGASeFsgYL26bcCHA+Qb8JxReqcs+/GF/ryg+VtMaAXO5r2q4nWm/nrdi7Qo44/rluOQ4pgOMpGdxPeTho0DJDdmza8xZo3w51KMYokFIzrWItPiHadz3F7+TE9/28iC2yK1XP3UbS5btM1G+fkzyjHXVCwN3dI4vWWqku3hJXRyPo=";
 
     public function build_base($data){
-
-
         ksort($data);
         $var = '';
         foreach($data as $key => $value){
@@ -36,61 +36,114 @@ class DouyinPay extends Model
 
         return $data;
     }
-    public function pay($openid){
 
 
 
-        $order_id=time()."_123";
-        $price=1;
-        $biz_content = array(
-            'body' => "测试订单",
-            'subject' => "测试订单" ,
-            'out_trade_no' => $order_id,
-            'timeout_express' => "7c",
-            'merchant_id'=>"1900014826",
-            'total_amount' =>$price,
-            "product_code"=>"QUICK_MSECURITY_PAY"
-        );
+    public function buildWxPay($order_info,$openid)
+    {
+        $config = [
+            // 必要配置
+            'app_id'             => 'wxcb1ae450a2189056',
+            'mch_id'             => '1511681811',
+            'key'                => '29c47844e4cd2eef0060bf844cc17053',   // API 密钥
 
-        $data=$this->buildalipay($biz_content);
 
-        $pay_info=[
-            "app_id"=>$this->appid,
-            "sign_type"=>"MD5",
-            "timestamp"=>time()."",
-            "trade_no"=>$order_id,
-            "merchant_id"=>$this->merchant_id,
-            "uid"=>$openid,
-            "total_amount"=>$price*100,
-            "params"=>json_encode(["url"=>$data])
+            'notify_url'         => 'https://pingoufan.com',     // 你也可以在下单时单独设置来想覆盖它
         ];
-        $pay_info=$this->build_base($pay_info);
-
-        $pay_info["method"]="tp.trade.confirm";
-        $pay_info["pay_channel"]="tp.trade.confirm";
-        $pay_info["pay_type"]="ALIPAY_APP";
-        $pay_info["risk_info"]=json_encode(["ip"=>$_SERVER['SERVER_ADDR']]);
+        $app =Factory::payment($config);
 
 
-        success_return($pay_info);
+        $isContract = true;
+
+        $result = $app->order->unify([
+            'body' => '腾讯充值中心-QQ会员充值',
+            'out_trade_no' => '20150806125346',
+            'total_fee' => 88,
+            'spbill_create_ip' => '123.12.12.123', // 可选，如不传该参数，SDK 将会自动获取相应 IP 地址
+            'notify_url' => 'https://pay.weixin.qq.com/wxpay/pay.action', // 支付结果通知网址，如果不设置则会使用配置里的默认地址
+            'trade_type' => 'JSAPI', // 请对应换成你的支付方式对应的值类型
+        ]);
+
+
+        var_dump(123);
+        var_dump($result);
+        exit;
+
     }
 
 
 
-    public function buildalipay($data)
-    {
+    public function pay($openid,$order_info,$type){
 
+
+
+        if($type=="wx"){
+            $pay_info=$this->buildWxPay($order_info,$openid);
+        }else{
+            $pay_info=$this->buildAliPay($order_info,$openid);
+        }
+
+        return $pay_info;
+    }
+
+    /**
+     * 得到支付宝支付基础数据
+    */
+    public function getalipaybase($order_info){
+        $biz_content = array(
+            'body' => $order_info->order_no,
+            'subject' => "测试订单" ,
+            'out_trade_no' => $order_info->order_no,
+            'timeout_express' => "7c",
+            'total_amount' => $order_info->order_amount,
+            "product_code"=>"QUICK_MSECURITY_PAY"
+        );
         $alipay_info=array(
-            "app_id"=>"2019083166763325",
+            "app_id"=>"2019090266833344",
             "method"=>"alipay.trade.app.pay",
             "charset"=>"utf-8",
             "sign_type"=>$this->sign_type,
             "timestamp"=>date("Y-m-d H:i:s"),
             "version"=>"1.0",
             "notify_url"=>"1.0",
-            "biz_content"=>json_encode($data),
+            "biz_content"=>json_encode($biz_content),
         );
-        return $this->buildGetUrl($alipay_info);
+
+        $return["url"]=$this->buildGetUrl($alipay_info);
+        $url="https://openapi.alipay.com/gateway.do";
+        var_dump($return["url"]);
+        var_dump(curlPostPay($url,$return["url"]));
+        exit;
+
+        $return["trade_no"]=$order_info->order_no;
+        $return["price"]=$order_info->order_amount;
+        return $return;
+    }
+    public function buildalipay($order_info,$openid)
+    {
+
+
+        $data=$this->getalipaybase($order_info);
+
+        $pay_info=[
+            "app_id"=>$this->appid,
+            "sign_type"=>"MD5",
+            "timestamp"=>time()."",
+            "trade_no"=>$data["trade_no"],
+            "merchant_id"=>$this->merchant_id,
+            "uid"=>$openid,
+            "total_amount"=>$data["price"]*100,
+            "params"=>json_encode(["url"=>$data])
+        ];
+        $pay_info=$this->build_base($pay_info);
+
+        $pay_info["method"]="tp.trade.confirm";
+        $pay_info["pay_channel"]="ALIPAY_NO_SIGN";
+        $pay_info["pay_type"]="ALIPAY_APP";
+        $pay_info["risk_info"]=json_encode(["ip"=>$_SERVER['SERVER_ADDR']]);
+
+
+        success_return($pay_info);
     }
     function trimall($str){
         $qian=array(" ","　","\t","\n","\r");

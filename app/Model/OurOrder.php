@@ -127,6 +127,7 @@ class OurOrder extends Model
             ->first();
         return $list;
     }
+
     public static function checkOrder($uid,$id,$status=""){
         $order=self::getDetail($uid,$id);
         if(empty($order->id)){

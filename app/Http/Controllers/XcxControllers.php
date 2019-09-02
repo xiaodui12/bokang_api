@@ -20,9 +20,16 @@ class XcxControllers extends Controller
     public function __construct(Request $request)
     {
         $Referer=$request->header("Referer");//得到hender数据Referer
-        if(!empty($Referer)){
+
+        $url="toutiao";
+        if(!empty($Referer)&&!strpos($Referer,"toutiao")){
             $Referer_array=(explode("/", $Referer));//Referer转成数组
             $this->appid=$Referer_array[3];//从数组中提取出appid
+        }
+        if(!empty($Referer)&&strpos($Referer,"toutiao")>0){
+            $arr = parse_url($Referer);
+            $arr_query = $this->convertUrlQuery($arr['query']);
+            $this->appid=$arr_query["appid"];//从数组中提取出appid
         }
 
         $token=$request->post("token","");

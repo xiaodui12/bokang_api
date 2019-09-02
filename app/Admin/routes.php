@@ -28,6 +28,7 @@ Route::group([
     $router->resource('our-orders', Our\OurOrderController::class);
 
     $router->resource('wechet-groups', wechet\WechetGroupController::class);
+    $router->resource('team-users', Team\TeamUserController::class);
 
 
 

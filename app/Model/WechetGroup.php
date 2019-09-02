@@ -11,6 +11,11 @@ class WechetGroup extends Model
 
     protected $table = 'bokang_wechet_group';
 
+    public function teamuid() {
+        return $this->hasMany('App\Model\TeamUser',"tuan_id","id");
+    }
+
+
     public function getListByDistance($lon,$lat)
     {
 

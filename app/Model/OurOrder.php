@@ -11,7 +11,6 @@ class OurOrder extends Model
 
     protected $table = 'bokang_our_order';
 
-
     public $type=["普通订单"];
     public $status=["未付款","已付款","已发货","已收货"];
     protected $guarded=[];

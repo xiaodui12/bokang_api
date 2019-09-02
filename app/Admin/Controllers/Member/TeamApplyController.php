@@ -32,7 +32,6 @@ class TeamApplyController extends AdminController
         $grid = new Grid(new TeamApply);
         $grid->model()->OrderBy("created_at","desc");
 
-
         $info_array=[
             array("field"=>"tuanuid.nickname","title"=>"昵称","type"=>"value"),//展示昵称
             array("field"=>"tuanuid.head","title"=>"头像","type"=>"image"),//展示真实姓名
@@ -46,7 +45,6 @@ class TeamApplyController extends AdminController
             array("field"=>"status","title"=>"状态","type"=>"array","array"=>array(0=>"申请中","1"=>"审核成功",2=>"审核失败")),
             array("field"=>"created_at","title"=>"申请时间","type"=>"value"),
         ];
-
         BaseControllers::setlist_show($grid,$info_array);//拼接列表展示数据
         BaseControllers::set_auth($grid,2);//设置版面权限
 

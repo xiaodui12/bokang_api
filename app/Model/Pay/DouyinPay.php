@@ -40,7 +40,7 @@ class DouyinPay extends Model
 
 
 
-        $order_id="123";
+        $order_id=time()."_123";
         $price=1;
         $biz_content = array(
             'body' => "测试订单",

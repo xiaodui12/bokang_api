@@ -45,4 +45,29 @@ class XcxControllers extends Controller
         $this->uid=$user_info["uid"];
 //        $this->uid=1;
     }
+    /**
+     * 将字符串参数变为数组
+     * @param $query
+     * @return array array (size=10)
+    'm' => string 'content' (length=7)
+    'c' => string 'index' (length=5)
+    'a' => string 'lists' (length=5)
+    'catid' => string '6' (length=1)
+    'area' => string '0' (length=1)
+    'author' => string '0' (length=1)
+    'h' => string '0' (length=1)
+    'region' => string '0' (length=1)
+    's' => string '1' (length=1)
+    'page' => string '1' (length=1)
+     */
+    function convertUrlQuery($query)
+    {
+        $queryParts = explode('&', $query);
+        $params = array();
+        foreach ($queryParts as $param) {
+            $item = explode('=', $param);
+            $params[$item[0]] = $item[1];
+        }
+        return $params;
+    }
 }

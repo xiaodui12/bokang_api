@@ -122,13 +122,14 @@ class GoodsController extends AdminController
         $goodsBase->set_number("basic","基础销量",$value?$value:0);
         $goodsBase->set_number("sales","销量",$value?$value:0);
         $goodsBase->settext("disseminate","宣传视频",$value?$value:"");
-        $goodsBase->settext("sku","库存",$value?$value:"");
+        $goodsBase->set_number("sku_number","库存",["sku_number"=>$value["sku"]]);
         $goodsBase->set_imgs("pic","图片",$value?$value:"/vendor/laravel-admin/AdminLTE/dist/img/user2-160x160.jpg");
 
         $goodsBase->set_sku($value);
         $goodsBase->set_uedit("content","内容",$value?$value:"");
 
         $form_info=$goodsBase->getform_info();
+
 
         return $form_info;
     }

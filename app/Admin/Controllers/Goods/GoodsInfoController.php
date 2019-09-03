@@ -15,7 +15,6 @@ class GoodsInfoController extends Controller
     public function create(Request $request){
         $data=$request->post();
 
-
         $goods=new Goods();
         $goods->addGoods($data);
         success_return("新增成功");

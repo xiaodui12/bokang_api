@@ -40,7 +40,7 @@ class Goods extends Model
         $goods["old_price"]=empty($data["old_price"])?"0":$data["old_price"];
         $goods["new_price"]=empty($data["new_price"])?"0":$data["new_price"];
         $goods["basic"]=empty($data["basic"])?"0":$data["basic"];
-        $goods["sku"]=empty($data["sku"])?"0":$data["sku"];
+        $goods["sku"]=empty($data["sku_number"])?"0":$data["sku_number"];
         $goods["sales"]=empty($data["sales"])?"0":$data["sales"];
         $goods["disseminate"]=empty($data["disseminate"])?"0":$data["disseminate"];
         $goods["cover"]=empty($data["pic"][0])?"":$data["pic"][0];
@@ -61,6 +61,7 @@ class Goods extends Model
                 $goods_result=self::insertGetId($goods);
                 $goods_id=$goods_result;
             }else{
+
                 $goods_result=self::where("id",$data["id"])->update($goods);
                 $goods_id=$data["id"];
             }
@@ -89,17 +90,16 @@ class Goods extends Model
             }
 
             $result2=GoodsProp::where("goods_id",$goods_id)->delete();
-
             $result=GoodsProp::insert($save_prop);
             if($result===false||$result2===false)
             {
-
                 throw new Exception("添加出错1");
             }
 
 
 
             if(!empty($data["name"])){
+                $goods=[];
                 $goods["sku"]=0;
                 foreach ($data["name"] as $key=>$value)
                 {
@@ -111,6 +111,7 @@ class Goods extends Model
                     $goods_sku_one["goods_id"]=$goods_id;
                     $goods_sku[]=$goods_sku_one;
                 }
+                self::where("id",$data["id"])->update($goods);
             }
 
             $result2=GoodsSku::where("goods_id",$goods_id)->delete();
@@ -121,6 +122,7 @@ class Goods extends Model
             {
                 throw new Exception("添加出错2");
             }
+
 
             DB::commit();
             return true;

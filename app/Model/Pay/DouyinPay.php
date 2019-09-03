@@ -103,8 +103,6 @@ class DouyinPay extends Model
         $aopclient->postCharset = 'UTF-8';
         $aopclient->format = "json";
 
-
-
         $appRequest = new \AlipayTradeAppPayRequest();
         $biz_content = array(
             'body' => $order_info->order_no,

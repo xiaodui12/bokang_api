@@ -21,9 +21,7 @@ class OurBackControllers
 
         Remark::add($data);
 
-        (new DouyinPay)->aliBack($data);
-
-        '{"gmt_create":"2019-09-03 09:48:48",
+        $data='{"gmt_create":"2019-09-03 09:48:48",
         "charset":"UTF-8",
         "seller_email":"44136977@qq.com",
         "subject":"\u6d4b\u8bd5\u8ba2\u5355",
@@ -50,6 +48,11 @@ class OurBackControllers
         "buyer_logon_id":"952***@qq.com",
         "point_amount":"0.00"
         }';
+        $data=json_decode($data,1);
+
+        (new DouyinPay)->aliBack($data);
+
+
 
 
     }

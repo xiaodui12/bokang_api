@@ -106,8 +106,6 @@ class DouyinPay extends Model
 
 
         $appRequest = new \AlipayTradeAppPayRequest();
-        $order_info->order_no=$order_info->order_no."_".rand(10,999);
-
         $biz_content = array(
             'body' => $order_info->order_no,
             'subject' => "测试订单" ,
@@ -134,10 +132,11 @@ class DouyinPay extends Model
         $aopclient=new \AopClient();
         $aopclient->alipayrsaPublicKey   =$this->alipayrsaPublicKey;
         $flag = $aopclient->rsaCheckV1($data, NULL, "RSA2");
-        Remark::add($flag);
-        if($data['trade_status'] == 'TRADE_SUCCESS' ){
+
+        if($data['trade_status'] == 'TRADE_SUCCESS'&&$flag ){
             //业务处理
-            Remark::add("success");
+
+            OurOrder::checkOrderPay($data["out_trade_no"],$data["buyer_pay_amount"]);
             echo 'success';
 
         }else{

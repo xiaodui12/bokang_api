@@ -128,6 +128,17 @@ class OurOrder extends Model
         return $list;
     }
 
+    /**
+     * 得到列表
+     */
+    public static function getDetailByOrderno($order_no)
+    {
+        $info=self::where("order_no",$order_no)
+            ->first();
+        return $info;
+    }
+
+
     public static function checkOrder($uid,$id,$status=""){
         $order=self::getDetail($uid,$id);
         if(empty($order->id)){
@@ -184,9 +195,15 @@ class OurOrder extends Model
             "order"=>$order,
         );
        return $return_array;
-
-
-
-
+    }
+    public static function checkOrderPay($order_no,$price)
+    {
+        $info=self::getDetailByOrderno($order_no);
+        if($info->order_status!=0){
+            return false;
+        }
+        $info->order_status=1;
+        $info->order_pay_time=date("Y-m-d H:i:s");
+        $info->save();
     }
 }

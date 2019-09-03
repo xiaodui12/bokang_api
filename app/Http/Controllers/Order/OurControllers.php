@@ -77,9 +77,9 @@ class OurControllers extends XcxControllers
     public function pay(Request $request){
 
         $type=$request->post("type","ali");
-        $order_id=$request->post("order_id","4");
+        $order_no=$request->post("order_no","");
 
-         $order_info=OurOrder::getDetail($this->uid,$order_id);
+         $order_info=OurOrder::getDetailByOrderno($order_no);
         $result=(new DouyinPay())->pay($this->openid,$order_info,$type);
         success_return($result);
     }

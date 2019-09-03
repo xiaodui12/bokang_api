@@ -124,11 +124,6 @@ class DouyinPay extends Model
 
         $return["url"]=$response;
 
-//        $url="https://openapi.alipay.com/gateway.do";
-//
-//        var_dump(curlPostPay($url,$return["url"]));
-//        exit;
-
         $return["trade_no"]=$order_info->order_no;
         $return["price"]=$order_info->order_amount;
         return $return;

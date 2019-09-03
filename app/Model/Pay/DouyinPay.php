@@ -105,10 +105,10 @@ class DouyinPay extends Model
 
 
         $appRequest = new \AlipayTradeAppPayRequest();
-
+        $order_info->order_no=$order_info->order_no."_".rand(10,999);
 
         $biz_content = array(
-            'body' => $order_info->order_no."_".rand(10,999),
+            'body' => $order_info->order_no,
             'subject' => "测试订单" ,
             'out_trade_no' => $order_info->order_no,
             'timeout_express' => "7c",

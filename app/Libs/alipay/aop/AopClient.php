@@ -1,5 +1,6 @@
 <?php
 
+
 require_once 'AopEncrypt.php';
 
 class AopClient {
@@ -72,6 +73,7 @@ class AopClient {
 		$stringToBeSigned = "";
 		$i = 0;
 		foreach ($params as $k => $v) {
+
 			if (false === $this->checkEmpty($v) && "@" != substr($v, 0, 1)) {
 
 				// 转换成目标字符集
@@ -376,7 +378,7 @@ class AopClient {
 			}
 
 			// 执行加密
-			$enCryptContent = encrypt($apiParams['biz_content'], $this->encryptKey);
+			$enCryptContent = alipayEncrypt ($apiParams['biz_content'], $this->encryptKey);
 			$apiParams['biz_content'] = $enCryptContent;
 
 		}
@@ -494,7 +496,7 @@ class AopClient {
 			}
 
 			// 执行加密
-			$enCryptContent = encrypt($apiParams['biz_content'], $this->encryptKey);
+			$enCryptContent = alipayEncrypt ($apiParams['biz_content'], $this->encryptKey);
 			$apiParams['biz_content'] = $enCryptContent;
 
 		}
@@ -638,6 +640,7 @@ class AopClient {
 	 *    if is null , return true;
 	 **/
 	protected function checkEmpty($value) {
+
 		if (!isset($value))
 			return true;
 		if ($value === null)
@@ -1085,7 +1088,7 @@ class AopClient {
 		$bodyIndexContent = substr($responseContent, 0, $parsetItem->startIndex);
 		$bodyEndContent = substr($responseContent, $parsetItem->endIndex, strlen($responseContent) + 1 - $parsetItem->endIndex);
 
-		$bizContent = decrypt($parsetItem->encryptContent, $this->encryptKey);
+		$bizContent = alipayDecrypt($parsetItem->encryptContent, $this->encryptKey);
 		return $bodyIndexContent . $bizContent . $bodyEndContent;
 
 	}
@@ -1149,7 +1152,7 @@ class AopClient {
 
 		$bodyIndexContent = substr($responseContent, 0, $parsetItem->startIndex);
 		$bodyEndContent = substr($responseContent, $parsetItem->endIndex, strlen($responseContent) + 1 - $parsetItem->endIndex);
-		$bizContent = decrypt($parsetItem->encryptContent, $this->encryptKey);
+		$bizContent = alipayDecrypt($parsetItem->encryptContent, $this->encryptKey);
 
 		return $bodyIndexContent . $bizContent . $bodyEndContent;
 

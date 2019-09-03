@@ -20,7 +20,7 @@ function curlPostPay($url,$post_data,$type="json"){
     ];
     //设置头文件的信息作为数据流输出
     curl_setopt($curl, CURLOPT_HEADER, 0);
-//    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
     curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
     curl_setopt($curl, CURLOPT_SSLVERSION, false);
@@ -29,7 +29,7 @@ function curlPostPay($url,$post_data,$type="json"){
     //设置获取的信息以文件流的形式返回，而不是直接输出。
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
     //设置post方式提交
-    curl_setopt($curl, CURLOPT_POST, 1);
+    curl_setopt($curl, CURLOPT_POST, 0);
 
     curl_setopt($curl, CURLOPT_POSTFIELDS, $post_data);
     //执行命令

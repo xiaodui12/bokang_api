@@ -22,7 +22,6 @@ class Map extends Field
     {
         switch (config('admin.map_provider')) {
             case 'tencent':
-
                 $js = '//map.qq.com/api/js?v=2.exp&key='.env('TENCENT_MAP_API_KEY');
                 break;
             case 'google':
@@ -40,8 +39,6 @@ class Map extends Field
 
     public function __construct($column, $arguments)
     {
-
-
         $this->column['lat'] = (string) $column;
         $this->column['lng'] = (string) $arguments[0];
 

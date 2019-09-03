@@ -2,6 +2,7 @@
 
 namespace App\Model\Pay;
 
+use App\Lib\alipay\Aop\AopClient;
 use App\Model\MpConfig;
 use App\Model\Order;
 use App\Model\OurOrder;
@@ -21,7 +22,7 @@ class DouyinPay extends Model
     protected $merchant_id="1900014826";
 
      protected $privateKey="MIIEogIBAAKCAQEAp5zBRnxEUm+C4Q2Sf0jgkpKD3Gr/AkFnc6v8hQ/uv+Y0zgOzGMQ89M1S90Pq2SLI8PKVR9wZ0PkeM5qqsB28VFtmmudoa3juPCtyBCs4Gxm5AQBGvLyapMkRXb6RcTChh3r1wOEwXEpyVG0iiL4MtkahBVeaPqssRo8BVokrKtfoyVJXTQgkkfwHabkQPL3jTn0TAsN7WPdyRkeSV1BNP2fHQv5f9RAqEwHTSfHKh62SiMg+WiU/71KiHrcg9HArqHLo2mYJ7SaOG1I54+mTlifXr4nW6v5kakdM4Xe/xSenP9wbKqodyVkwLIuOixDU8SAeE3C0hgQOi6WcjdaZGQIDAQABAoIBAGAaoDNTAzWlHIz/5DS5S5KfEZ4rd0YKzE9lmKeO6Bz92N8a/fDAbBcNN3nxZlHUARUucmu+hsrsW+XI0/+hPR+9PIqrDpM4xpiXbIt5YHUhfZNWXjjPh3feleeDYg9di/CLjydltv3j7cP8w2VWWyGUQ7U1copmST+3tVOx2J96ORxS0q1CKB8msMiznZ/FZc7LOsQn/l4xXSeAW2Ddp8fiRFiLydmZbeKhw9cl5fdMzLRy4H68tDyM68Xb/RjNy9EzlizCKdbn2crd4yQLssptnlYsQILu1sNzwk7kO98LYz9h/VRLvV8ZwK6FZEmWr1dsqwSmdz8/PZqIVXrw34UCgYEA1qkZOPlwvFx7IkeGB+Lhv1mrMXkJaf0QgZHZbZvqYDr/3JMJtMiAySHa0hfQtkCSJtATir3phniV/7hiv9q5HflWDETWh41pE4lfycDHMr5QhbGo2iTXwK5b+R1oYPthSLLrakwkUch9TYj7nAhbEVQSS3yaWCHmjfNjwLN9uZMCgYEAx+QmPZNi8Ka2Bw7cu/Uz1E0a5vxKW1RscikE2Pk5FJThzr/zdAsRKeilTTuSyDMBJqxe9uUZsEIWYCXeotZfWYCZjvASTwGEH/ofMoDe+0kiFY7Qh7XkvF3hWuavaJN7nl+PMJdkGMpGYDHYNe+QLBeLvsFdl9/gujmIwhzdHiMCgYB0vFDzIvOj+8caxTqmX0PVA7aNmPz9npmzXNWZPgkfe/ZYxb2pisA+oSKWzky6UDMq2E1ITi8I6droziUloJS7MDUTRvxDiytxbGujFCs/9S9lBVCGETMjna52sv9ofkxRdLuBexblQtqhp7TtDb44lje8xW5KL2VqHMpKqVHd8QKBgBePACLJuCN8wn9adRGB+LXQ0JbgrTLOZGmgA/4+gUe3tFVVsi+/DirOTI0ptEb8G+qe7iJTJg/r+g8i53ZxpZM64N5D1SSSnSvXos2k+qLLH8VCq7kS6v54YhMAlTPSDgPAZ3Pmo9l4HYtA1KamsWtA6yt0Rr+blzTbiw61sCnZAoGASeFsgYL26bcCHA+Qb8JxReqcs+/GF/ryg+VtMaAXO5r2q4nWm/nrdi7Qo44/rluOQ4pgOMpGdxPeTho0DJDdmza8xZo3w51KMYokFIzrWItPiHadz3F7+TE9/28iC2yK1XP3UbS5btM1G+fkzyjHXVCwN3dI4vWWqku3hJXRyPo=";
-
+     protected $alipayrsaPublicKey="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlFEK5RhIqrEl0kBMXWBOwhZIWVLTY28ctewVYemJ8VOeedBoOE56hUEYcoeLnn68omn3KzNZz8bBXyTfc0vPuK3dC8ucDKx6JJOEZa20LFs1kiXltef3ZtXg48fue/56DupwFwvQObFLH6hNcSw6apPhNYiGI5+bmtHs+wdRQS/i0hl1eK65uLsttDh4kxZdxLr/GpOQ3nQbw7ZdOTbGVPjdsIdZUNE6v+4Y6o2cEkI9Te/bEKF4FiHmqmMvldXh9OPVYn1d7t8hnuDVFYKN8U+GuZJlvCeDFyzq/C6maHMqqtODnmKdus5Bt0yNI+yOgFLqwjpZUdUE+zwZsYIOMwIDAQAB";
     public function build_base($data){
         ksort($data);
         $var = '';
@@ -90,6 +91,22 @@ class DouyinPay extends Model
      * 得到支付宝支付基础数据
     */
     public function getalipaybase($order_info){
+
+      $aopclient=new \AopClient();
+        $aopclient->gatewayUrl="https://openapi.alipay.com/gateway.do";
+        $aopclient->appId ="2019090266833344";
+        $aopclient->rsaPrivateKey  =$this->privateKey;
+        $aopclient->alipayrsaPublicKey   =$this->alipayrsaPublicKey;
+        $aopclient->apiVersion   ="1.0";
+        $aopclient->signType    =$this->sign_type;
+        $aopclient->postCharset = 'UTF-8';
+        $aopclient->format = "json";
+
+
+
+        $appRequest = new \AlipayTradeAppPayRequest();
+
+
         $biz_content = array(
             'body' => $order_info->order_no,
             'subject' => "测试订单" ,
@@ -98,21 +115,18 @@ class DouyinPay extends Model
             'total_amount' => $order_info->order_amount,
             "product_code"=>"QUICK_MSECURITY_PAY"
         );
-        $alipay_info=array(
-            "app_id"=>"2019090266833344",
-            "method"=>"alipay.trade.app.pay",
-            "charset"=>"utf-8",
-            "sign_type"=>$this->sign_type,
-            "timestamp"=>date("Y-m-d H:i:s"),
-            "version"=>"1.0",
-            "notify_url"=>"1.0",
-            "biz_content"=>json_encode($biz_content),
-        );
 
-        $return["url"]=$this->buildGetUrl($alipay_info);
-        $url="https://openapi.alipay.com/gateway.do";
+        $url="https://pingoufan.com/ourback";
+        $appRequest->setNotifyUrl($url);
+        $appRequest->setBizContent(json_encode($biz_content));
+        $response = $aopclient->sdkExecute($appRequest);
 
-        curlPostPay($url,$return["url"]);
+
+        $return["url"]=$response;
+
+//        $url="https://openapi.alipay.com/gateway.do";
+//
+//        var_dump(curlPostPay($url,$return["url"]));
 //        exit;
 
         $return["trade_no"]=$order_info->order_no;
@@ -133,7 +147,7 @@ class DouyinPay extends Model
             "merchant_id"=>$this->merchant_id,
             "uid"=>$openid,
             "total_amount"=>$data["price"]*100,
-            "params"=>json_encode(["url"=>$data])
+            "params"=>json_encode(["url"=>$data["url"]])
         ];
         $pay_info=$this->build_base($pay_info);
 

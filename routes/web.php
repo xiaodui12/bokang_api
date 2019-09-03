@@ -140,6 +140,8 @@ Route::post('/cart/del',  'Douyin\CartControllers@delCart');
 
 Route::post('/Order/douyin/pay',  'Order\OurControllers@pay');
 
+Route::post('/ourback',  'Order\OurControllers@pay');
+
 
 Route::post('/Order/our/getlist',  'Order\OurControllers@getOrderList');
 Route::post('/Order/our/getdetail',  'Order\OurControllers@getOrderDetail');

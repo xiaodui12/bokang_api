@@ -15,7 +15,9 @@
         "overtrue/laravel-lang": "~3.0",
         "overtrue/laravel-wechat": "~4.0",
         "stevenyangecho/laravel-u-editor": "~1.4",
-        "sunnyshift/laravel-uploader": "^0.1.2"
+        "sunnyshift/laravel-uploader": "^0.1.2",
+        "ignited/laravel-omnipay": "2.*",
+        "lokielse/omnipay-alipay": "dev-master"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
@@ -28,7 +30,8 @@
         "classmap": [
             "database/seeds",
             "database/factories",
-            "app/Libs/xcx_decrypt"
+            "app/Libs/xcx_decrypt",
+            "app/Libs/alipay"
         ],
         "psr-4": {
             "App\\": "app/",

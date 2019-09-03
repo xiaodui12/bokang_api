@@ -127,6 +127,25 @@ class DouyinPay extends Model
         $return["price"]=$order_info->order_amount;
         return $return;
     }
+
+
+    public function aliBack($data){
+        $aopclient=new \AopClient();
+        $aopclient->alipayrsaPublicKey   =$this->alipayrsaPublicKey;
+        $flag = $aopclient->rsaCheckV1($data, NULL, "RSA2");
+        Remark::add($flag);
+        if($data['trade_status'] == 'TRADE_SUCCESS' ){
+            //业务处理
+            Remark::add("success");
+            echo 'success';
+
+        }else{
+            Remark::add("fail");
+            echo 'fail';
+        }
+    }
+
+
     public function buildalipay($order_info,$openid)
     {
 

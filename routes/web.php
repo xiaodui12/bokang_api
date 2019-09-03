@@ -147,8 +147,8 @@ Route::post('/Order/our/getlist',  'Order\OurControllers@getOrderList');
 Route::post('/Order/our/getdetail',  'Order\OurControllers@getOrderDetail');
 Route::post('/Order/our/setreceive',  'Order\OurControllers@setReceiving');
 Route::post('/Order/our/getlogistics',  'Order\OurControllers@getLogistics');
-Route::post('/ourback',  'Order\OurbackControllers@aliback');
-Route::get('/ourback',  'Order\OurbackControllers@aliback');
+Route::post('/ourback',  'Order\OurBackControllers@aliback');
+Route::get('/ourback',  'Order\OurBackControllers@aliback');
 
 
 

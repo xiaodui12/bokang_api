@@ -10,12 +10,13 @@ namespace App\Http\Controllers\Order;
 
 
 use App\Model\Remark;
-use Qiniu\Http\Request;
+use Illuminate\Http\Request;
+
 
 class OurBackControllers
 {
     public function aliback(Request $request){
-        $data=$request->input();
+        $data=$request->all();
         $post=$request->post();
         Remark::add("get");
         Remark::add($data);

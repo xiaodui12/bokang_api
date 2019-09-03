@@ -108,14 +108,13 @@ class DouyinPay extends Model
 
 
         $biz_content = array(
-            'body' => $order_info->order_no,
+            'body' => $order_info->order_no."_".rand(10,999),
             'subject' => "测试订单" ,
             'out_trade_no' => $order_info->order_no,
             'timeout_express' => "7c",
             'total_amount' => $order_info->order_amount,
             "product_code"=>"QUICK_MSECURITY_PAY"
         );
-
         $url="https://pingoufan.com/ourback";
         $appRequest->setNotifyUrl($url);
         $appRequest->setBizContent(json_encode($biz_content));

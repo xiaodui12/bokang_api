@@ -86,12 +86,13 @@ class OurOrder extends Model
             $order_m->ourgoods()->createMany($order_info_goods);
             $order_m->ouraddress()->create($address_info);
 
+
             $cart=new Cart();
             $cart->setUid($uid);
             $cart->deleteCart($cart_list);
 
             DB::commit();
-            success_return(array("order_no"=>$order_info["order_no"]),"创建成功");
+            success_return(array("order_no"=>$order_info["order_no"],"order_id"=>$order_m->id),"创建成功");
         }catch (Exception $exception){
             DB::rollback();  //回滚
             error_return($exception->getMessage());

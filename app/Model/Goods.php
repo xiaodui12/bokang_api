@@ -51,6 +51,7 @@ class Goods extends Model
         $goods["sizes"]=empty($data["sizes"])?"0":$data["sizes"];
         $goods["selectedArr"]=empty($data["selectedArr"])?"0":$data["selectedArr"];
         $goods["tabledata"]=empty($data["tabledata"])?"0":$data["tabledata"];
+        $goods["status"]=1;
 
 
 
@@ -161,7 +162,6 @@ class Goods extends Model
         }else{
             $list=$model->get();
         }
-
             return $list;
     }
 

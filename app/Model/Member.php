@@ -95,4 +95,18 @@ class Member extends Model
         return !$result?false:UserLog::log($uid,"订单".$order_id.",分享得到积分".$point);
 
     }
+
+    /***
+     * 佣金发放
+    */
+    public static function addCommon($uid,$money)
+    {
+        $user= self::where("id",$uid)->first();
+        if($user->is_tuan !=1){
+            return true;
+        }
+        $user->commisson+=$money;
+        $user->commisson_all+=$money;
+        return $user->save();
+    }
 }

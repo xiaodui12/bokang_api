@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Pdd;
 
 
+use App\Model\CommissonLog;
 use App\Model\Member;
 use App\Model\Order;
 use App\Model\System;
@@ -38,8 +39,7 @@ class RefreshControllers extends BaseControllers
         $data["start_update_time"]=$refresh_time;//搜索开始时间
         $data["end_update_time"]=time();//搜索结束时间
         $order_data=$this->send_all($this->url,$type,$data);//得到接口返回
-        var_dump($data);
-        var_dump($order_data);
+
         $this->change_order($order_data["order_list_get_response"]["order_list"]);
 
     }
@@ -62,6 +62,10 @@ class RefreshControllers extends BaseControllers
                 $order_m->add_order($order);
             }else{
                 $order_m->change_order($order,$order_id);
+                if($order["order_status"]==5){
+                    CommissonLog::sendCommisson($order["order_no"]);
+                }
+
             }
 
         }

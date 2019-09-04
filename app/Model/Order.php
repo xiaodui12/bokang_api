@@ -57,6 +57,7 @@ class Order extends Model
         try{
             $order_m=self::create($order);
             $order_m->ordergoods()->createMany($order_goods);
+            CommissonLog::addLog(1,$order["order_no"],$order["order_amount"],$order["team_uid"],$order["team_price"],$order["user_uid"]);
             DB::commit();
         }catch (Exception $exception){
             DB::rollBack();
@@ -79,6 +80,8 @@ class Order extends Model
             $order_m->refresh_time=$order["refresh_time"];
             $result=$order_m->save();
             if($result){
+                CommissonLog::addLog(1,$order["order_no"],$order["order_amount"],$order["team_uid"],$order["team_price"],$order["user_uid"]);
+
                 DB::commit();
             }else{
                 throw new Exception(" ");

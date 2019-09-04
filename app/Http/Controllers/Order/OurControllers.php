@@ -85,8 +85,6 @@ class OurControllers extends XcxControllers
     }
 
 
-
-
     /**
      * 得到订单列表
      */
@@ -125,4 +123,5 @@ class OurControllers extends XcxControllers
         $result=OurOrder::getLogistics($this->uid,$id);
         success_return($result);
     }
+
 }

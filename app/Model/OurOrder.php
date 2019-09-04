@@ -82,7 +82,6 @@ class OurOrder extends Model
             unset($address_info["deleted_at"]);
             unset($address_info["is_default"]);
 
-
             $order_m=self::create($order_info);
             $order_m->ourgoods()->createMany($order_info_goods);
             $order_m->ouraddress()->create($address_info);
@@ -97,7 +96,6 @@ class OurOrder extends Model
             DB::rollback();  //回滚
             error_return($exception->getMessage());
         }
-
     }
 
 
@@ -155,11 +153,15 @@ class OurOrder extends Model
     */
     public static function setReceiving($uid,$id)
     {
-
         $order=self::checkOrder($uid,$id,2);
         $order->order_status=3;
         $order->receive_at=date("Y-m-d H:i:s");
-        return $order->save();
+        $result=$order->save();
+
+        if($result){
+            CommissonLog::sendCommisson($order->order_no);
+        }
+        return $result;
     }
 
     /**
@@ -177,9 +179,8 @@ class OurOrder extends Model
 
     public static function setPay($uid,$id){
         $order=self::checkOrder($uid,$id,0);
-        $order->order_status=1;
-        $order->order_pay_time=date("Y-m-d H:i:s");
-        return $order->save();
+        $result=self::setpaysend($order);
+        return $result;
     }
 
     public static function getLogistics($uid,$id){
@@ -199,11 +200,18 @@ class OurOrder extends Model
     public static function checkOrderPay($order_no,$price)
     {
         $info=self::getDetailByOrderno($order_no);
+        $result=self::setpaysend($info);
+        return $result;
+
+    }
+    protected static function setpaysend($info){
         if($info->order_status!=0){
             return false;
         }
         $info->order_status=1;
         $info->order_pay_time=date("Y-m-d H:i:s");
         $info->save();
+        CommissonLog::addLog(0,$info->order_no,$info->order_amount,$info->share_id,$info->promotion_amount,$info->buy_id);
+
     }
 }

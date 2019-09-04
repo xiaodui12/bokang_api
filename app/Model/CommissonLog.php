@@ -35,7 +35,7 @@ class CommissonLog extends Model
     public static function sendCommisson($order_no){
         $log=self::getDetail($order_no);
 
-        if(empty($log)&&$log->status==0)
+        if(empty($log)||$log->status==0)
         {
             return true;
         }

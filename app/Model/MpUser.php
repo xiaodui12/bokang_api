@@ -21,12 +21,14 @@ class MpUser extends Model
         $mp_user=$this->where("openid",$openid)->where("appid",$appid)->first();
 
         $return_array["is_tuan"]=false;//默认不是团长
+        $return_array["is_new"]=true;
         //当用户不存在，添加当前用户
         if(empty($mp_user))
         {
             $this->add_user($openid,$appid);//添加用户
         }
         elseif(!empty($mp_user["uid"])){
+            $return_array["is_new"]=false;
             $userM=new Member();
             $is_tuan=$userM->checkTuan($mp_user["uid"]);//得到用户是否是团长
             $invitation=$userM->getinvitation($mp_user["uid"]);

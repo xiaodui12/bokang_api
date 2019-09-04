@@ -35,7 +35,6 @@ class LoginControllers extends Controller
         }
         $token=$request->input("token","");
         if(!empty($token)){
-
             $token_m=new Token();
             $user_info=$token_m->get_token($token);//得到token保存数据
             $this->openid=$user_info["openid"];

@@ -176,8 +176,10 @@ class Goods extends Model
     public function getCoverAttribute($value)
     {
         $url=config("filesystems.disks.admin.url");//图片链接前缀
-        return strpos($value,"http")?$value:$url.$value;
+        return strpos($value,"ttp")>0?$value:$url.$value;
+
     }
+
     /**
      * 图片链接修改器
      */
@@ -186,9 +188,9 @@ class Goods extends Model
         $url=config("filesystems.disks.admin.url");//图片链接前缀
         $list=[];
         if(!empty($value)){
-            $list=json_decode($value,0);
-            foreach ($list as $key=>$value1){
-                $list[$key]=strpos($value1,"http")?$value1:$url.$value1;
+            $list1=json_decode($value,1);
+            foreach ($list1 as $key=>$value1){
+                $list[$key]=strpos($value1,"ttp")>0?$value1:$url.$value1;
             }
         }
         return $list;

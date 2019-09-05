@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class GoodsClass extends Model
 {
@@ -32,6 +33,7 @@ class GoodsClass extends Model
             $next_list=$this->getList($value["id"],$left."--");
            array_merge($list_array,$next_list);
         }
+     
         return $list_array;
     }
     public function getNextInfo($class_id=null){

@@ -164,6 +164,7 @@
             };
             var img = editor.selection.getRange().getClosedNode();
             if (img) {
+                console.log(img);
                 this.setImage(img);
             }
         },
@@ -226,6 +227,7 @@
 
             /* 防止onchange事件循环调用 */
             if (src !== $G("url").value) $G("url").value = src;
+            console.log(src);
             if(src) {
                 /* 设置表单内容 */
                 $G("width").value = img.width || '';

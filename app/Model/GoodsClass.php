@@ -30,7 +30,7 @@ class GoodsClass extends Model
         {
             $list_array[$value->id]=$value["title"];
             $next_list=$this->getList($value["id"],$left."--");
-            $list_array=array_merge($list_array,$next_list);
+           array_merge($list_array,$next_list);
         }
         return $list_array;
     }

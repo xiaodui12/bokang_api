@@ -186,6 +186,7 @@ class Goods extends Model
     public function getPicAttribute($value)
     {
         $url=config("filesystems.disks.admin.url");//图片链接前缀
+
         $list=[];
         if(!empty($value)){
             $list1=json_decode($value,1);
@@ -193,6 +194,7 @@ class Goods extends Model
                 $list[$key]=strpos($value1,"ttp")>0?$value1:$url.$value1;
             }
         }
+
         return $list;
     }
 

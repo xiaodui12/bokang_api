@@ -60,9 +60,9 @@
                                             var list=JSON.parse('<?php echo (!empty($value["value"])&&!empty($value["value"][$value["name"]]))?json_encode($value["value"][$value["name"]]):"[]"?>');
 
 
-
                                             for(var i in list){
-                                                var html= $("<div>")
+                                                var html="";
+                                                 html= $("<div>");
                                                 html.attr("id","WU_FILE_"+i);
                                                 html.addClass("img-item");
                                                 html.append($("<div>").addClass("delete"));
@@ -70,7 +70,10 @@
                                                 html.append($("<div>").addClass("wrapper").css("display","none"));
                                                 html.append($("<input>").attr("type","hidden").attr("name",'{{$value["name"]}}'+"[]").val(list[i]));
 
-                                                $("#image_{{$value['name']}}").find(".img-item").before(html);
+
+                                                    $("#image_{{$value['name']}}").find(".picker").before(html);
+
+
                                             }
 
                                         </script>

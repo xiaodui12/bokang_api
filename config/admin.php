@@ -97,6 +97,8 @@ return [
     */
     'https' => env('ADMIN_HTTPS', false),
 
+    'secure' => true,
+
     /*
     |--------------------------------------------------------------------------
     | Laravel-admin auth setting

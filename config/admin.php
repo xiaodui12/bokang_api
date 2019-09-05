@@ -97,7 +97,7 @@ return [
     */
     'https' => env('ADMIN_HTTPS', false),
 
-    'secure' => true,
+    'secure' => env('ADMIN_HTTPS', false),
 
     /*
     |--------------------------------------------------------------------------

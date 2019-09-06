@@ -69,7 +69,7 @@ class WechetGroup extends Model
 
 
         $result=$team_user->where("uid",$uid)->delete();
-        if(!$result){
+        if($result===false){
             return array("status"=>false,"msg"=>"团长信息更新失败");
         }
         $result=$team_user->insertGetId($team_user_info);

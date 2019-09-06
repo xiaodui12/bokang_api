@@ -53,7 +53,6 @@ class WechetGroup extends Model
             return array("status"=>false,"msg"=>"创建群组表失败");
         }
 
-
         $team_user_info=array(
             "uid"=>$uid,
             "name"=>$other_info["model"]["realname"],
@@ -66,8 +65,6 @@ class WechetGroup extends Model
             "is_tuan"=>1,
             "created_at"=>date("Y-m-d H:i:s"),
         );
-
-
         $result=$team_user->where("uid",$uid)->delete();
         if($result===false){
             return array("status"=>false,"msg"=>"团长信息更新失败");

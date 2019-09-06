@@ -157,7 +157,7 @@ class DouyinPay extends Model
             "trade_no"=>$data["trade_no"],
             "merchant_id"=>$this->merchant_id,
             "uid"=>$openid,
-            "total_amount"=>$data["price"]*100,
+            "total_amount"=>floor($data["price"]*100),
             "params"=>json_encode(["url"=>$data["url"]])
         ];
         $pay_info=$this->build_base($pay_info);

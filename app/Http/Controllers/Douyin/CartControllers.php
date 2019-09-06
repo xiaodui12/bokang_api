@@ -28,6 +28,10 @@ class CartControllers extends XcxControllers
     public function __construct(Request $request)
     {
         parent::__construct($request);
+
+        if(empty($this->uid)){
+            error_return("请授权用户信息登录");
+        }
         $this->cart=new Cart();
         $this->cart->setUid($this->uid);
     }

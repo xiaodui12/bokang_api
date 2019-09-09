@@ -37,8 +37,11 @@ class Member extends Model
      */
     public function saveuserinfo($data,$unionid)
     {
-        $user_uid=$this->where("unionid",$unionid)->first();//根据unionid 得到用户信息
-        $set_uid= $user_uid?$user_uid->id:"";
+        $user=$this->where("unionid",$unionid)->first();//根据unionid 得到用户信息
+
+        var_dump($user);
+        exit;
+        $set_uid= $user?$user->id:"";
 
         $is_tuan=false;
         $invitation="";
@@ -56,8 +59,8 @@ class Member extends Model
             $data["update_time"]=time();
             $result=$this->where("id",$set_uid)->update($data);//更新用户
             !$result&&error_return("创建用户失败");//更新失败，抛出异常
-            $is_tuan=$user_uid["is_tuan"];
-            $invitation=$user_uid["invitation"];
+            $is_tuan=$user["is_tuan"];
+            $invitation=$user["invitation"];
         }
         $return_array=array(
             "set_uid"=>$set_uid,

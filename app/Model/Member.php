@@ -38,10 +38,11 @@ class Member extends Model
     public function saveuserinfo($data,$unionid)
     {
         $user=$this->where("unionid",$unionid)->first();//根据unionid 得到用户信息
-
-        var_dump($user);
-        exit;
         $set_uid= $user?$user->id:"";
+        var_dump($user);
+        var_dump($set_uid);
+        exit;
+
 
         $is_tuan=false;
         $invitation="";

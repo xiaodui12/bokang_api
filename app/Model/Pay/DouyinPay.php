@@ -167,7 +167,6 @@ class DouyinPay extends Model
         $pay_info["pay_type"]="ALIPAY_APP";
         $pay_info["risk_info"]=json_encode(["ip"=>$_SERVER['SERVER_ADDR']]);
 
-
         success_return($pay_info);
     }
     function trimall($str){

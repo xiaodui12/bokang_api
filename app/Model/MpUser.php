@@ -63,9 +63,6 @@ class MpUser extends Model
     }
 
 
-
-
-
     public function change_userinfo($appid,$openid,$info,$token){
         $save["nickname"]= $info["nickname"];//昵称
         $save["sex"]= $info["sex"];//性别

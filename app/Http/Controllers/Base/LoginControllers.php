@@ -62,8 +62,6 @@ class LoginControllers extends Controller
         success_return($check_info);
     }
 
-
-
     /**
      * 设置用户信息
      * sessionKey

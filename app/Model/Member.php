@@ -56,7 +56,6 @@ class Member extends Model
             empty($set_uid)&&error_return("创建用户失败");//创建失败抛出异常
         }else{
 
-
             $data["update_time"]=time();
             $result=$this->where("id",$set_uid)->update($data);//更新用户
             !$result&&error_return("创建用户失败");//更新失败，抛出异常

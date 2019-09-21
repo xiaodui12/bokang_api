@@ -57,7 +57,7 @@ class LoginControllers extends Controller
         $check_info["sessionKey"]=$session_key;//sessionkey
         if(!empty($parent_code)){
             $user_m=new Member();
-            $user_m->checkTuan();
+            $user_m->checkTuanByCode($parent_code);
         }
         success_return($check_info);
     }

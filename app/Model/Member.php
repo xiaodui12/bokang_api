@@ -13,6 +13,9 @@ class Member extends Model
      * $uid  用户id
      */
     public function checkTuan($uid){
+        if(empty($uid)){
+            return 0;
+        }
         return $this->where("id",$uid)->value("is_tuan");
     }
     /**

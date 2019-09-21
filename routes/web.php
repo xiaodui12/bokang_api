@@ -122,13 +122,10 @@ Route::post('/address/setdefault',  'Base\AddressControllers@setDefault');
 Route::post('/address/delete',  'Base\AddressControllers@delete');
 
 
-
-
 Route::post('/Order/our/getadd',  'Order\OurControllers@getAddOrder');
 
 
 Route::post('/Order/our/addorder',  'Order\OurControllers@addSubmit');
-
 
 
 Route::post('/cart/getlist',  'Douyin\CartControllers@getList');
@@ -140,15 +137,11 @@ Route::post('/cart/del',  'Douyin\CartControllers@delCart');
 
 Route::post('/Order/douyin/pay',  'Order\OurControllers@pay');
 
-Route::post('/ourback',  'Order\OurControllers@pay');
-
-
 Route::post('/Order/our/getlist',  'Order\OurControllers@getOrderList');
 Route::post('/Order/our/getdetail',  'Order\OurControllers@getOrderDetail');
 Route::post('/Order/our/setreceive',  'Order\OurControllers@setReceiving');
 Route::post('/Order/our/getlogistics',  'Order\OurControllers@getLogistics');
 Route::post('/ourback',  'Order\OurBackControllers@aliback');
-Route::get('/ourback',  'Order\OurBackControllers@aliback');
 
 
 

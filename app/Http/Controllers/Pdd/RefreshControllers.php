@@ -34,13 +34,14 @@ class RefreshControllers extends BaseControllers
     public function order_get()
     {
         $type="pdd.ddk.order.list.increment.get";
-
         $refresh_time=Order::getlastrefresh_time();//得到最后更新时间
         $data["start_update_time"]=$refresh_time;//搜索开始时间
         $data["end_update_time"]=time();//搜索结束时间
         $order_data=$this->send_all($this->url,$type,$data);//得到接口返回
 
         $this->change_order($order_data["order_list_get_response"]["order_list"]);
+
+
 
     }
 

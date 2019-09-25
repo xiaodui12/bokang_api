@@ -1,74 +1,52 @@
-<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
-<!--<html lang="en">-->
-<!--<head>-->
-
-<!--<meta charset="UTF-8">-->
-<!--<title>Blob Url</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<script src="video/video.js"></script>-->
-<!--<script src="video/videojs-contrib-hls.js"></script>-->
-
-<!--<video id="player" class="video-js vjs-default-skin"-->
-<!--controls-->
-<!--autoplay-->
-<!--muted-->
-<!--width="640" height="360">-->
-<!--<source id="video" src="test.php" type="application/x-mpegURL">-->
-<!--</video>-->
-<!--<script type="text/javascript">-->
-<!--//创建XMLHttpRequest对象-->
-<!--var xhr = new XMLHttpRequest();-->
-<!--//配置请求方式、请求地址以及是否同步-->
-<!--xhr.open('get', 'test.php', true);-->
-<!--//设置请求结果类型为blob-->
-<!--xhr.responseType = 'blob';-->
-<!--//请求成功回调函数-->
-<!--xhr.onload = function(e) {-->
-<!--if (this.status == 200) {//请求成功-->
-<!--//获取blob对象-->
-<!--var blob = this.response;-->
-<!--//获取blob对象地址，并把值赋给容器-->
-<!--var src= URL.createObjectURL(blob);-->
-
-<!--document.getElementById("video").src = src;-->
-
-
-<!--}-->
-<!--};-->
-<!--xhr.send();-->
-<!--</script>-->
-
-
-<!--<script type="text/javascript">-->
-
-
-<!---->
-<!--</script>-->
-<!--</body>-->
-<!--</html>-->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
-    <title>Blob Url</title>
+    <title>Title</title>
 </head>
 <body>
+<!--<h1>七牛</h1>-->
+<!--<div id="video" style="width: 900px;height: 450px"></div>-->
 
-<script src="http://lib.baomitu.com/chimee-player/1.1.9/chimee-player.browser.js"></script>
+<!--<h1>阿里</h1>-->
+<!--<div id="video_ali" style="width: 900px;height: 450px"></div>-->
 
-<div id="wrapper"></div>
+
+
+
+
+<!--<script type="text/javascript" src="https://sdk-release.qnsdk.com/qiniu-web-player-1.2.3.js"></script>-->
+<!--<script>-->
+    <!--const player = new QPlayer({-->
+        <!--url: "http://resource.csge.org.cn/files/5d85d12d78dc1_20190921?avvod/m3u8",-->
+        <!--container: document.getElementById("video"),-->
+    <!--});-->
+<!--</script>-->
+
+<section id="wrapper" class="chimee-container">
+    <video tabindex="-1"></video>
+</section>
+<script src="./lib/chimee-mobile-player.browser.js"></script>
+<script src="https://s.ssl.qhres.com/static/af3c1d4b462cc178/jquery.js"></script>
+<script src="https://s5.ssl.qhres.com/static/588b46b97caa0749.js"></script>
+
 <script>
-    // HLS 直播
-    new ChimeePlayer({
+    new ChimeeMobilePlayer({
         wrapper: '#wrapper',  // video dom容器
-        src: 'test.php',
-        box: 'hls',
+        src: 'http://resource.csge.org.cn/files/5d85d12d78dc1_20190921?avvod/m3u8',
         isLive: true,
         autoplay: true,
-        controls: true
+        controls: true,
+        playsInline: true,
+        preload: 'auto',
+        x5VideoPlayerFullscreen: true,
+        x5VideoOrientation: 'landscape|portrait',
+        xWebkitAirplay: true,
+        muted: true,
+        disableUA: ['Mozilla/5.0 (Linux; Android 4.4.2; HM NOTE 1TD Build/KOT49H; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/62.0.3202.97 Mobile Safari/537.36']
+        // removeInnerPlugins: ['chimeeMobiControlbar', 'chimeeState'] // 需要移除的插件
     });
 </script>
+
 </body>
 </html>

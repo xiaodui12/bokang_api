@@ -48,6 +48,10 @@ Route::get('/taobao/refresh/order',  'Taobao\RefreshControllers@order_get');
 Route::get('/taobao/getutil',  'Taobao\IndexControllers@getsend');
 
 
+
+Route::get('/jd/getutil',  'Jd\IndexControllers@getsend');
+
+
 /****---------拼多多接口（结束）---------------------**/
 
 

@@ -3,7 +3,9 @@
 namespace App\Model\Pay;
 
 
+use App\Exceptions\ApiException;
 use App\Model\MpConfig;
+use App\Model\OurOrder;
 use EasyWeChat\Factory;
 use EasyWeChat\Work\Application;
 use Illuminate\Database\Eloquent\Model;
@@ -16,11 +18,7 @@ class Wechat extends Model
         $config=MpConfig::getpayconfig($appid);
 
 
-
-
         $app = Factory::payment($config);
-
-
 
 //        //创建订单
 
@@ -39,25 +37,28 @@ class Wechat extends Model
             return $config;
 
         }else{
-            Log::error('微信支付签名失败:'.var_export($result,1));
+            throw new ApiException('微信支付签名失败:'.var_export($result,1));
             return false;
         }
     }
 
-    public function wxpay_notify(Request $request)
+    public function wxpay_notify($appid,Request $request)
     {
-        $app = Factory::payment(get_weixin_config());
+        $config=MpConfig::getpayconfig($appid);
+
+        $app = Factory::payment($config);
+
         $response = $app->handlePaidNotify(function ($notify, $fail) {
             $out_trade_no = $notify['out_trade_no']; // 商户订单号
             $trade_no = $notify['transaction_id'];  // 微信支付订单号
-//            $order = "";
-            if (empty($order)) {
-                return true; // 告诉微信，我已经处理完了，订单没找到，别再通知我了
-            }
+            $total_fee = $notify['total_fee'];  // 微信支付订单号
+
+
             if ($notify['return_code'] === 'SUCCESS') { // return_code 表示通信状态，不代表支付状态
                 // 用户是否支付成功
                 if (array_get($notify, 'result_code') === 'SUCCESS') {
                     //加入自己支付完成后该做的事
+                    OurOrder::checkOrderPay($out_trade_no,$total_fee/100);
                 }
             } else {
                 return $fail('通信失败，请稍后再通知我');

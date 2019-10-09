@@ -34,7 +34,7 @@ class MpConfig extends Model
             'cert_path'          => '', // XXX: 绝对路径！！！！
             'key_path'           => '',      // XXX: 绝对路径！！！！
 
-            'notify_url'         => "https://".$_SERVER['SERVER_NAME']."/ourwechetback",     // 你也可以在下单时单独设置来想覆盖它
+            'notify_url'         => "https://".$_SERVER['SERVER_NAME']."/ourwechetback/appid/".$appid,     // 你也可以在下单时单独设置来想覆盖它
         ];
 
 

@@ -77,14 +77,11 @@ class DouyinPay extends Model
 
     public function pay($openid,$order_info,$type){
 
-
-
         if($type=="wx"){
             $pay_info=$this->buildWxPay($order_info,$openid);
         }else{
             $pay_info=$this->buildAliPay($order_info,$openid);
         }
-
         return $pay_info;
     }
 

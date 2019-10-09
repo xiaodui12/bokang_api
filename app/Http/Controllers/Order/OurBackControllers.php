@@ -18,14 +18,7 @@ class OurBackControllers
 {
     public function aliback(Request $request){
         $data=$request->all();
-
         Remark::add($data);
-
-
         (new DouyinPay)->aliBack($data);
-
-
-
-
     }
 }

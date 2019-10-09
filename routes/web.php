@@ -140,12 +140,15 @@ Route::post('/cart/del',  'Douyin\CartControllers@delCart');
 
 
 Route::post('/Order/douyin/pay',  'Order\OurControllers@pay');
+Route::post('/Order/wechet/pay',  'Order\OurControllers@wechetPay');
+Route::get('/Order/wechet/pay',  'Order\OurControllers@wechetPay');
 
 Route::post('/Order/our/getlist',  'Order\OurControllers@getOrderList');
 Route::post('/Order/our/getdetail',  'Order\OurControllers@getOrderDetail');
 Route::post('/Order/our/setreceive',  'Order\OurControllers@setReceiving');
 Route::post('/Order/our/getlogistics',  'Order\OurControllers@getLogistics');
 Route::post('/ourback',  'Order\OurBackControllers@aliback');
+Route::post('/ourwechetback',  'Order\OurBackControllers@wechetback');
 
 
 

@@ -17,6 +17,7 @@ use App\Model\GoodsSku;
 use App\Model\Order;
 use App\Model\OurOrder;
 use App\Model\Pay\DouyinPay;
+use App\Model\Pay\Wechat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -85,6 +86,17 @@ class OurControllers extends XcxControllers
 
          $order_info=OurOrder::getDetailByOrderno($order_no);
         $result=(new DouyinPay())->pay($this->openid,$order_info,$type);
+        success_return($result);
+    }
+
+
+    public function wechetPay(Request $request){
+        $this->appid="wxdab63b962ce4577a";
+        $order_no=$request->input("order_no","");
+
+        $order_info=OurOrder::getDetailByOrderno($order_no);
+
+        $result=(new Wechat())->pay("订单支付","订单支付",$order_no,$order_info->order_amount,$this->openid,$this->appid);
         success_return($result);
     }
 

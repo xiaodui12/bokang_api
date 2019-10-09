@@ -19,6 +19,29 @@ class MpConfig extends Model
     }
 
 
+    public static function getpayconfig($appid){
+       $self= new self();
+        $info=$self->get_one($appid);
+
+
+        $config = [
+            // 必要配置
+            'app_id'             => $info["appid"],
+            'mch_id'             => $info["mchid"],
+            'key'                =>$info["mchkey"],   // API 密钥
+
+            // 如需使用敏感接口（如退款、发送红包等）需要配置 API 证书路径(登录商户平台下载 API 证书)
+            'cert_path'          => '', // XXX: 绝对路径！！！！
+            'key_path'           => '',      // XXX: 绝对路径！！！！
+
+            'notify_url'         => "https://".$_SERVER['SERVER_NAME']."/ourwechetback",     // 你也可以在下单时单独设置来想覆盖它
+        ];
+
+
+        return $config;
+    }
+
+
 
     /**
      * 根据appid得到appsecret和token

@@ -23,15 +23,6 @@ class Wechat extends Model
 
 
 //        //创建订单
-//        $attributes = [
-//            'trade_type' => "JSAPI", // JSAPI，NATIVE，APP...
-//            'body' => $body,
-//            'detail' => $detail,
-//            'out_trade_no' => $out_trade_no,
-//            'total_fee' => $total_fee, // 单位：分
-//
-//            'openid' => $openid, // trade_type=JSAPI，此参数必传，用户在商户appid下的唯一标识，
-//        ];
 
         $result = $app->order->unify([
             'body' => $body,
@@ -40,9 +31,8 @@ class Wechat extends Model
              'trade_type' => 'JSAPI', // 请对应换成你的支付方式对应的值类型
             'openid' => $openid,
         ]);
-        var_dump($result);
-        exit;
-        $result = $app->order->unify($attributes);
+
+
         if( $result['return_code'] == 'SUCCESS' && $result['result_code'] == 'SUCCESS'){
 
             $config = $app->jssdk->bridgeConfig($result['prepay_id'], false); // 生成支付 JS 配置

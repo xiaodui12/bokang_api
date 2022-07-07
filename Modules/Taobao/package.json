@@ -27,7 +27,7 @@
     "jquery": "^3.2",
     "js-cookie": "^2.2.0",
     "lodash": "^4.17.4",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "popper.js": "^1.12",
     "sass-resources-loader": "^2.0.0",
     "vant": "^2.0.3",
